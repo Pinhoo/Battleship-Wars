@@ -16,6 +16,11 @@ namespace BattleshipPRJ.Controllers
 
             ViewBag.Grelha = grelhaTeste.Grelha;
 
+            EspacoOcupado espacoOcupado = new EspacoOcupado();
+
+            ViewBag.Barcos = espacoOcupado.Barcos;
+
+
             return View();
         }
 
