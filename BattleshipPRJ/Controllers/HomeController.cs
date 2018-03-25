@@ -18,7 +18,7 @@ namespace BattleshipPRJ.Controllers
 
             EspacoOcupado espacoOcupado = new EspacoOcupado();
 
-            ViewBag.Barcos = espacoOcupado.Barcos;
+            ViewBag.Barcos = espacoOcupado.BarcosO;
 
 
             return View();
