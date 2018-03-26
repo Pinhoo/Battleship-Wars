@@ -13,11 +13,11 @@ namespace BattleshipPRJ.Controllers
         public IActionResult Index()
         {
             GrelhaTeste grelhaTeste = new GrelhaTeste();
-
+           
             ViewBag.Grelha = grelhaTeste.Grelha;
-
+           
             EspacoOcupado espacoOcupado = new EspacoOcupado();
-
+           
             ViewBag.Barcos = espacoOcupado.BarcosO;
 
 
