@@ -50,8 +50,8 @@ namespace BattleshipPRJ.Models
 
             //1 porta avioes
             {
-                int PortaAvioesX = rnr.Next(2, 10);//x e Y aleatórios
-                int PortaAvioesY = rnr.Next(2, 10);//entre 2 e 9 porque vai ter bordas e se n fosse assim ficava de fora
+                int PortaAvioesX = rnr.Next(1, 9);//x e Y aleatórios
+                int PortaAvioesY = rnr.Next(1, 9);//entre 2 e 9 porque vai ter bordas e se n fosse assim ficava de fora
 
                 Barcos[PortaAvioesX, PortaAvioesY] = 5;//ponto inicial
 
@@ -101,10 +101,10 @@ namespace BattleshipPRJ.Models
 
                     if (PosicaoIIIIC == 0)//vertical
                     {
-                        QuatroCanosX = rnr.Next(1, 11);// coord X
-                        QuatroCanosY = rnr.Next(4, 11);// coord y
+                        QuatroCanosX = rnr.Next(0, 10);// coord X
+                        QuatroCanosY = rnr.Next(3, 10);// coord y
 
-                        if (QuatroCanosX == 10 && QuatroCanosY == 10)
+                        if (QuatroCanosX == 9 && QuatroCanosY == 9)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 4] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 4] == 0)
                             {
@@ -115,7 +115,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 1 && QuatroCanosY == 10)
+                        else if (QuatroCanosX == 0 && QuatroCanosY == 9)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 4] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 4] == 0)
                             {
@@ -126,7 +126,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 10 && QuatroCanosY == 4)
+                        else if (QuatroCanosX == 9 && QuatroCanosY == 3)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 3] == 0)
                             {
@@ -137,7 +137,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 1 && QuatroCanosY == 4)
+                        else if (QuatroCanosX == 0 && QuatroCanosY == 3)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0)
                             {
@@ -148,7 +148,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosY == 10)
+                        else if (QuatroCanosY == 9)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 4] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 4] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 4] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY] == 0)
                             {
@@ -159,7 +159,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosY == 4)
+                        else if (QuatroCanosY == 3)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY] == 0)
                             {
@@ -170,7 +170,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 10)
+                        else if (QuatroCanosX == 9)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 4] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 4] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0)
                             {
@@ -181,7 +181,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 1)
+                        else if (QuatroCanosX == 0)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 2] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 3] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 4] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 4] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0)
                             {
@@ -207,9 +207,9 @@ namespace BattleshipPRJ.Models
                     }
                     if (PosicaoIIIIC == 1)//horizontal
                     {
-                        QuatroCanosX = rnr.Next(4, 11);
-                        QuatroCanosY = rnr.Next(1, 11);
-                        if (QuatroCanosX == 10 && QuatroCanosY == 10)
+                        QuatroCanosX = rnr.Next(3, 10);
+                        QuatroCanosY = rnr.Next(0, 10);
+                        if (QuatroCanosX == 9 && QuatroCanosY == 9)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 2, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 3, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 4, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 4, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0)
                             {
@@ -220,7 +220,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 10 && QuatroCanosY == 1)
+                        else if (QuatroCanosX == 9 && QuatroCanosY == 0)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 2, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 3, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 4, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 4, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0)
                             {
@@ -231,7 +231,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 4 && QuatroCanosY == 10)
+                        else if (QuatroCanosX == 3 && QuatroCanosY == 9)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 2, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 3, QuatroCanosY] == 4 && Barcos[QuatroCanosX + 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0)
                             {
@@ -242,7 +242,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 4 && QuatroCanosY == 1)
+                        else if (QuatroCanosX == 3 && QuatroCanosY == 0)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 2, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 3, QuatroCanosY] == 4 && Barcos[QuatroCanosX + 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0)
                             {
@@ -253,7 +253,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 10)
+                        else if (QuatroCanosX == 9)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 2, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 3, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 4, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 4, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 4, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0)
                             {
@@ -264,7 +264,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosX == 4)
+                        else if (QuatroCanosX == 3)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 2, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 3, QuatroCanosY] == 4 && Barcos[QuatroCanosX + 1, QuatroCanosY] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0)
                             {
@@ -275,7 +275,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosY == 1)
+                        else if (QuatroCanosY == 0)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 2, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 3, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 4, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 4, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY + 1] == 0 && Barcos[QuatroCanosX + 1, QuatroCanosY] == 0)
                             {
@@ -286,7 +286,7 @@ namespace BattleshipPRJ.Models
                                 iiiiC = true;
                             }
                         }
-                        else if (QuatroCanosY == 10)
+                        else if (QuatroCanosY == 9)
                         {
                             if (Barcos[QuatroCanosX, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 1, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 2, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 3, QuatroCanosY] == 4 && Barcos[QuatroCanosX - 4, QuatroCanosY] == 0 && Barcos[QuatroCanosX - 4, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 3, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 2, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 1, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 4, QuatroCanosY - 1] == 0 && Barcos[QuatroCanosX - 4, QuatroCanosY] == 0)
                             {
@@ -323,10 +323,10 @@ namespace BattleshipPRJ.Models
                     int PosicaoTresCanos = rnr.Next(1);
                     if (PosicaoTresCanos == 0)//horizontal
                     {
-                        TresCanosX = rnr.Next(3, 11);// coord X
-                        TresCanosY = rnr.Next(1, 11);// coord y
+                        TresCanosX = rnr.Next(2, 10);// coord X
+                        TresCanosY = rnr.Next(0, 10);// coord y
 
-                        if (TresCanosX == 10 && TresCanosY == 10)
+                        if (TresCanosX == 9 && TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX - 3, TresCanosY - 1] == 0)
                             {
@@ -336,7 +336,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 3 && TresCanosY == 10)
+                        else if (TresCanosX == 2 && TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0)
                             {
@@ -346,7 +346,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 3 && TresCanosY == 1)
+                        else if (TresCanosX == 2 && TresCanosY == 0)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0)
                             {
@@ -356,7 +356,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 10 && TresCanosY == 1)
+                        else if (TresCanosX == 9 && TresCanosY == 0)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY + 1] == 0)
                             {
@@ -366,7 +366,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 10)
+                        else if (TresCanosX == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0)
                             {
@@ -376,7 +376,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 3)
+                        else if (TresCanosX == 2)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0)
                             {
@@ -386,7 +386,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosY == 10)
+                        else if (TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 3, TresCanosY - 1] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0)
                             {
@@ -396,7 +396,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosY == 1)
+                        else if (TresCanosY == 0)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0)
                             {
@@ -420,10 +420,10 @@ namespace BattleshipPRJ.Models
                     }
                     if (PosicaoTresCanos == 1)//vertical
                     {
-                        TresCanosX = rnr.Next(1, 11);// coord X
-                        TresCanosY = rnr.Next(3, 11);// coord y
+                        TresCanosX = rnr.Next(0, 10);// coord X
+                        TresCanosY = rnr.Next(2, 10);// coord y
 
-                        if (TresCanosX == 10 && TresCanosY == 10)
+                        if (TresCanosX == 9 && TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX - 1, TresCanosY - 3] == 0)
                             {
@@ -433,7 +433,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 1 && TresCanosY == 10)
+                        else if (TresCanosX == 0 && TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY - 3] == 0)
                             {
@@ -443,7 +443,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 10 && TresCanosY == 3)
+                        else if (TresCanosX == 9 && TresCanosY == 2)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0)
                             {
@@ -453,7 +453,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 1 && TresCanosY == 3)
+                        else if (TresCanosX == 0 && TresCanosY == 2)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0)
                             {
@@ -463,7 +463,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosY == 10)
+                        else if (TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX - 1, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0)
                             {
@@ -473,7 +473,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosY == 3)
+                        else if (TresCanosY == 2)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0)
                             {
@@ -483,7 +483,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 10)
+                        else if (TresCanosX == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX - 1, TresCanosY - 3] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0)
                             {
@@ -493,7 +493,7 @@ namespace BattleshipPRJ.Models
                                 iiiC = true;
                             }
                         }
-                        else if (TresCanosX == 1)
+                        else if (TresCanosX == 0)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0)
                             {
@@ -523,10 +523,10 @@ namespace BattleshipPRJ.Models
                     int PosicaoTresCanos = rnr.Next(1);
                     if (PosicaoTresCanos == 0)//horizontal
                     {
-                        TresCanosX = rnr.Next(3, 11);// coord X
-                        TresCanosY = rnr.Next(1, 11);// coord y
+                        TresCanosX = rnr.Next(2, 10);// coord X
+                        TresCanosY = rnr.Next(0, 10);// coord y
 
-                        if (TresCanosX == 10 && TresCanosY == 10)
+                        if (TresCanosX == 9 && TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX - 3, TresCanosY - 1] == 0)
                             {
@@ -536,7 +536,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 3 && TresCanosY == 10)
+                        else if (TresCanosX == 2 && TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0)
                             {
@@ -546,7 +546,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 3 && TresCanosY == 1)
+                        else if (TresCanosX == 2 && TresCanosY == 0)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0)
                             {
@@ -556,7 +556,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 10 && TresCanosY == 1)
+                        else if (TresCanosX == 9 && TresCanosY == 0)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY + 1] == 0)
                             {
@@ -566,7 +566,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 10)
+                        else if (TresCanosX == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0)
                             {
@@ -576,7 +576,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 3)
+                        else if (TresCanosX == 2)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0)
                             {
@@ -586,7 +586,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosY == 10)
+                        else if (TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 2, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX - 3, TresCanosY - 1] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0)
                             {
@@ -596,7 +596,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosY == 1)
+                        else if (TresCanosY == 0)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX - 2, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 2, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY + 1] == 0 && Barcos[TresCanosX - 3, TresCanosY] == 0)
                             {
@@ -620,10 +620,10 @@ namespace BattleshipPRJ.Models
                     }
                     if (PosicaoTresCanos == 1)//vertical
                     {
-                        TresCanosX = rnr.Next(1, 11);// coord X
-                        TresCanosY = rnr.Next(3, 11);// coord y
+                        TresCanosX = rnr.Next(0, 10);// coord X
+                        TresCanosY = rnr.Next(2, 10);// coord y
 
-                        if (TresCanosX == 10 && TresCanosY == 10)
+                        if (TresCanosX == 9 && TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX - 1, TresCanosY - 3] == 0)
                             {
@@ -633,7 +633,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 1 && TresCanosY == 10)
+                        else if (TresCanosX == 0 && TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY - 3] == 0)
                             {
@@ -643,7 +643,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 10 && TresCanosY == 3)
+                        else if (TresCanosX == 9 && TresCanosY == 2)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0)
                             {
@@ -653,7 +653,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 1 && TresCanosY == 3)
+                        else if (TresCanosX == 0 && TresCanosY == 2)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0)
                             {
@@ -663,7 +663,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosY == 10)
+                        else if (TresCanosY == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX - 1, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0)
                             {
@@ -673,7 +673,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosY == 3)
+                        else if (TresCanosY == 2)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0)
                             {
@@ -683,7 +683,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 10)
+                        else if (TresCanosX == 9)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX - 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX - 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX - 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX - 1, TresCanosY - 3] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0 && Barcos[TresCanosX, TresCanosY + 1] == 0)
                             {
@@ -693,7 +693,7 @@ namespace BattleshipPRJ.Models
                                 iiiC2 = true;
                             }
                         }
-                        else if (TresCanosX == 1)
+                        else if (TresCanosX == 0)
                         {
                             if (Barcos[TresCanosX, TresCanosY] == 0 && Barcos[TresCanosX + 1, TresCanosY] == 0 && Barcos[TresCanosX, TresCanosY - 1] == 0 && Barcos[TresCanosX + 1, TresCanosY - 1] == 0 && Barcos[TresCanosX, TresCanosY - 2] == 0 && Barcos[TresCanosX + 1, TresCanosY - 2] == 0 && Barcos[TresCanosX, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY - 3] == 0 && Barcos[TresCanosX + 1, TresCanosY + 1] == 0 && Barcos[TresCanosX - 1, TresCanosY + 1] == 0)
                             {
@@ -729,10 +729,10 @@ namespace BattleshipPRJ.Models
                     int PosicaoDoisCanos = rnr.Next(1);
                     if (PosicaoDoisCanos == 0)//horizontal
                     {
-                        DoisCanosX = rnr.Next(2, 11);
-                        DoisCanosY = rnr.Next(1, 11);
+                        DoisCanosX = rnr.Next(1, 10);
+                        DoisCanosY = rnr.Next(0, 10);
 
-                        if (DoisCanosX == 10 && DoisCanosY == 10)
+                        if (DoisCanosX == 9 && DoisCanosY == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0)
                             {
@@ -741,7 +741,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 2 && DoisCanosY == 10)
+                        else if (DoisCanosX == 1 && DoisCanosY == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
                             {
@@ -750,7 +750,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 10 && DoisCanosY == 1)
+                        else if (DoisCanosX == 9 && DoisCanosY == 0)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0)
                             {
@@ -759,7 +759,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 2 && DoisCanosY == 1)
+                        else if (DoisCanosX == 1 && DoisCanosY == 0)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
                             {
@@ -768,7 +768,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 10)
+                        else if (DoisCanosX == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -777,7 +777,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 2)
+                        else if (DoisCanosX == 1)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -786,7 +786,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosY == 1)
+                        else if (DoisCanosY == 0)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
                             {
@@ -795,7 +795,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosY == 10)
+                        else if (DoisCanosY == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
                             {
@@ -816,10 +816,10 @@ namespace BattleshipPRJ.Models
                     }
                     if (PosicaoDoisCanos == 1)//vertical
                     {
-                        DoisCanosX = rnr.Next(1, 11);
-                        DoisCanosY = rnr.Next(2, 11);
+                        DoisCanosX = rnr.Next(0, 10);
+                        DoisCanosY = rnr.Next(1, 10);
 
-                        if (DoisCanosX == 10 && DoisCanosY == 10) //1
+                        if (DoisCanosX == 9 && DoisCanosY == 9) //1
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0)
                             {
@@ -828,7 +828,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 1 && DoisCanosY == 10) //2
+                        else if (DoisCanosX == 0 && DoisCanosY == 9) //2
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0)
                             {
@@ -837,7 +837,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 1 && DoisCanosY == 2) //3
+                        else if (DoisCanosX == 0 && DoisCanosY == 1) //3
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
                             {
@@ -846,7 +846,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 10 && DoisCanosY == 2) //4
+                        else if (DoisCanosX == 9 && DoisCanosY == 1) //4
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0)
                             {
@@ -855,7 +855,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 10) //5
+                        else if (DoisCanosX == 9) //5
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -864,7 +864,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosX == 1) //6
+                        else if (DoisCanosX == 0) //6
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -873,7 +873,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosY == 2) //7
+                        else if (DoisCanosY == 1) //7
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
                             {
@@ -882,7 +882,7 @@ namespace BattleshipPRJ.Models
                                 iiC = true;
                             }
                         }
-                        else if (DoisCanosY == 10) //8
+                        else if (DoisCanosY == 9) //8
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
                             {
@@ -908,10 +908,10 @@ namespace BattleshipPRJ.Models
                     int PosicaoDoisCanos = rnr.Next(1);
                     if (PosicaoDoisCanos == 0)//horizontal
                     {
-                        DoisCanosX = rnr.Next(2, 11);
-                        DoisCanosY = rnr.Next(1, 11);
+                        DoisCanosX = rnr.Next(1, 10);
+                        DoisCanosY = rnr.Next(0, 10);
 
-                        if (DoisCanosX == 10 && DoisCanosY == 10)
+                        if (DoisCanosX == 9 && DoisCanosY == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0)
                             {
@@ -920,7 +920,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 2 && DoisCanosY == 10)
+                        else if (DoisCanosX == 1 && DoisCanosY == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
                             {
@@ -929,7 +929,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 10 && DoisCanosY == 1)
+                        else if (DoisCanosX == 9 && DoisCanosY == 0)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0)
                             {
@@ -938,7 +938,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 2 && DoisCanosY == 1)
+                        else if (DoisCanosX == 1 && DoisCanosY == 0)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
                             {
@@ -947,7 +947,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 10)
+                        else if (DoisCanosX == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -956,7 +956,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 2)
+                        else if (DoisCanosX == 1)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -965,7 +965,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosY == 1)
+                        else if (DoisCanosY == 0)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
                             {
@@ -974,7 +974,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosY == 10)
+                        else if (DoisCanosY == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
                             {
@@ -995,10 +995,10 @@ namespace BattleshipPRJ.Models
                     }
                     if (PosicaoDoisCanos == 1)//vertical
                     {
-                        DoisCanosX = rnr.Next(1, 11);
-                        DoisCanosY = rnr.Next(2, 11);
+                        DoisCanosX = rnr.Next(0, 10);
+                        DoisCanosY = rnr.Next(1, 10);
 
-                        if (DoisCanosX == 10 && DoisCanosY == 10) //1
+                        if (DoisCanosX == 9 && DoisCanosY == 9) //1
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0)
                             {
@@ -1007,7 +1007,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 1 && DoisCanosY == 10) //2
+                        else if (DoisCanosX == 0 && DoisCanosY == 9) //2
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0)
                             {
@@ -1016,7 +1016,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 1 && DoisCanosY == 2) //3
+                        else if (DoisCanosX == 0 && DoisCanosY == 1) //3
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
                             {
@@ -1025,7 +1025,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 10 && DoisCanosY == 2) //4
+                        else if (DoisCanosX == 9 && DoisCanosY == 1) //4
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0)
                             {
@@ -1034,7 +1034,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 10) //5
+                        else if (DoisCanosX == 9) //5
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -1043,7 +1043,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosX == 1) //6
+                        else if (DoisCanosX == 0) //6
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -1052,7 +1052,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosY == 2) //7
+                        else if (DoisCanosY == 1) //7
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
                             {
@@ -1061,7 +1061,7 @@ namespace BattleshipPRJ.Models
                                 iiC2 = true;
                             }
                         }
-                        else if (DoisCanosY == 10) //8
+                        else if (DoisCanosY == 9) //8
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
                             {
@@ -1087,10 +1087,10 @@ namespace BattleshipPRJ.Models
                     int PosicaoDoisCanos = rnr.Next(1);
                     if (PosicaoDoisCanos == 0)//horizontal
                     {
-                        DoisCanosX = rnr.Next(2, 11);
-                        DoisCanosY = rnr.Next(1, 11);
+                        DoisCanosX = rnr.Next(1, 10);
+                        DoisCanosY = rnr.Next(0, 10);
 
-                        if (DoisCanosX == 10 && DoisCanosY == 10)
+                        if (DoisCanosX == 9 && DoisCanosY == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0)
                             {
@@ -1099,7 +1099,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 2 && DoisCanosY == 10)
+                        else if (DoisCanosX == 1 && DoisCanosY == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
                             {
@@ -1108,7 +1108,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 10 && DoisCanosY == 1)
+                        else if (DoisCanosX == 9 && DoisCanosY == 0)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0)
                             {
@@ -1117,7 +1117,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 2 && DoisCanosY == 1)
+                        else if (DoisCanosX == 1 && DoisCanosY == 0)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
                             {
@@ -1126,7 +1126,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 10)
+                        else if (DoisCanosX == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -1135,7 +1135,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 2)
+                        else if (DoisCanosX == 1)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -1144,7 +1144,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosY == 1)
+                        else if (DoisCanosY == 0)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
                             {
@@ -1153,7 +1153,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosY == 10)
+                        else if (DoisCanosY == 9)
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
                             {
@@ -1174,10 +1174,10 @@ namespace BattleshipPRJ.Models
                     }
                     if (PosicaoDoisCanos == 1)//vertical
                     {
-                        DoisCanosX = rnr.Next(1, 11);
-                        DoisCanosY = rnr.Next(2, 11);
+                        DoisCanosX = rnr.Next(0, 10);
+                        DoisCanosY = rnr.Next(1, 10);
 
-                        if (DoisCanosX == 10 && DoisCanosY == 10) //1
+                        if (DoisCanosX == 9 && DoisCanosY == 9) //1
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0)
                             {
@@ -1186,7 +1186,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 1 && DoisCanosY == 10) //2
+                        else if (DoisCanosX == 0 && DoisCanosY == 9) //2
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0)
                             {
@@ -1195,7 +1195,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 1 && DoisCanosY == 2) //3
+                        else if (DoisCanosX == 0 && DoisCanosY == 1) //3
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
                             {
@@ -1204,7 +1204,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 10 && DoisCanosY == 2) //4
+                        else if (DoisCanosX == 9 && DoisCanosY == 1) //4
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0)
                             {
@@ -1213,7 +1213,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 10) //5
+                        else if (DoisCanosX == 9) //5
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -1222,7 +1222,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosX == 1) //6
+                        else if (DoisCanosX == 0) //6
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                             {
@@ -1231,7 +1231,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosY == 2) //7
+                        else if (DoisCanosY == 1) //7
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
                             {
@@ -1240,7 +1240,7 @@ namespace BattleshipPRJ.Models
                                 iiC3 = true;
                             }
                         }
-                        else if (DoisCanosY == 10) //8
+                        else if (DoisCanosY == 9) //8
                         {
                             if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
                             {
@@ -1269,10 +1269,10 @@ namespace BattleshipPRJ.Models
                 int SubY;
                 while (Submarinos < 4)
                 {
-                    SubX = rnr.Next(1, 11);
-                    SubY = rnr.Next(1, 11);
+                    SubX = rnr.Next(0, 10);
+                    SubY = rnr.Next(0, 10);
 
-                    if (SubX == 10 && SubY == 10)
+                    if (SubX == 9 && SubY == 9)
                     {
                         if (Barcos[SubX, SubY] == 0 && Barcos[SubX - 1, SubY] == 0 && Barcos[SubX, SubY - 1] == 0 && Barcos[SubX - 1, SubY - 1] == 0)
                         {
@@ -1280,7 +1280,7 @@ namespace BattleshipPRJ.Models
                             Submarinos++;
                         }
                     }
-                    else if (SubX == 1 && SubY == 10)
+                    else if (SubX == 0 && SubY == 9)
                     {
                         if (Barcos[SubX, SubY] == 0 && Barcos[SubX + 1, SubY] == 0 && Barcos[SubX, SubY - 1] == 0 && Barcos[SubX + 1, SubY - 1] == 0)
                         {
@@ -1289,7 +1289,7 @@ namespace BattleshipPRJ.Models
                         }
 
                     }
-                    else if (SubX == 10 && SubY == 1)
+                    else if (SubX == 9 && SubY == 0)
                     {
                         if (Barcos[SubX, SubY] == 0 && Barcos[SubX - 1, SubY] == 0 && Barcos[SubX, SubY + 1] == 0 && Barcos[SubX - 1, SubY + 1] == 0)
                         {
@@ -1297,7 +1297,7 @@ namespace BattleshipPRJ.Models
                             Submarinos++;
                         }
                     }
-                    else if (SubX == 1 && SubY == 1) //4
+                    else if (SubX == 0 && SubY == 0) //4
                     {
                         if (Barcos[SubX, SubY] == 0 && Barcos[SubX + 1, SubY] == 0 && Barcos[SubX, SubY + 1] == 0 && Barcos[SubX + 1, SubY + 1] == 0)
                         {
@@ -1305,7 +1305,7 @@ namespace BattleshipPRJ.Models
                             Submarinos++;
                         }
                     }
-                    else if (SubX == 10) //5
+                    else if (SubX == 9) //5
                     {
                         if (Barcos[SubX, SubY] == 0 && Barcos[SubX - 1, SubY] == 0 && Barcos[SubX, SubY - 1] == 0 && Barcos[SubX - 1, SubY - 1] == 0 && Barcos[SubX - 1, SubY + 1] == 0 && Barcos[SubX, SubY + 1] == 0)
                         {
@@ -1313,7 +1313,7 @@ namespace BattleshipPRJ.Models
                             Submarinos++;
                         }
                     }
-                    else if (SubX == 1) //6
+                    else if (SubX == 0) //6
                     {
                         if (Barcos[SubX, SubY] == 0 && Barcos[SubX + 1, SubY] == 0 && Barcos[SubX, SubY - 1] == 0 && Barcos[SubX + 1, SubY - 1] == 0 && Barcos[SubX + 1, SubY + 1] == 0 && Barcos[SubX, SubY + 1] == 0)
                         {
@@ -1321,7 +1321,7 @@ namespace BattleshipPRJ.Models
                             Submarinos++;
                         }
                     }
-                    else if (SubY == 10) //7
+                    else if (SubY == 9) //7
                     {
                         if (Barcos[SubX, SubY] == 0 && Barcos[SubX - 1, SubY] == 0 && Barcos[SubX, SubY + 1] == 0 && Barcos[SubX - 1, SubY + 1] == 0 && Barcos[SubX + 1, SubY + 1] == 0 && Barcos[SubX + 1, SubY] == 0)
                         {
@@ -1329,7 +1329,7 @@ namespace BattleshipPRJ.Models
                             Submarinos++;
                         }
                     }
-                    else if (SubY == 1)
+                    else if (SubY == 0)
                     {
                         if (Barcos[SubX, SubY] == 0 && Barcos[SubX - 1, SubY] == 0 && Barcos[SubX, SubY - 1] == 0 && Barcos[SubX - 1, SubY - 1] == 0 && Barcos[SubX + 1, SubY - 1] == 0 && Barcos[SubX + 1, SubY] == 0)
                         {
