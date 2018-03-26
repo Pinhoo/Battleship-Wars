@@ -718,9 +718,10 @@ namespace BattleshipPRJ.Models
                 }
             }
             //3 barcos de 2 canos
+            {
             bool iiC = false;
-
-
+            bool iiC2 = false;
+            bool iiC3 = false;
             int DoisCanosX;
             int DoisCanosY;
             while (iiC == false)
@@ -767,16 +768,16 @@ namespace BattleshipPRJ.Models
                             iiC = true;
                         }
                     }
-                    else if(DoisCanosX == 10)
+                    else if (DoisCanosX == 10)
                     {
-                        if(Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                         {
                             Barcos[DoisCanosX, DoisCanosY] = 2;
                             Barcos[DoisCanosX - 1, DoisCanosY] = 2;
                             iiC = true;
                         }
                     }
-                    else if(DoisCanosX == 2)
+                    else if (DoisCanosX == 2)
                     {
                         if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
                         {
@@ -785,18 +786,18 @@ namespace BattleshipPRJ.Models
                             iiC = true;
                         }
                     }
-                    else if(DoisCanosY == 1)
+                    else if (DoisCanosY == 1)
                     {
-                        if(Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
                         {
                             Barcos[DoisCanosX, DoisCanosY] = 2;
                             Barcos[DoisCanosX - 1, DoisCanosY] = 2;
                             iiC = true;
                         }
                     }
-                    else if(DoisCanosY == 10)
+                    else if (DoisCanosY == 10)
                     {
-                        if(Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
                         {
                             Barcos[DoisCanosX, DoisCanosY] = 2;
                             Barcos[DoisCanosX - 1, DoisCanosY] = 2;
@@ -805,7 +806,7 @@ namespace BattleshipPRJ.Models
                     }
                     else
                     {
-                        if(Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0)
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0)
                         {
                             Barcos[DoisCanosX, DoisCanosY] = 2;
                             Barcos[DoisCanosX - 1, DoisCanosY] = 2;
@@ -815,9 +816,453 @@ namespace BattleshipPRJ.Models
                 }
                 if (PosicaoDoisCanos == 1)//vertical
                 {
+                    DoisCanosX = rnr.Next(1, 11);
+                    DoisCanosY = rnr.Next(2, 11);
+
+                    if (DoisCanosX == 10 && DoisCanosY == 10) //1
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
+                    else if (DoisCanosX == 1 && DoisCanosY == 10) //2
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
+                    else if (DoisCanosX == 1 && DoisCanosY == 2) //3
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10 && DoisCanosY == 2) //4
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10) //5
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
+                    else if (DoisCanosX == 1) //6
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
+                    else if (DoisCanosY == 2) //7
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
+                    else if (DoisCanosY == 10) //8
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
+                    else//9
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
 
                 }
             }
+            while (iiC2 == false)
+            {
+                int PosicaoDoisCanos = rnr.Next(1);
+                if (PosicaoDoisCanos == 0)//horizontal
+                {
+                    DoisCanosX = rnr.Next(2, 11);
+                    DoisCanosY = rnr.Next(1, 11);
+
+                    if (DoisCanosX == 10 && DoisCanosY == 10)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 2 && DoisCanosY == 10)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10 && DoisCanosY == 1)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 2 && DoisCanosY == 1)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 2)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosY == 1)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosY == 10)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                }
+                if (PosicaoDoisCanos == 1)//vertical
+                {
+                    DoisCanosX = rnr.Next(1, 11);
+                    DoisCanosY = rnr.Next(2, 11);
+
+                    if (DoisCanosX == 10 && DoisCanosY == 10) //1
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 1 && DoisCanosY == 10) //2
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 1 && DoisCanosY == 2) //3
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10 && DoisCanosY == 2) //4
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10) //5
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 1) //6
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosY == 2) //7
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else if (DoisCanosY == 10) //8
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC2 = true;
+                        }
+                    }
+                    else//9
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC2 = true;
+                        }
+                    }
+
+                }
+            }
+            while (iiC3 == false)
+            {
+                int PosicaoDoisCanos = rnr.Next(1);
+                if (PosicaoDoisCanos == 0)//horizontal
+                {
+                    DoisCanosX = rnr.Next(2, 11);
+                    DoisCanosY = rnr.Next(1, 11);
+
+                    if (DoisCanosX == 10 && DoisCanosY == 10)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 2 && DoisCanosY == 10)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10 && DoisCanosY == 1)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 2 && DoisCanosY == 1)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 2)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosY == 1)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosY == 10)
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 2, DoisCanosY] == 0 && Barcos[DoisCanosX - 2, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX - 1, DoisCanosY] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                }
+                if (PosicaoDoisCanos == 1)//vertical
+                {
+                    DoisCanosX = rnr.Next(1, 11);
+                    DoisCanosY = rnr.Next(2, 11);
+
+                    if (DoisCanosX == 10 && DoisCanosY == 10) //1
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 1 && DoisCanosY == 10) //2
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 1 && DoisCanosY == 2) //3
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10 && DoisCanosY == 2) //4
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 10) //5
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosX == 1) //6
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosY == 2) //7
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else if (DoisCanosY == 10) //8
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC3 = true;
+                        }
+                    }
+                    else//9
+                    {
+                        if (Barcos[DoisCanosX, DoisCanosY] == 0 && Barcos[DoisCanosX, DoisCanosY - 1] == 0 && Barcos[DoisCanosX, DoisCanosY - 2] == 0 && Barcos[DoisCanosX - 1, DoisCanosY] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 2] == 0 && Barcos[DoisCanosX + 1, DoisCanosY] == 0 && Barcos[DoisCanosX + 1, DoisCanosY - 1] == 0 && Barcos[DoisCanosX + 1, DoisCanosY + 1] == 0 && Barcos[DoisCanosX, DoisCanosY + 1] == 0 && Barcos[DoisCanosX - 1, DoisCanosY + 1] == 0)
+                        {
+                            Barcos[DoisCanosX, DoisCanosY] = 2;
+                            Barcos[DoisCanosX, DoisCanosY - 1] = 2;
+                            iiC = true;
+                        }
+                    }
+
+                }
+            }
+            }
+
         }
 
     }
