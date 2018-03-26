@@ -315,7 +315,7 @@ namespace BattleshipPRJ.Models
             while(iiiC == 0)
             {
                 int PosicaoTresCanos = rnr.Next(1);
-                if (PosicaoTresCanos == 0)
+                if (PosicaoTresCanos == 0)//horizontal
                 {
                     TresCanosX = rnr.Next(1, 11);// coord X
                     TresCanosY = rnr.Next(1, 11);// coord y
