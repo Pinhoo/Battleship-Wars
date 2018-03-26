@@ -20,7 +20,6 @@ namespace BattleshipPRJ.Controllers
 
             ViewBag.Barcos = espacoOcupado.BarcosO;
 
-
             return View();
         }
 

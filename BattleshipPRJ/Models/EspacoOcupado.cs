@@ -25,20 +25,21 @@ namespace BattleshipPRJ.Models
 
             int a = 0;
             int i = 0;
-            while (i <= 10)
+            while (i <= 9)
             {
                 Barcos[i, a] = 0;
-                i++;
-                a++;
-                if (i == 9)
+                i++;              
+                if (i == 8)
                 {
                     Barcos[i + 1, a] = 0;
+                    a++;
                     i = 0;
                     if (a == 10)
                     {
                         i = 10;
                         a = 0;
                     }
+
                 }
 
             }
@@ -1323,7 +1324,7 @@ namespace BattleshipPRJ.Models
                     }
                     else if (SubY == 9) //7
                     {
-                        if (Barcos[SubX, SubY] == 0 && Barcos[SubX - 1, SubY] == 0 && Barcos[SubX, SubY + 1] == 0 && Barcos[SubX - 1, SubY + 1] == 0 && Barcos[SubX + 1, SubY + 1] == 0 && Barcos[SubX + 1, SubY] == 0)
+                        if (Barcos[SubX, SubY] == 0 && Barcos[SubX - 1, SubY] == 0 && Barcos[SubX, SubY - 1] == 0 && Barcos[SubX - 1, SubY - 1] == 0 && Barcos[SubX + 1, SubY - 1] == 0 && Barcos[SubX + 1, SubY] == 0)
                         {
                             Barcos[SubX, SubY] = 1;
                             Submarinos++;
@@ -1331,7 +1332,7 @@ namespace BattleshipPRJ.Models
                     }
                     else if (SubY == 0)
                     {
-                        if (Barcos[SubX, SubY] == 0 && Barcos[SubX - 1, SubY] == 0 && Barcos[SubX, SubY - 1] == 0 && Barcos[SubX - 1, SubY - 1] == 0 && Barcos[SubX + 1, SubY - 1] == 0 && Barcos[SubX + 1, SubY] == 0)
+                        if (Barcos[SubX, SubY] == 0 && Barcos[SubX - 1, SubY] == 0 && Barcos[SubX, SubY + 1] == 0 && Barcos[SubX - 1, SubY + 1] == 0 && Barcos[SubX + 1, SubY + 1] == 0 && Barcos[SubX + 1, SubY] == 0)
                         {
                             Barcos[SubX, SubY] = 1;
                             Submarinos++;

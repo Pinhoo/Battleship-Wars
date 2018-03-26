@@ -11,6 +11,9 @@ namespace BattleshipPRJ.Models
 
         public int SelectedCoordY { get; set; }
 
+        
+
+
         public Coordenadas()
         {
 
