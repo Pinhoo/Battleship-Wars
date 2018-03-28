@@ -42,5 +42,10 @@ namespace BattleshipPRJ.Controllers
         {
             return View();
         }
+
+        public IActionResult PaginaInicial()
+        {
+            return View();
+        }
     }
 }
