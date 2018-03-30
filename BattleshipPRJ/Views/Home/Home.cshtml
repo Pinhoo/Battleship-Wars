@@ -2,25 +2,21 @@
     ViewData["Title"] = "Home";
 }
 
-<head>
+<div class="page-header">
+    <h1>Battleship Wars</h1>
+</div>
 
-</head>
-<body>
-    <div class="page-header">
-        <h1>Battleship Wars</h1>
-    </div>
-    <div>
-        <form method="post" action="/Home/Game">
-            <button class="btn btn-primary center-block">Começar</button>
-        </form>
-        <form method="post" action="/Home/About">
-            <button class="btn btn-primary center-block">Regras</button>
-        </form>
-        <form method="post" action="/Home/Equipa">
-            <button class="btn btn-primary center-block">Equipa</button>
-        </form>
-    </div>
-    <div>
-     teste
-    </div>
-</body>
+<div>
+    <form method="post" action="/Home/NovoJogo">
+        <button class="btn btn-primary center-block">Criar Novo Jogo</button>
+    </form>
+    <form method="post" action="/Home/HiScores">
+        <button class="btn btn-primary center-block">Hi-Scores</button>
+    </form>
+    <form method="post" action="/Home/About">
+        <button class="btn btn-primary center-block">Regras</button>
+    </form>
+    <form method="post" action="/Home/Equipa">
+        <button class="btn btn-primary center-block">Equipa</button>
+    </form>
+</div>

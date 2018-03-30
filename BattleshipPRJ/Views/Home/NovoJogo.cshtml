@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "NovoJogo";
+}
+<div class="page-header">
+    <h1>Novo Jogo</h1>
+
+</div>
+
+<form method="post" action="/Home/Game">
+
+    <div>
+        <label>Nome: <input type="text" name="username" size="15" maxlenght="30" required="required" /> </label>
+    </div>
+
+    <div>
+        <label> Antiaérea <input type="radio" name="missao" value="antiarea" checked="checked"/> </label>
+        <label> Destruição Total <input type="radio" name="missao" value="dtotal" /> </label>
+    </div>
+
+    <div>
+        <input type="submit" value="Iniciar Jogo" />
+
+    </div>
+
+</form>

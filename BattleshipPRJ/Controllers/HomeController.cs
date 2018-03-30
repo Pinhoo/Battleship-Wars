@@ -10,7 +10,7 @@ namespace BattleshipPRJ.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Game()
         {
             GrelhaTeste grelhaTeste = new GrelhaTeste();
            
@@ -43,9 +43,20 @@ namespace BattleshipPRJ.Controllers
             return View();
         }
 
-        public IActionResult Home()
+       public IActionResult Home()
         {
             return View();
         }
+
+        public IActionResult NovoJogo()
+        {
+            return View();
+        }
+
+        public IActionResult HiScores()
+        {
+            return View();
+        }
+        
     }
 }
