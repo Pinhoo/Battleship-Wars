@@ -19,8 +19,7 @@ namespace BattleshipPRJ.Controllers
             EspacoOcupado espacoOcupado = new EspacoOcupado();
            
             ViewBag.Barcos = espacoOcupado.BarcosO;
-
-
+            
 
             return View();
         }
@@ -48,6 +47,7 @@ namespace BattleshipPRJ.Controllers
 
         public IActionResult NovoJogo()
         {
+
             return View();
         }
 
