@@ -20,6 +20,8 @@ namespace BattleshipPRJ.Controllers
            
             ViewBag.Barcos = espacoOcupado.BarcosO;
 
+
+
             return View();
         }
 
@@ -28,10 +30,6 @@ namespace BattleshipPRJ.Controllers
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            return View();
-        }
 
         public IActionResult Error()
         {
