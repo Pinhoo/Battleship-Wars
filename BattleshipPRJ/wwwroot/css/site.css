@@ -1,6 +1,76 @@
-﻿
+﻿.row {
+    margin-top: 25px;
+    padding-top: 25px;
+    margin-bottom: 25px;
+    
+}
+.homep {
+    margin-top: 25px;
+    padding-top: 25px;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    
+}
 
-table, th, td, caption {
+h3 {
+    font-family: Verdana;
+    font-size: 30px;
+    line-height: 1.5;
+}
+
+p {
+    padding-bottom: 25px;
+    text-align: justify;
+    font-family: Verdana;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+li {
+    font-family: Verdana;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+caption {
+    color: black;
+    text-align: center;
+    font-size: x-large;
+}
+
+td {
+    color: black;
+    background-color: white;
+    padding: 15px;
+    border: 1px solid black;
+    text-align: center;
+    margin: 10px 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+th {
+    background-color: dimgray;
+    color: white;
+    padding: 15px;
+    border: 1px solid black;
+    text-align: center;
+    margin: 10px 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
+    font-weight: bold;
+    font-family: Verdana;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+table {
     color: black;
     padding: 15px;
     border: 1px solid black;
@@ -8,6 +78,10 @@ table, th, td, caption {
     margin: 10px 0;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 25px;
+    font-family: Verdana;
+    font-size: 15px;
+    line-height: 1.5;
 }
 
 .imagembatalha {
@@ -24,13 +98,15 @@ table, th, td, caption {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 30%;
+    width: 60%;
     border: 2px solid black;
 }
 
 figcaption {
-    font-weight:bold;
+    font-weight: bold;
     text-align: center;
+    padding-top: 10px;
+    padding-bottom: 50px;
 }
 
 
