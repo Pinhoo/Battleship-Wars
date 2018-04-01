@@ -24,7 +24,7 @@ namespace BattleshipPRJ.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Regras()
         {
             return View();
         }

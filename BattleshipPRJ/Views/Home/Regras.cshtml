@@ -1,0 +1,169 @@
+﻿@{
+    ViewData["Title"] = "Regras -";
+}
+
+<div class="page-header">
+    <h1>Regras</h1>
+</div>
+
+<div>
+
+    <p>
+        A Batalha Naval é um jogo de tabuleiro em que o objetivo do jogador é destruir a armada do jogador
+        oponente. A armada do adversário é estrategicamente colocada numa grelha de jogo (ver Figura 1) com a
+        dimensão de 10 linhas (de 1 a 10) por 10 colunas (de A a J).
+    </p>
+
+    <figure>
+
+        <img class="imgcenter" src="~/images/Screenshot_1.png" alt="Grelha de Jogo" title="Grelha de Jogo" />
+
+        <figcaption>Figura 1: Grelha de jogo</figcaption>
+
+    </figure>
+
+    <p> A armada do adversário é composta por 11 barcos com diferentes dimensões (Figura 2): </p>
+
+    <ul>
+        <li>1 Porta-aviões (5 quadrados em T)</li>
+        <li>1 Barco de 4 canos (4 quadrados)</li>
+        <li>2 Barcos de 3 canos (3 quadrados)</li>
+        <li>3 Barcos de 2 canos (2 quadrados)</li>
+        <li>4 Submarinos (1 quadrado)</li>
+
+    </ul>
+
+    <figure>
+
+        <img class="imgcenter" src="~/images/Screenshot_2.png" alt="Armada do adversário" title="Armada do adversário" />
+
+        <figcaption>Figura 2: Armada do adversário</figcaption>
+
+    </figure>
+
+    <p>A colocação da armada na grelha obedece a duas regras importantes:</p>
+
+    <ul>
+        <li>a orientação dos barcos pode ser em qualquer das quatro direções;</li>
+        <li>os barcos não se podem tocar, nem mesmo na diagonal.</li>
+    </ul>
+
+
+
+
+    <p>
+        Ao contrário da versão tradicional, na versão que vamos implementar o jogador não tem a sua própria
+        armada.
+    </p>
+
+    <p>
+        No nosso jogo, a situação é catastrófica e o jogador já não dispõe de qualquer barco no cenário de
+        guerra. A sua última arma é um arsenal limitado de mísseis que pode disparar contra o adversário numa
+        última tentativa de evitar a derrota. Cada míssil lançado (normalmente denominado de tiro) é dirigido a um
+        quadrado da grelha. Graças a um sofisticado sistema de reconhecimento, o jogador obtém de imediato a
+        informação do resultado de cada tiro, sabendo se o mesmo falhou o alvo (“água”), ou se acertou num barco
+        específico (“tiro num barco de 3 canos”). Se o tiro afundou um barco, a informação recebida reflete esse facto
+        (“barco de 2 canos ao fundo”). Um barco é afundado quando todos os quadrados que ocupa foram atingidos.
+    </p>
+
+
+
+    <p>O jogador pode escolher entre duas missões:</p>
+
+
+    <ul>
+        <li>
+            Missão antiaérea: ataque relâmpago. Use até 20 mísseis e afunde o porta-aviões inimigo, antes que
+            o mesmo possa lançar um ataque letal.
+        </li>
+        <li>
+            Destruição total: acabou a brincadeira. Use até 50 mísseis para destruir toda a armada inimiga.
+        </li>
+    </ul>
+
+    <p>O jogo termina quando o primeiro de dois eventos ocorrer:</p>
+
+    <ul>
+        <li>
+            O jogador cumpriu a missão escolhida (jogador vence)
+        </li>
+        <li>
+            O jogador ficou sem mísseis (jogador perde)
+        </li>
+    </ul>
+
+
+
+    <p>
+        Seja qual for o resultado final do jogo, o jogador tem uma pontuação (score) que é contabilizada e mostrada
+        ao longo do jogo, e que reflete a performance do jogador. Dependendo das ações do jogador, a sua
+        pontuação final pode receber diferentes bónus ou penalizações. A tabela abaixo indica os pontos a atribuir
+        em todas as situações:
+    </p>
+
+    <table>
+        <tr>
+            <th>Ação</th>
+            <th>Pontos</th>
+        </tr>
+
+
+        <tr>
+            <td>Barco Atingido</td>
+            <td>100 por quadrado</td>
+
+        </tr>
+
+        <tr>
+            <td>Bónus por barco afundado</td>
+            <td>200 por barco</td>
+
+        </tr>
+
+        <tr>
+            <td>Bónus por tiros consecutivos no alvo (streak)</td>
+            <td>+25% em cada streak, acumulável até 100%</td>
+
+        </tr>
+
+        <tr>
+            <td>
+                Penalização por tiro repetido
+                no mesmo quadrado
+            </td>
+            <td>
+                -100 por tiro
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>Bónus por ganhar o jogo</td>
+            <td>1000 por jogo</td>
+
+        </tr>
+
+        <tr>
+            <td>
+                Bónus por cada míssil
+                restante ao ganhar o jogo
+            </td>
+            <td>250 por míssil</td>
+
+        </tr>
+    </table>
+
+    
+    <p>
+        Os bónus são acumuláveis: por exemplo, afundar um barco depois de na jogada anterior ter atingido um
+        barco dá direito a uma pontuação correspondente ao tiro que afundou o barco, mais 25% por ser o segundo
+        tiro certeiro consecutivo, mais o bónus por barco afundado (100 + 25 + 200 = 325 pontos).
+    </p>
+
+
+    <p>
+        Baseado em  <a href="https://aindasoudotempo.blogspot.pt/2016/10/do-jogo-da-batalha-naval.html" target="_blank"> https://aindasoudotempo.blogspot.pt/2016/10/do-jogo-da-batalha-naval.html</a>, adaptado e
+        modificado para este projeto.
+    </p>
+
+</div>

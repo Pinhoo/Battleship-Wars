@@ -1,9 +1,13 @@
-﻿table, th, td, caption {
+﻿
+
+table, th, td, caption {
     color: black;
     padding: 15px;
-    border: 2px solid black;
+    border: 1px solid black;
     text-align: center;
     margin: 10px 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .imagembatalha {
@@ -13,6 +17,21 @@
     object-position: center;
 }
 
+
+
+
+.imgcenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    border: 2px solid black;
+}
+
+figcaption {
+    font-weight:bold;
+    text-align: center;
+}
 
 
 body {
