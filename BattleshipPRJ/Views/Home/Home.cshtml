@@ -3,27 +3,67 @@
 }
 
 <div class="page-header">
-    <h1>Battleship Wars</h1>
-</div>
-
-<div>
+    
     <img class="imagembatalha" src="~/images/batalha.jpg" alt="batalha" title="Batalha" />
+</div>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <h3>Começa a jogar</h3>
+        <p>
+            Basta introduzires o teu nome e escolher uma das duas missões disponíveis.
+
+        </p>
+        <form method="post" action="/Home/NovoJogo">
+            <button class="btn">Criar Novo Jogo &raquo</button>
+        </form>
+
+    </div>
+
+    <div class="col-md-3">
+        <h3>Melhores resultados</h3>
+
+        <p>
+            Consulta os melhores resultados para cada uma das missões.
+
+        </p>
+
+        <form method="post" action="/Home/HiScores">
+            <button class="btn">Hi-Scores &raquo</button>
+        </form>
+    </div>
+
+    <div class="col-md-3">
+        <h3>Regras do jogo</h3>
+        <p>
+            Caso tenhas alguma dúvida sobre o funcionamento do jogo, esta página irá ajudar-te.
+
+        </p>
+
+
+        <form method="post" action="/Home/About">
+            <button class="btn">Regras &raquo</button>
+        </form>
+
+    </div>
+
+    <div class="col-md-3">
+        <h3>Apresentação da equipa</h3>
+        <p>
+            Conhece a equipa por detrás desta aplicação.
+
+        </p>
+
+        <form method="post" action="/Home/Equipa">
+            <button class="btn">Equipa &raquo</button>
+        </form>
+    </div>
 
 
 </div>
 
 
-<div align="center">
-    <form method="post" action="/Home/NovoJogo">
-        <button class="botoeshome">Criar Novo Jogo</button>
-    </form>
-    <form method="post" action="/Home/HiScores">
-        <button class="botoeshome" >Hi-Scores</button>
-    </form>
-    <form method="post" action="/Home/About">
-        <button class="botoeshome">Regras</button>
-    </form>
-    <form method="post" action="/Home/Equipa">
-        <button class="botoeshome" >Equipa</button>
-    </form>
-</div>
+
+
+
