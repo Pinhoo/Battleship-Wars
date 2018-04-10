@@ -8,11 +8,12 @@
 
 </div>
 
+
 <form method="post" asp-action="NovoJogo">
 
     <div>
         <label asp-for="Nome">Nome:</label>
-        <input asp-for="Nome" />
+        <input required="required" asp-for="Nome" />
     </div>
 
 
@@ -21,8 +22,8 @@
         <label asp-for="Missao"> Missão: </label>
         <select asp-for="Missao">
 
-            <option value="antiaerea">Antiaérea</option>
-            <option value="dtotal">Destruição Total</option>
+            <option value="Antiaérea" >Antiaérea</option>
+            <option value="Destruição Total">Destruição Total</option>
 
 
         </select>
@@ -38,41 +39,35 @@
 
 </form>
 
-<!---->
-<!--</div>                                                                                                                                                         -->
-<!--                                                                                                                                                               -->
-<!--                                                                                                                                                               -->
-<!--                                                                                                                                                               -->
-<!--<div>                                                                                                                                                          -->
-<!--    <label> Missão AntiAérea <input type="radio" name="missao" value="antiarea" checked="checked" /> </label>                                                  -->
-<!--    <div class="column">                                                                                                                                       -->
-<!--        <img width="300" height="300" src="https://dinamicaglobal.files.wordpress.com/2012/11/aircraftcarrier.jpg" alt="Fjords" style="width:50%">             -->
-<!--                                                                                                                                                               -->
-<!--        <p>                                                                                                                                                    -->
-<!--            Tens como objetivo afundar o Porta-Aviões inimigo antes que o mesmo te destrua.                                                                    -->
-<!--                                                                                                                                                               -->
-<!--            Tens 20 tentativas para cumprires o teu objetivo , por isso é bom que tenhas boa pontaria.                                                         -->
-<!--            O jogo acaba quando o jogador tiver cumprido o seu objetivo ou ficar sem munições.                                                                 -->
-<!--        </p>                                                                                                                                                   -->
-<!--                                                                                                                                                               -->
-<!--    </div>                                                                                                                                                     -->
-<!--                                                                                                                                                               -->
-<!--                                                                                                                                                               -->
-<!--                                                                                                                                                               -->
-<!--    <label> Destruição Total <input type="radio" name="missao" value="dtotal" /> </label>                                                                      -->
-<!--    <div class="column">                                                                                                                                       -->
-<!--        <img width="300" height="300" src="http://cdn.metrotvnews.com/dynamic/content/2016/09/29/590394/6Vc8Nj20zW.jpg?w=650" alt="Forest" style="width:50%">  -->
-<!--                                                                                                                                                               -->
-<!--        <p>                                                                                                                                                    -->
-<!--            Tens como objetivo afundar toda a frota inimiga sem que a tua seja eliminada.                                                                      -->
-<!--            Contas com 50 tentativas para cumprires o teu objetivo.                                                                                            -->
-<!--            O jogo tem o seu fim quando o jogador tiver cumprido o seu objetivo ou quando ficar sem munições.                                                  -->
-<!--        </p>                                                                                                                                                   -->
-<!--    </div>                                                                                                                                                     -->
-<!--                                                                                                                                                               -->
-<!--    <div align="center">                                                                                                                                       -->
-<!--        <input type="submit" class="btn" value="Iniciar Jogo" align="middle" />                                                                                -->
-<!--    </div>                                                                                                                                                     -->
-<!--</div>                                                                                                                                                         -->
-<!--                                                                                                                                                               -->
-<!--     </form>                                                                                                                                                   -->
+
+<div>
+
+    Missões disponíveis
+
+</div>
+
+<div>
+
+    <img width="300" height="300" src="https://dinamicaglobal.files.wordpress.com/2012/11/aircraftcarrier.jpg" alt="Fjords" style="width:50%">
+
+    <p>
+        Tens como objetivo afundar o Porta-Aviões inimigo antes que o mesmo te destrua.
+
+        Tens 20 tentativas para cumprires o teu objetivo , por isso é bom que tenhas boa pontaria.
+        O jogo acaba quando o jogador tiver cumprido o seu objetivo ou ficar sem munições.
+    </p>
+
+
+</div>
+
+<div>
+
+    <img width="300" height="300" src="http://cdn.metrotvnews.com/dynamic/content/2016/09/29/590394/6Vc8Nj20zW.jpg?w=650" alt="Forest" style="width:50%">
+
+    <p>
+        Tens como objetivo afundar toda a frota inimiga sem que a tua seja eliminada.
+        Contas com 50 tentativas para cumprires o teu objetivo.
+        O jogo tem o seu fim quando o jogador tiver cumprido o seu objetivo ou quando ficar sem munições.
+    </p>
+
+</div>

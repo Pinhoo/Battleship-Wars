@@ -49,7 +49,7 @@ caption {
 
 td {
     color: black;
-    background-color: white;
+    background-color: gainsboro;
     padding: 15px;
     border: 1px solid black;
     text-align: center;
@@ -57,7 +57,7 @@ td {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 25px;
-    font-weight: bold;
+    
     font-family: Verdana;
     font-size: 15px;
     line-height: 1.5;
@@ -91,6 +91,7 @@ table {
     font-family: Verdana;
     font-size: 15px;
     line-height: 1.5;
+    
 }
 
 
