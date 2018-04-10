@@ -10,20 +10,7 @@ namespace BattleshipPRJ.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Game()
-        {
-            GrelhaTeste grelhaTeste = new GrelhaTeste();
-           
-            ViewBag.Grelha = grelhaTeste.Grelha;
-           
-            EspacoOcupado espacoOcupado = new EspacoOcupado();
-           
-            ViewBag.Barcos = espacoOcupado.BarcosO;
-            
-
-            return View();
-        }
-
+     
         public IActionResult Regras()
         {
             return View();
@@ -45,8 +32,31 @@ namespace BattleshipPRJ.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult NovoJogo()
         {
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Game(Player player)
+        {
+
+            GrelhaTeste grelhaTeste = new GrelhaTeste();
+
+            ViewBag.Grelha = grelhaTeste.Grelha;
+
+            EspacoOcupado espacoOcupado = new EspacoOcupado();
+
+            ViewBag.Barcos = espacoOcupado.BarcosO;
+
+            ViewBag.Nome = player.Nome;
+
+            ViewBag.Missao = player.Missao;
+
+            ViewBag.Score = player.Score;
+
 
             return View();
         }
