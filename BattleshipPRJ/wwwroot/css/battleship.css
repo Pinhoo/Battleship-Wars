@@ -8,7 +8,7 @@ CSS adaptada de: Battleship Game, Geraldo Cabral, https://portfolium.com/Gerardo
   height: 700px;
   width: 700px;
   background-color: black;
-  border-style: solid;
+  border-style: none;
   border-color: dodgerblue;
 
 }
@@ -23,20 +23,20 @@ CSS adaptada de: Battleship Game, Geraldo Cabral, https://portfolium.com/Gerardo
 }
 
 .tile-inv {
-    background-color: gainsboro;
-    border-style: solid;
-    border-color: gainsboro;
+    background-image: url(/images/backg.png);
+    border-style:none;
+    border-color: transparent;
     font-family: Verdana;
     text-align: center;
 }
 
 .tile-letras {
-    border-color: gainsboro gainsboro black gainsboro;
+    border-color: transparent transparent black transparent;
     font-weight: bold;
 }
 
 .tile-numeros {
-    border-color: gainsboro black gainsboro gainsboro;
+    border-color: transparent black transparent transparent;
     font-weight: bold;
 }
 

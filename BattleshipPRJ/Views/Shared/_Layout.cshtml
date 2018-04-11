@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/battleship.css" />
-        <link rel="icon" type="image/png" sizes="16x16" href="~/favicon1.ico">
+        <link rel="icon" type="image/png" sizes="16x16" href="~/favicon.ico">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -23,18 +23,20 @@
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Home" class="navbar-brand">Battleship Wars</a>
+                <a asp-area="" asp-controller="Home" asp-action="Home" class="navbar-brand"> <img class="logo" src="~/images/battleship.png" /> </a>
+                
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Home">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="NovoJogo">Novo Jogo</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="HiScores">Hi-Scores</a></li>
+                    <li><a asp-area="" asp-controller="Game" asp-action="NovoJogo">Novo Jogo</a></li>
+                    <li><a asp-area="" asp-controller="Game" asp-action="HiScores">Hi-Scores</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Equipa">Equipa</a></li>
 
                 </ul>

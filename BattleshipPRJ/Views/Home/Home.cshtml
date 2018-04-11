@@ -2,10 +2,12 @@
     ViewData["Title"] = "";
 }
 
-<div class="page-header">
+<div>
 
-    <img class="imagembatalha" src="~/images/batalha.jpg" alt="batalha" title="Batalha" />
+    <img class="imgcenterfront" src="~/images/frontbs.png" alt="Battleship Wars" title="Battleship Wars" />
 </div>
+
+<hr/>
 
 <div class="row">
 
@@ -16,7 +18,7 @@
 
         </p>
 
-        <a asp-action="NovoJogo" class="btn btn-default">
+        <a asp-controller="Game" asp-action="NovoJogo" class="btn btn-default">
 
             Criar Novo Jogo &raquo
 
@@ -34,7 +36,7 @@
         </p>
 
 
-        <a asp-action="HiScores" class="btn btn-default">
+        <a asp-controller="Game" asp-action="HiScores" class="btn btn-default">
             Hi-Scores &raquo
 
         </a>
@@ -44,7 +46,7 @@
 
 
     <div class="col-md-4">
-        <h2>Apresentação da equipa</h2>
+        <h2>A nossa equipa</h2>
         <p class="homep">
             Conhece a equipa por detrás desta trabalhosa aplicação.
 
@@ -61,8 +63,8 @@
 
 </div>
 
-<hr />
 
+<hr/>
 
 
 <div class="row">
@@ -108,8 +110,8 @@
     </div>
 </div>
 
-        
-   
+
+
 
 
 
