@@ -36,6 +36,18 @@ namespace BattleshipPRJ.Controllers
 
             ViewBag.Score = player.Score;
 
+            if (player.Missao == "Antiaérea")
+            {
+                ViewBag.Misseis = 20;
+
+
+            }
+            else
+            {
+                ViewBag.Misseis = 50;
+            }
+            
+
 
             return View();
         }

@@ -40,7 +40,7 @@ namespace BattleshipPRJ.Models
         {
             m_nome = Nome;
             m_missao = Missao;
-            m_misseis = 50;
+            m_misseis = 0;
             m_ganhou = false;
             m_score = 0;
             
