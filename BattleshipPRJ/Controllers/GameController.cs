@@ -59,7 +59,7 @@ namespace BattleshipPRJ.Controllers
         }
 
         [HttpPost]
-        public IActionResult SelectCoords(int CoordX,int CoordY)
+        public IActionResult SelectCoords(int CoordX, int CoordY)
         {
             SelectCoords selectcoords = new SelectCoords(CoordX, CoordY);
             ViewBag.Grelha[selectcoords.CoordX , selectcoords.CoordY] = ViewBag.Barcos[selectcoords.CoordX, selectcoords.CoordY];

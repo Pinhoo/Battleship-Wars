@@ -64,8 +64,7 @@
     </div>
     <div class="col-md-4">
         <form asp-action="SelectCoords" method="post">
-            <label asp-for="CoordX"></label>
-            <select asp-for="CoordX">
+            <select id="opcaoX" asp-for="CoordX">
                 <option value="0">A</option>
                 <option value="1">B</option>
                 <option value="2">C</option>
@@ -78,7 +77,7 @@
                 <option value="9">J</option>
             </select>
 
-            <select asp-for="CoordY">
+            <select id="opcaoY" asp-for="CoordY">
                 <option value="0">1</option>
                 <option value="1">2</option>
                 <option value="2">3</option>
