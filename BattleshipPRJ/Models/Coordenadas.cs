@@ -7,15 +7,50 @@ namespace BattleshipPRJ.Models
 {
     public class Coordenadas
     {
-        public int SelectedCoordX { get; set; }
 
-        public int SelectedCoordY { get; set; }
-
-        
+        private int m_selectedcoordx;
+        private int m_selectedcoordy;
 
 
-        public Coordenadas()
+        public int SelectedCoordX
         {
+
+            get
+            {
+                return m_selectedcoordx;
+            }
+
+            set
+            {
+                m_selectedcoordx = value;
+
+            }
+        }
+
+
+        public int SelectedCoordY
+        {
+
+            get
+            {
+                return m_selectedcoordy;
+            }
+
+            set
+            {
+                m_selectedcoordy = value;
+
+            }
+        }
+
+
+
+
+        public Coordenadas(int coordx, int coordy)
+        {
+            m_selectedcoordx = coordx;
+
+            m_selectedcoordy = coordy;
 
 
         }
