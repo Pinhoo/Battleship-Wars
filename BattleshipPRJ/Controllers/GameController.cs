@@ -14,14 +14,12 @@ namespace BattleshipPRJ.Controllers
         [HttpGet]
         public IActionResult NovoJogo()
         {
-
             return View();
         }
 
         [HttpPost]
         public IActionResult Game(Player player)
         {
-
             GrelhaTeste grelhaTeste = new GrelhaTeste();
 
             ViewBag.Grelha = grelhaTeste.Grelha;
@@ -29,6 +27,7 @@ namespace BattleshipPRJ.Controllers
             EspacoOcupado espacoOcupado = new EspacoOcupado();
 
             ViewBag.Barcos = espacoOcupado.BarcosO;
+
 
             ViewBag.Nome = player.Nome;
 
@@ -57,6 +56,14 @@ namespace BattleshipPRJ.Controllers
         public IActionResult HiScores()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult SelectCoords(int CoordX,int CoordY)
+        {
+            SelectCoords selectcoords = new SelectCoords(CoordX, CoordY);
+            ViewBag.Grelha[selectcoords.CoordX , selectcoords.CoordY] = ViewBag.Barcos[selectcoords.CoordX, selectcoords.CoordY];
+            return Game(ViewBag.Nome);
         }
     }
 }
