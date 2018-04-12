@@ -7,11 +7,6 @@
 }
 
 
-.row {
-    margin-top: 25px;
-    padding-top: 25px;
-    margin-bottom: 25px;
-}
 
 .homep {
     margin-top: 25px;
@@ -22,7 +17,8 @@
 
 h3 {
     
-    font-size: 30px;
+    text-align:center;
+    font-size: 25px;
     line-height: 1.5;
     
 }

@@ -11,20 +11,20 @@
 <hr />
 
 
-<form method="post" asp-action="NovoJogo">
+<form class="form-inline"  method="post" asp-action="NovoJogo">
 
-    <div>
+    <div class="form-group">
         <label asp-for="Nome">Nome:</label>
         <input required="required" asp-for="Nome" />
     </div>
 
 
-    <div>
+    <div class="form-group">
 
         <label asp-for="Missao"> Missão: </label>
         <select asp-for="Missao">
 
-            <option value="Antiaérea" >Antiaérea</option>
+            <option value="Antiaérea">Antiaérea</option>
             <option value="Destruição Total">Destruição Total</option>
 
 
@@ -33,43 +33,51 @@
 
 
 
-    <div>
+    <div class="form-group">
 
-        <button type="submit" asp-action="Game" align="middle">Iniciar Jogo</button>
+        <button class="btn btn-default" type="submit" asp-action="Game" align="middle">Iniciar Jogo &raquo</button>
 
     </div>
 
 </form>
 
 
-<div>
-
-    Missões disponíveis
-
-</div>
-
-<div>
-
-    <img width="300" height="300" src="https://dinamicaglobal.files.wordpress.com/2012/11/aircraftcarrier.jpg" alt="Fjords" style="width:50%">
-
-    <p>
-        Tens como objetivo afundar o Porta-Aviões inimigo antes que o mesmo te destrua.
-
-        Tens 20 tentativas para cumprires o teu objetivo , por isso é bom que tenhas boa pontaria.
-        O jogo acaba quando o jogador tiver cumprido o seu objetivo ou ficar sem munições.
-    </p>
 
 
-</div>
+<h3>
 
-<div>
+    Missões disponíveis (no caso de não te lembrares)
 
-    <img width="300" height="300" src="http://cdn.metrotvnews.com/dynamic/content/2016/09/29/590394/6Vc8Nj20zW.jpg?w=650" alt="Forest" style="width:50%">
+</h3>
 
-    <p>
-        Tens como objetivo afundar toda a frota inimiga sem que a tua seja eliminada.
-        Contas com 50 tentativas para cumprires o teu objetivo.
-        O jogo tem o seu fim quando o jogador tiver cumprido o seu objetivo ou quando ficar sem munições.
-    </p>
+<div class="row">
+    <div class="col-md-6">
 
+        <img class="imgcenter" src="~/images/portaavioes.jpg" alt="Missão Antiaérea" title="Missão Antiaérea">
+
+        <figcaption>Missão Antiaérea</figcaption>
+
+        <p>
+            Tens como objetivo afundar o Porta-Aviões inimigo antes que o mesmo te destrua.
+
+            Tens 20 tentativas para cumprires o teu objetivo , por isso é bom que tenhas boa pontaria.
+            O jogo acaba quando o jogador tiver cumprido o seu objetivo ou ficar sem munições.
+        </p>
+
+
+    </div>
+
+    <div class="col-md-6">
+
+        <img class="imgcenter" src="~/images/destotal.jpg" alt="Destruição Total" title="Destruição Total">
+
+        <figcaption>Destruição Total</figcaption>
+
+        <p>
+            Tens como objetivo afundar toda a frota inimiga sem que a tua seja eliminada.
+            Contas com 50 tentativas para cumprires o teu objetivo.
+            O jogo tem o seu fim quando o jogador tiver cumprido o seu objetivo ou quando ficar sem munições.
+        </p>
+
+    </div>
 </div>
