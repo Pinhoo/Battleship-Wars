@@ -62,9 +62,9 @@
 
 
     </div>
-
-    <form asp-action="SelectCoords" method="post">
-        <label asp-for="CoordX"></label>
+    <div class="col-md-4">
+        <form asp-action="SelectCoords" method="post">
+            <label asp-for="CoordX"></label>
             <select asp-for="CoordX">
                 <option value="0">A</option>
                 <option value="1">B</option>
@@ -92,56 +92,57 @@
             </select>
 
             <button class="btn btn-default" type="submit">Submit</button>
-    </form>
-
-    <p>
-        Nome do jogador: @ViewBag.Nome
-    </p>
-
-    <p>
-        Missão: @ViewBag.Missao
-    </p>
+        </form>
 
 
-    <p>
-        Score: @ViewBag.Score
-    </p>
-    <p>
-        Mísseis restantes: @ViewBag.Misseis
-    </p>
-    <p>
-        Porta aviões restantes: 1 (Ir atualizando)
-    </p>
-    <p>
-        4 canos restantes: 1 (Ir atualizando)
-    </p>
-    <p>
-        3 canos restantes: 2 (Ir atualizando)
-    </p>
-    <p>
-        2 canos restantes: 3 (Ir atualizando)
-    </p>
-    <p>
-        Submarinos restantes: 4 (Ir atualizando)
-    </p>
+        <p>
+            Nome do jogador: @ViewBag.Nome
+        </p>
+
+        <p>
+            Missão: @ViewBag.Missao
+        </p>
+
+
+        <p>
+            Score: @ViewBag.Score
+        </p>
+        <p>
+            Mísseis restantes: @ViewBag.Misseis
+        </p>
+        <p>
+            Porta aviões restantes: 1 (Ir atualizando)
+        </p>
+        <p>
+            4 canos restantes: 1 (Ir atualizando)
+        </p>
+        <p>
+            3 canos restantes: 2 (Ir atualizando)
+        </p>
+        <p>
+            2 canos restantes: 3 (Ir atualizando)
+        </p>
+        <p>
+            Submarinos restantes: 4 (Ir atualizando)
+        </p>
 
 
 
+
+
+
+
+
+
+
+
+    <div>
+        <form asp-action="HiScores">
+            <button class="btn btn-default">Desistir</button>
+        </form>
+    </div>
 
 
 </div>
-
-
-
-
-
-        <div>
-            <form asp-action="HiScores">
-                <button class="btn btn-default">Desistir</button>
-            </form>
-        </div>
-
-
-    </div>
 
 </div>
