@@ -7,27 +7,12 @@ namespace BattleshipPRJ.Models
 {
     public class SelectCoords
     {
-        //campos
-        private int m_CoordX;
-        private int m_CoordY;
+        public int CoordX { get; set; }
 
-        //propriedades
-        public int CoordX
-        {
-            get { return m_CoordX; }
-            set { m_CoordX = value; }
-        }
-        public int CoordY
-        {
-            get { return m_CoordY; }
-            set { m_CoordY = value; }
-        }
+        public int CoordY { get; set; }
 
-        //CONSTRUTOR
-        public SelectCoords(int sCoordsX, int sCoordsY)
-        {
-            m_CoordX = sCoordsX;
-            m_CoordX = sCoordsX;
-        }
+
+       
+        
     }
 }

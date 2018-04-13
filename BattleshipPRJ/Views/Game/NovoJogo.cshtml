@@ -13,9 +13,10 @@
 
 <form class="form-inline"  method="post" asp-action="NovoJogo">
 
+    <div asp-validation-summary="All"></div>
     <div class="form-group">
         <label asp-for="Nome">Nome:</label>
-        <input required="required" asp-for="Nome" />
+        <input asp-for="Nome" />
     </div>
 
 

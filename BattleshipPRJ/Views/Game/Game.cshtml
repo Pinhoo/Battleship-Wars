@@ -1,4 +1,6 @@
-﻿@model BattleshipPRJ.Models.SelectCoords;
+﻿
+@model BattleshipPRJ.Models.Player
+
 @{
     ViewData["Title"] = "Game -";
 }
@@ -63,7 +65,7 @@
 
     </div>
     <div class="col-md-4">
-        <form asp-action="SelectCoords" method="post">
+        <form>
             <select id="opcaoX" asp-for="CoordX">
                 <option value="0">A</option>
                 <option value="1">B</option>
@@ -95,19 +97,21 @@
 
 
         <p>
-            Nome do jogador: @ViewBag.Nome
+            Nome do jogador: @Model.Nome
         </p>
 
         <p>
-            Missão: @ViewBag.Missao
+            Missão: @Model.Missao
         </p>
 
 
         <p>
-            Score: @ViewBag.Score
+            Score: @Model.Score
         </p>
         <p>
             Mísseis restantes: @ViewBag.Misseis
+
+
         </p>
         <p>
             Porta aviões restantes: 1 (Ir atualizando)
@@ -135,13 +139,13 @@
 
 
 
-    <div>
-        <form asp-action="HiScores">
-            <button class="btn btn-default">Desistir</button>
-        </form>
+        <div>
+            <form asp-action="HiScores">
+                <button class="btn btn-default">Desistir</button>
+            </form>
+        </div>
+
+
     </div>
-
-
-</div>
 
 </div>

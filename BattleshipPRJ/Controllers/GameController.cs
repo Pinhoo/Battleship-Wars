@@ -28,29 +28,26 @@ namespace BattleshipPRJ.Controllers
 
             ViewBag.Barcos = espacoOcupado.BarcosO;
 
-
-            ViewBag.Nome = player.Nome;
-
-            ViewBag.Missao = player.Missao;
-
-            ViewBag.Score = player.Score;
-            
-
-
-            if (player.Missao == "Antiaérea")
+            if(player.Missao == "Antiaérea")
             {
                 ViewBag.Misseis = 20;
-
-
             }
             else
             {
                 ViewBag.Misseis = 50;
             }
+
+            if(ModelState.IsValid)
+            {
+                return View(player);
+            }
+            else
+            {
+                return View("NovoJogo");
+            }
+
+
             
-
-
-            return View();
         }
 
         public IActionResult HiScores()
@@ -58,12 +55,16 @@ namespace BattleshipPRJ.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult SelectCoords(int CoordX, int CoordY)
-        {
-            SelectCoords selectcoords = new SelectCoords(CoordX, CoordY);
-            ViewBag.Grelha[selectcoords.CoordX , selectcoords.CoordY] = ViewBag.Barcos[selectcoords.CoordX, selectcoords.CoordY];
-            return Game(ViewBag.Nome);
-        }
+       [HttpPost]
+       public IActionResult SelectedCords(int CoordX, int CoordY)
+       {
+           SelectCoords selectcoords = new SelectCoords(CoordX, CoordY);
+           ViewBag.Grelha[selectcoords.CoordX , selectcoords.CoordY] = ViewBag.Barcos[selectcoords.CoordX, selectcoords.CoordY];
+           return View(selectcoords);
+       }
+
+
+
+      
     }
 }
