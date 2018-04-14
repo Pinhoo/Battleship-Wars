@@ -17,6 +17,10 @@ namespace BattleshipPRJ.Models
             {
                 return grelha;
             }
+            set
+            {
+                grelha = value;
+            }
         }
 
 

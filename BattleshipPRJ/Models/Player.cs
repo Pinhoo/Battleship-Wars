@@ -18,18 +18,7 @@ namespace BattleshipPRJ.Models
         public int CoordX { get; set; }
         public int CoordY { get; set; }
 
-        
-
         public Player()
         { }
-
-        
-
-
-
-
-
-
-
     }
 }

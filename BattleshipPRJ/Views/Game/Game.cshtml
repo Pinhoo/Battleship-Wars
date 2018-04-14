@@ -65,36 +65,42 @@
 
     </div>
     <div class="col-md-4">
-        <form>
-            <select id="opcaoX" asp-for="CoordX">
-                <option value="0">A</option>
-                <option value="1">B</option>
-                <option value="2">C</option>
-                <option value="3">D</option>
-                <option value="4">E</option>
-                <option value="5">F</option>
-                <option value="6">G</option>
-                <option value="7">H</option>
-                <option value="8">I</option>
-                <option value="9">J</option>
-            </select>
+        <div asp-validation-summary="All">
+            <form method="post">
+                <select id="opcaoX" asp-for="CoordX">
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                    <option value="4">E</option>
+                    <option value="5">F</option>
+                    <option value="6">G</option>
+                    <option value="7">H</option>
+                    <option value="8">I</option>
+                    <option value="9">J</option>
+                </select>
 
-            <select id="opcaoY" asp-for="CoordY">
-                <option value="0">1</option>
-                <option value="1">2</option>
-                <option value="2">3</option>
-                <option value="3">4</option>
-                <option value="4">5</option>
-                <option value="5">6</option>
-                <option value="6">7</option>
-                <option value="7">8</option>
-                <option value="8">9</option>
-                <option value="9">10</option>
-            </select>
 
-            <button class="btn btn-default" type="submit">Submit</button>
-        </form>
 
+                <select id="opcaoY" asp-for="CoordY">
+                    <option value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                    <option value="5">6</option>
+                    <option value="6">7</option>
+                    <option value="7">8</option>
+                    <option value="8">9</option>
+                    <option value="9">10</option>
+                </select>
+
+                <button class="btn btn-default" type="submit">Submit</button>
+                
+                <label asp-for="Nome">Nome:</label>
+                <input asp-for="Nome" />
+            </form>
+        </div>
 
         <p>
             Nome do jogador: @Model.Nome
