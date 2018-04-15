@@ -27,13 +27,14 @@ namespace BattleshipPRJ.Controllers
         [HttpPost]
         public IActionResult Game(Player player)
         {
-            EspacoOcupado espacoOcupado = new EspacoOcupado();
-            GrelhaTeste grelhaTeste = new GrelhaTeste();     
+            //isto permite ter botao funcional
+            //EspacoOcupado espacoOcupado = new EspacoOcupado();
+            //GrelhaTeste grelhaTeste = new GrelhaTeste();     
             
-            ViewBag.Grelha = grelhaTeste.Grelha;
-            ViewBag.Barcos = espacoOcupado.BarcosO;
+            //ViewBag.Grelha = grelhaTeste.Grelha;
+            //ViewBag.Barcos = espacoOcupado.BarcosO;
 
-            grelhaTeste.Grelha[player.CoordY, player.CoordX] = espacoOcupado.BarcosO[player.CoordY, player.CoordX];
+            //grelhaTeste.Grelha[player.CoordY, player.CoordX] = espacoOcupado.BarcosO[player.CoordY, player.CoordX];
 
 
 
