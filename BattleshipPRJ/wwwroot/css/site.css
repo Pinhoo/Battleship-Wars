@@ -1,4 +1,26 @@
-﻿.logo{
+﻿.field-validation-error {
+    color: navy;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid navy;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: navy;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.logo{
 
     height:150%;
     margin-top:-6px;

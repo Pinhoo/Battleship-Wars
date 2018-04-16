@@ -17,43 +17,29 @@ namespace BattleshipPRJ.Controllers
         {
             return View();
         }
-
-        public IActionResult Game()
-        {
-            return View();
-        }
-
+        
 
         [HttpPost]
-        public IActionResult Game(Player player)
+        public IActionResult NovoJogo(Player player)
         {
-            //isto permite ter botao funcional
-            //EspacoOcupado espacoOcupado = new EspacoOcupado();
-            //GrelhaTeste grelhaTeste = new GrelhaTeste();     
             
-            //ViewBag.Grelha = grelhaTeste.Grelha;
-            //ViewBag.Barcos = espacoOcupado.BarcosO;
+            //EspacoOcupado espacoOcupado = new EspacoOcupado();
+            GrelhaTeste grelhaTeste = new GrelhaTeste();     
+            
+            ViewBag.Grelha = grelhaTeste.Grelha;
+           // ViewBag.Barcos = espacoOcupado.BarcosO;
 
-            //grelhaTeste.Grelha[player.CoordY, player.CoordX] = espacoOcupado.BarcosO[player.CoordY, player.CoordX];
+            // grelhaTeste.Grelha[player.CoordY, player.CoordX] = espacoOcupado.BarcosO[player.CoordY, player.CoordX];
 
-
-
-            if (player.Missao == "Antiaérea")
-            {
-                ViewBag.Misseis = 20;
-            }
-            else
-            {
-                ViewBag.Misseis = 50;
-            }
+            
 
             if (ModelState.IsValid)
             {
-                return View(player);
+                return View("Game", player);
             }
             else
             {
-                return View("NovoJogo");
+                return View();
             }
 
 

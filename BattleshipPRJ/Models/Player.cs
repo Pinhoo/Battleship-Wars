@@ -11,6 +11,7 @@ namespace BattleshipPRJ.Models
         [Required( ErrorMessage ="Por favor preencha o campo Nome!")]
         public string Nome { get; set; }
 
+        [Required(ErrorMessage = "Por favor seleccione a missão pretendida!")]
         public string Missao { get; set; }
         public int Misseis { get; set; }
         public bool Ganhou { get; set; }

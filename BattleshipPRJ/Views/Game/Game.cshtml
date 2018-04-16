@@ -116,7 +116,18 @@
             Score: @Model.Score
         </p>
         <p>
-            Mísseis restantes: @ViewBag.Misseis
+            Mísseis restantes: @if (Model.Missao == "Antiaérea")
+            {
+                Model.Misseis = 20;
+            }
+            else
+            {
+                Model.Misseis = 50;
+
+            }
+
+
+            @Model.Misseis
 
 
         </p>
