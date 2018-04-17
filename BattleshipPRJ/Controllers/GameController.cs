@@ -22,12 +22,12 @@ namespace BattleshipPRJ.Controllers
         [HttpPost]
         public IActionResult NovoJogo(Jogo jogo)
         {
-            
-            //EspacoOcupado espacoOcupado = new EspacoOcupado();
-            
-           // ViewBag.Barcos = espacoOcupado.BarcosO;
 
-            // grelhaTeste.Grelha[player.CoordY, player.CoordX] = espacoOcupado.BarcosO[player.CoordY, player.CoordX];
+            //EspacoOcupado espacoOcupado = new EspacoOcupado();
+
+            //ViewBag.Barcos = espacoOcupado.BarcosO;
+
+            jogo.Grelha[5,5] = 0;
             
 
             if (ModelState.IsValid)
@@ -42,6 +42,8 @@ namespace BattleshipPRJ.Controllers
             
 
         }
+        
+
 
         public IActionResult HiScores()
         {

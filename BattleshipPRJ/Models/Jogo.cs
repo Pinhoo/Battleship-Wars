@@ -17,8 +17,7 @@ namespace BattleshipPRJ.Models
         public int Misseis { get; set; }
         public bool Ganhou { get; set; }
         public int Score { get; set; }
-        public int CoordX { get; set; }
-        public int CoordY { get; set; }
+        
 
 
         private int[,] grelha;
@@ -32,10 +31,7 @@ namespace BattleshipPRJ.Models
             {
                 return grelha;
             }
-            set
-            {
-                grelha = value;
-            }
+            
         }
 
         

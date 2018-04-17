@@ -12,62 +12,10 @@
 
 <div class="row">
 
-    <div class="col-md-8">
-
-        <table id="gameBoard">
-            <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
-            <!--primeira linha: letras (coordenadas)-->
-            <tr>
-                <!-- célula vazia invisível no canto sup.esq. da tabela-->
-                <td class="tile-inv"></td>
-
-                @for (int coluna = 0; coluna < 10; coluna++)
-                {
-                    <td class="tile-inv tile-letras">
-                        <!--converter número da coluna para letra com o código ASCII ('A'=65) -->
-                        @Convert.ToChar(coluna + 65)
-                    </td>
-                }
-            </tr>
-
-            @for (int linha = 0; linha < 10; linha++) // para cada linha no array modelo, que varia entre 0 e 9
-            {
-                <tr>
-                    <td class="tile-inv tile-numeros">
-                        <!--primeira coluna: números (coordenadas)-->
-                        @(linha + 1)
-                    </td>
-
-                    @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
-                    {
-                        switch (Model.Grelha[linha, coluna])
-                        {
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                            case 5:
-                                <td id="@(linha)@(coluna)" class="tile hit">000</td>
-                                break;
-                            case 0:
-                                <td id="@(linha)@(coluna)" class="tile misses">000</td>
-                                break;
-                            default:
-                                <td id="@(linha)@(coluna)" class="tile">000</td>
-                                break;
-                        }
-                    }
-                </tr>
-            }
-
-        </table>
+    <div class="col-md-6">
 
 
-    </div>
-    <div class="col-md-4">
-
-        <form>
-            <select id="opcaoX">
+            <select id="opcaox">
                 <option value="0">A</option>
                 <option value="1">B</option>
                 <option value="2">C</option>
@@ -95,53 +43,115 @@
                 <option value="9">10</option>
             </select>
 
+
             <button class="btn btn-default" type="submit">Submit</button>
 
-        </form>
+
+
+
+            <p>
+                <strong>Nome:</strong> @Model.Nome
+            </p>
+
+            <p>
+                <strong>Missão:</strong> @Model.Missao
+            </p>
+
+
+            <p>
+                <strong>Score:</strong> @Model.Score
+            </p>
+            <p>
+                <strong>Mísseis restantes:</strong> @Model.Misseis
+
+
+            </p>
+
+            <p>
+                <strong>Porta aviões restantes:</strong> 1 (Ir atualizando)
+
+
+            </p>
+            <p>
+                <strong>4 canos restantes:</strong> 1 (Ir atualizando)
+
+
+            </p>
+            <p>
+                <strong>3 canos restantes:</strong> 2 (Ir atualizando)
+
+
+            </p>
+            <p>
+                <strong>2 canos restantes:</strong> 3 (Ir atualizando)
+
+
+            </p>
+            <p>
+                <strong>Submarinos restantes:</strong> 4 (Ir atualizando)
+
+
+            </p>
+
+
+            <a asp-action="NovoJogo" class="btn btn-default">
+                Desistir
+            </a>
+
+
+
     </div>
 
-    <p>
-        <strong>Nome:</strong> @Model.Nome
-    </p>
 
-    <p>
-        <strong>Missão:</strong> @Model.Missao
-    </p>
+    <div class="col-md-6">
+
+        <table id="gameBoard">
+            <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
+            <!--primeira linha: letras (coordenadas)-->
+            <tr>
+                <!-- célula vazia invisível no canto sup.esq. da tabela-->
+                <td class="tile-inv"></td>
+                @for (int coluna = 0; coluna < 10; coluna++)
+                {
+                    <td class="tile-inv tile-letras">
+                        <!--converter número da coluna para letra com o código ASCII ('A'=65) -->
+                        @Convert.ToChar(coluna + 65)
+                    </td>
+                }
+            </tr>
+            @for (int linha = 0; linha < 10; linha++) // para cada linha no array modelo, que varia entre 0 e 9
+            {
+                <tr>
+                    <td class="tile-inv tile-numeros">
+                        <!--primeira coluna: números (coordenadas)-->
+                        @(linha + 1)
+                    </td>
+                    @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
+                    {
+                        switch (Model.Grelha[linha, coluna])
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                                <td id="@(linha)@(coluna)" class="tile hit">000</td>
+                                break;
+                            case 0:
+                                <td id="@(linha)@(coluna)" class="tile misses">000</td>
+                                break;
+                            default:
+                                <td id="@(linha)@(coluna)" class="tile">000</td>
+                                break;
+                        }
+                    }
+                </tr>
+            }
+        </table>
 
 
-    <p>
-        <strong>Score:</strong> @Model.Score
-    </p>
-    <p>
-        <strong>Mísseis restantes:</strong> @Model.Misseis
 
-
-    </p>
-    <p>
-        Porta aviões restantes: 1 (Ir atualizando)
-    </p>
-    <p>
-        4 canos restantes: 1 (Ir atualizando)
-    </p>
-    <p>
-        3 canos restantes: 2 (Ir atualizando)
-    </p>
-    <p>
-        2 canos restantes: 3 (Ir atualizando)
-    </p>
-    <p>
-        Submarinos restantes: 4 (Ir atualizando)
-    </p>
-
-
-
-    <div>
-        <form asp-action="HiScores">
-            <button class="btn btn-default">Desistir</button>
-        </form>
     </div>
-
 
 </div>
-
 
