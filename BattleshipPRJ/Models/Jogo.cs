@@ -15,9 +15,10 @@ namespace BattleshipPRJ.Models
         public string Missao { get; set; }
 
         public int Misseis { get; set; }
-        public bool Ganhou { get; set; }
+        
         public int Score { get; set; }
         
+
 
 
         private int[,] grelha;
@@ -39,7 +40,12 @@ namespace BattleshipPRJ.Models
         public Jogo()
         {
 
-             if(Missao == "1")
+            Score = 0;
+
+            
+
+
+            if (Missao == "Antiaérea")
              { 
                  Misseis = 20;
             
@@ -65,7 +71,7 @@ namespace BattleshipPRJ.Models
 
                 //nesta grelha de teste mostramos alguns quadrados marcados com água e outros com barcos
                 //esta disposição não apareceria no jogo pois não há barcos de 4 canos com este formato
-                { -1,-1,-1,-1,0,1,2,-1,-1, -1},
+                { -1,-1,-1,-1,-1,-1,-1,-1,-1, -1},
                 {-1, -1,-1,-1,-1,-1,-1,-1, -1,-1},
                 {-1,-1, -1, -1, -1, -1, -1, -1,-1,-1},
                 {-1,-1, -1,-1,-1,-1,-1, -1,-1,-1},

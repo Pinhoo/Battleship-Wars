@@ -1,5 +1,4 @@
-﻿
-@model BattleshipPRJ.Models.Jogo
+﻿@model BattleshipPRJ.Models.Jogo
 
 @{
     ViewData["Title"] = "Game -";
@@ -14,8 +13,9 @@
 
     <div class="col-md-6">
 
+        <form class="form-inline" method="get">
 
-            <select id="opcaox">
+            <select class="form-control" id="opcaox">
                 <option value="0">A</option>
                 <option value="1">B</option>
                 <option value="2">C</option>
@@ -30,7 +30,7 @@
 
 
 
-            <select id="opcaoY">
+            <select class="form-control" id="opcaoY">
                 <option value="0">1</option>
                 <option value="1">2</option>
                 <option value="2">3</option>
@@ -44,9 +44,9 @@
             </select>
 
 
-            <button class="btn btn-default" type="submit">Submit</button>
+            <button class="btn btn-default" type="submit" value="Submit">Disparar</button>
 
-
+        </form>
 
 
             <p>
@@ -57,38 +57,37 @@
                 <strong>Missão:</strong> @Model.Missao
             </p>
 
-
             <p>
                 <strong>Score:</strong> @Model.Score
             </p>
             <p>
-                <strong>Mísseis restantes:</strong> @Model.Misseis
+                <strong>Mísseis restantes:</strong> @Model.Misseis falta meter se é 20 ou 50 (dependendo da missão)
 
 
             </p>
 
             <p>
-                <strong>Porta aviões restantes:</strong> 1 (Ir atualizando)
+                <strong>Porta aviões restantes:</strong> 1
 
 
             </p>
             <p>
-                <strong>4 canos restantes:</strong> 1 (Ir atualizando)
+                <strong>4 canos restantes:</strong> 1 
 
 
             </p>
             <p>
-                <strong>3 canos restantes:</strong> 2 (Ir atualizando)
+                <strong>3 canos restantes:</strong> 2 
 
 
             </p>
             <p>
-                <strong>2 canos restantes:</strong> 3 (Ir atualizando)
+                <strong>2 canos restantes:</strong> 3 
 
 
             </p>
             <p>
-                <strong>Submarinos restantes:</strong> 4 (Ir atualizando)
+                <strong>Submarinos restantes:</strong> 4 
 
 
             </p>

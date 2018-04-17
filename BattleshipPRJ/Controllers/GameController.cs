@@ -22,10 +22,7 @@ namespace BattleshipPRJ.Controllers
         [HttpPost]
         public IActionResult NovoJogo(Jogo jogo)
         {
-
-            //EspacoOcupado espacoOcupado = new EspacoOcupado();
-
-            //ViewBag.Barcos = espacoOcupado.BarcosO;
+            
 
             jogo.Grelha[5,5] = 0;
             
