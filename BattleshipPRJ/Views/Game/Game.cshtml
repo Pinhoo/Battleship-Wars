@@ -1,5 +1,5 @@
 ﻿
-@model BattleshipPRJ.Models.Player
+@model BattleshipPRJ.Models.Jogo
 
 @{
     ViewData["Title"] = "Game -";
@@ -40,7 +40,7 @@
 
                     @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
                     {
-                        switch (ViewBag.Grelha[linha, coluna])
+                        switch (Model.Grelha[linha, coluna])
                         {
                             case 1:
                             case 2:
@@ -65,7 +65,7 @@
 
     </div>
     <div class="col-md-4">
-        <div asp-validation-summary="All">
+        
             <form method="post">
                 <select id="opcaoX" asp-for="CoordX">
                     <option value="0">A</option>
@@ -96,10 +96,7 @@
                 </select>
 
                 <button class="btn btn-default" type="submit">Submit</button>
-                <!--   para testar o posicionamento do barco
-            <label asp-for="Nome">Nome:</label>
-            <input asp-for="Nome" />
-    -->
+               
             </form>
 </div>
 
@@ -116,18 +113,7 @@
             Score: @Model.Score
         </p>
         <p>
-            Mísseis restantes: @if (Model.Missao == "Antiaérea")
-            {
-                Model.Misseis = 20;
-            }
-            else
-            {
-                Model.Misseis = 50;
-
-            }
-
-
-            @Model.Misseis
+            Mísseis restantes: @Model.Misseis
 
 
         </p>
@@ -146,14 +132,6 @@
         <p>
             Submarinos restantes: 4 (Ir atualizando)
         </p>
-
-
-
-
-
-
-
-
 
 
 

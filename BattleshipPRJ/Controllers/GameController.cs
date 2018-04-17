@@ -20,22 +20,19 @@ namespace BattleshipPRJ.Controllers
         
 
         [HttpPost]
-        public IActionResult NovoJogo(Player player)
+        public IActionResult NovoJogo(Jogo jogo)
         {
             
             //EspacoOcupado espacoOcupado = new EspacoOcupado();
-            GrelhaTeste grelhaTeste = new GrelhaTeste();     
             
-            ViewBag.Grelha = grelhaTeste.Grelha;
            // ViewBag.Barcos = espacoOcupado.BarcosO;
 
             // grelhaTeste.Grelha[player.CoordY, player.CoordX] = espacoOcupado.BarcosO[player.CoordY, player.CoordX];
-
             
 
             if (ModelState.IsValid)
             {
-                return View("Game", player);
+                return View("Game", jogo);
             }
             else
             {
@@ -52,5 +49,7 @@ namespace BattleshipPRJ.Controllers
         {
             return View();
         }
+
+        
     }
 }
