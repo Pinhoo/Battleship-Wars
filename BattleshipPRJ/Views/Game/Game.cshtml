@@ -65,83 +65,83 @@
 
     </div>
     <div class="col-md-4">
-        
-            <form method="post">
-                <select id="opcaoX" asp-for="CoordX">
-                    <option value="0">A</option>
-                    <option value="1">B</option>
-                    <option value="2">C</option>
-                    <option value="3">D</option>
-                    <option value="4">E</option>
-                    <option value="5">F</option>
-                    <option value="6">G</option>
-                    <option value="7">H</option>
-                    <option value="8">I</option>
-                    <option value="9">J</option>
-                </select>
+
+        <form>
+            <select id="opcaoX">
+                <option value="0">A</option>
+                <option value="1">B</option>
+                <option value="2">C</option>
+                <option value="3">D</option>
+                <option value="4">E</option>
+                <option value="5">F</option>
+                <option value="6">G</option>
+                <option value="7">H</option>
+                <option value="8">I</option>
+                <option value="9">J</option>
+            </select>
 
 
 
-                <select id="opcaoY" asp-for="CoordY">
-                    <option value="0">1</option>
-                    <option value="1">2</option>
-                    <option value="2">3</option>
-                    <option value="3">4</option>
-                    <option value="4">5</option>
-                    <option value="5">6</option>
-                    <option value="6">7</option>
-                    <option value="7">8</option>
-                    <option value="8">9</option>
-                    <option value="9">10</option>
-                </select>
+            <select id="opcaoY">
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+                <option value="4">5</option>
+                <option value="5">6</option>
+                <option value="6">7</option>
+                <option value="7">8</option>
+                <option value="8">9</option>
+                <option value="9">10</option>
+            </select>
 
-                <button class="btn btn-default" type="submit">Submit</button>
-               
-            </form>
-</div>
+            <button class="btn btn-default" type="submit">Submit</button>
 
-        <p>
-            Nome do jogador: @Model.Nome
-        </p>
-
-        <p>
-            Missão: @Model.Missao
-        </p>
-
-
-        <p>
-            Score: @Model.Score
-        </p>
-        <p>
-            Mísseis restantes: @Model.Misseis
-
-
-        </p>
-        <p>
-            Porta aviões restantes: 1 (Ir atualizando)
-        </p>
-        <p>
-            4 canos restantes: 1 (Ir atualizando)
-        </p>
-        <p>
-            3 canos restantes: 2 (Ir atualizando)
-        </p>
-        <p>
-            2 canos restantes: 3 (Ir atualizando)
-        </p>
-        <p>
-            Submarinos restantes: 4 (Ir atualizando)
-        </p>
-
-
-
-        <div>
-            <form asp-action="HiScores">
-                <button class="btn btn-default">Desistir</button>
-            </form>
-        </div>
-
-
+        </form>
     </div>
 
+    <p>
+        <strong>Nome:</strong> @Model.Nome
+    </p>
+
+    <p>
+        <strong>Missão:</strong> @Model.Missao
+    </p>
+
+
+    <p>
+        <strong>Score:</strong> @Model.Score
+    </p>
+    <p>
+        <strong>Mísseis restantes:</strong> @Model.Misseis
+
+
+    </p>
+    <p>
+        Porta aviões restantes: 1 (Ir atualizando)
+    </p>
+    <p>
+        4 canos restantes: 1 (Ir atualizando)
+    </p>
+    <p>
+        3 canos restantes: 2 (Ir atualizando)
+    </p>
+    <p>
+        2 canos restantes: 3 (Ir atualizando)
+    </p>
+    <p>
+        Submarinos restantes: 4 (Ir atualizando)
+    </p>
+
+
+
+    <div>
+        <form asp-action="HiScores">
+            <button class="btn btn-default">Desistir</button>
+        </form>
+    </div>
+
+
 </div>
+
+

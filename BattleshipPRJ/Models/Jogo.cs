@@ -8,11 +8,12 @@ namespace BattleshipPRJ.Models
 {
     public class Jogo
     {
-        [Required( ErrorMessage ="Por favor preencha o campo Nome!")]
+        [Required( ErrorMessage ="Por favor preenche o campo Nome!")]
         public string Nome { get; set; }
 
-        [Required(ErrorMessage = "Por favor seleccione a missão pretendida!")]
+        [Required(ErrorMessage = "Por favor seleciona a missão pretendida!")]
         public string Missao { get; set; }
+
         public int Misseis { get; set; }
         public bool Ganhou { get; set; }
         public int Score { get; set; }
@@ -21,8 +22,9 @@ namespace BattleshipPRJ.Models
 
 
         private int[,] grelha;
+        
 
-
+       
 
         public int[,] Grelha
         {
@@ -36,23 +38,23 @@ namespace BattleshipPRJ.Models
             }
         }
 
-
-
-
+        
 
         public Jogo()
         {
 
-            if (Missao == "Antiaérea")
-            {
-                Misseis = 20;
-
-            }
-            else
-            {
-                Misseis = 50;
-
-            }
+             if(Missao == "1")
+             { 
+                 Misseis = 20;
+            
+             }
+             else
+             { 
+             
+                 Misseis = 50;
+            
+             }
+            
 
             
 
@@ -67,7 +69,7 @@ namespace BattleshipPRJ.Models
 
                 //nesta grelha de teste mostramos alguns quadrados marcados com água e outros com barcos
                 //esta disposição não apareceria no jogo pois não há barcos de 4 canos com este formato
-                { -1,-1,-1,-1,-1,-1,-1,-1,-1, -1},
+                { -1,-1,-1,-1,0,1,2,-1,-1, -1},
                 {-1, -1,-1,-1,-1,-1,-1,-1, -1,-1},
                 {-1,-1, -1, -1, -1, -1, -1, -1,-1,-1},
                 {-1,-1, -1,-1,-1,-1,-1, -1,-1,-1},

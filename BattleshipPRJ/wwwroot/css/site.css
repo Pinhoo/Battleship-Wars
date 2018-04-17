@@ -37,12 +37,19 @@
     padding-bottom: 25px;
 }
 
+
 h3 {
     
     text-align:center;
     font-size: 25px;
     line-height: 1.5;
     
+}
+
+.regras{
+
+    padding-top:100px;
+
 }
 
 p {
