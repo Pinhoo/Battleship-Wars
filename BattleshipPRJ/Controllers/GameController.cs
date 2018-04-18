@@ -24,7 +24,7 @@ namespace BattleshipPRJ.Controllers
         {
             
 
-            jogo.Grelha[5,5] = 0;
+            //jogo.Grelha[5,5] = 0;
             
 
             if (ModelState.IsValid)
@@ -40,6 +40,21 @@ namespace BattleshipPRJ.Controllers
 
         }
         
+
+        [HttpGet]
+        public IActionResult Game()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        public IActionResult Game(Jogo jogo)
+        {
+            return View(jogo);
+
+        }
+
 
 
         public IActionResult HiScores()

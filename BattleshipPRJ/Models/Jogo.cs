@@ -17,14 +17,17 @@ namespace BattleshipPRJ.Models
         public int Misseis { get; set; }
         
         public int Score { get; set; }
-        
+
+        public int coordx { get; set; }
+
+        public int coordy { get; set; }
+
 
 
 
         private int[,] grelha;
         
-
-       
+        
 
         public int[,] Grelha
         {
@@ -36,30 +39,29 @@ namespace BattleshipPRJ.Models
         }
 
         
-
         public Jogo()
         {
 
             Score = 0;
 
-            
+            Nome = Nome;
+
+            Missao = Missao;
 
 
-            if (Missao == "Antiaérea")
-             { 
-                 Misseis = 20;
-            
-             }
-             else
-             { 
-             
-                 Misseis = 50;
-            
-             }
-            
+          // if (Missao == "Antiaérea")
+          // {
+          //     Misseis = 20;
+          //
+          // }
+          // else
+          // {
+          //
+          //     Misseis = 50;
+          //
+          // }
 
-            
-
+            Misseis = 90;
 
             grelha = new int[10, 10]
             {
