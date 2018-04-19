@@ -11,7 +11,7 @@
 
 <div class="row">
 
-    <div class="col-md-6">
+    <div class="col-md-4">
 
         <form class="form-inline" method="post" asp-action="Game">
 
@@ -95,7 +95,7 @@
 
         </p>
 
-        @(Model.Grelha[Model.coordy, Model.coordx] = 0)
+        
 
 
         <a asp-action="NovoJogo" class="btn btn-default">
@@ -107,7 +107,7 @@
     </div>
 
 
-    <div class="col-md-6">
+    <div class="col-md-8">
 
         <table id="gameBoard">
             <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->

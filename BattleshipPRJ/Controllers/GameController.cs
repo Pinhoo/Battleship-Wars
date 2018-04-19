@@ -51,6 +51,8 @@ namespace BattleshipPRJ.Controllers
         [HttpPost]
         public IActionResult Game(Jogo jogo)
         {
+            jogo.Grelha[jogo.coordy, jogo.coordx] = 0;
+
             return View(jogo);
 
         }
