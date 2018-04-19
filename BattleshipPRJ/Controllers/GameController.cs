@@ -12,6 +12,8 @@ namespace BattleshipPRJ.Controllers
 
     public class GameController : Controller
     {
+
+
         [HttpGet]
         public IActionResult NovoJogo()
         {
@@ -51,7 +53,13 @@ namespace BattleshipPRJ.Controllers
         [HttpPost]
         public IActionResult Game(Jogo jogo)
         {
+
+            // EspacoOcupado espacoOcupado = new EspacoOcupado();
+            //
+            // jogo.Grelha[jogo.coordy, jogo.coordx] = espacoOcupado.BarcosO[jogo.coordy, jogo.coordx] ;
+
             jogo.Grelha[jogo.coordy, jogo.coordx] = 0;
+            
 
             return View(jogo);
 
