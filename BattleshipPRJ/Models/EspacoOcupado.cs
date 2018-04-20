@@ -67,10 +67,10 @@ namespace BattleshipPRJ.Models
                     }
                     else if (PosicaoPA == 1)
                     {
-                        Barcos[PortaAvioesX + 1, PortaAvioesY] = 5;
+                        Barcos[PortaAvioesX - 1, PortaAvioesY + 1] = 5;
                         Barcos[PortaAvioesX - 1, PortaAvioesY] = 5;
                         Barcos[PortaAvioesX - 1, PortaAvioesY - 1] = 5;
-                        Barcos[PortaAvioesX + 1, PortaAvioesY - 1] = 5;
+                        Barcos[PortaAvioesX + 1, PortaAvioesY] = 5;
 
 
                     }
@@ -78,7 +78,7 @@ namespace BattleshipPRJ.Models
                     {
                         Barcos[PortaAvioesX, PortaAvioesY + 1] = 5;
                         Barcos[PortaAvioesX + 1, PortaAvioesY - 1] = 5;
-                        Barcos[PortaAvioesX, PortaAvioesY + 1] = 5;
+                        Barcos[PortaAvioesX, PortaAvioesY - 1] = 5;
                         Barcos[PortaAvioesX - 1, PortaAvioesY - 1] = 5;
                     }
                     else

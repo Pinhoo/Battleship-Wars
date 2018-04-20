@@ -62,8 +62,6 @@ namespace BattleshipPRJ.Models
         public Jogo()
         {
 
-
-
             grelha = new int[10, 10]
             {
                 //valores reservados:

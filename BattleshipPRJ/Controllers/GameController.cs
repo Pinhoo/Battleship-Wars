@@ -58,12 +58,10 @@ namespace BattleshipPRJ.Controllers
             jogue.coordx = jogo.coordx;
 
             jogue.coordy = jogo.coordy;
-
-
-            //
             
 
             jogue.Grelha[jogo.coordy, jogo.coordx] = EspacoOcupado.BarcosO[jogo.coordy, jogo.coordx] ;
+
 
             //jogue.Grelha[jogue.coordy, jogue.coordx] = 0;
             
