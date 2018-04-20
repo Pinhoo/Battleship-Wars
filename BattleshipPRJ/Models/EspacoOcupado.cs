@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace BattleshipPRJ.Models
 {
-    public class EspacoOcupado
+    public static class EspacoOcupado
     {
-        private int[,] Barcos;
+        private static int[,] Barcos;
 
-        public int[,] BarcosO
+        public static int[,] BarcosO
         {
             get
             {
@@ -17,7 +17,7 @@ namespace BattleshipPRJ.Models
             }
         }
         //criação dos barcos
-        public EspacoOcupado()
+        public static void CriarEspacoOcupado()
         {
             Barcos = new int[10, 10];//tabela 10 por 10 para gravar os barcos
 
