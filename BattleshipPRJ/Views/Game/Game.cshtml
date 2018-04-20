@@ -64,7 +64,18 @@
             <strong>Score:</strong> @Model.Score
         </p>
         <p>
-            <strong>Mísseis restantes:</strong> @Model.Misseis falta meter se é 20 ou 50 (dependendo da missão)
+            <strong>Mísseis restantes:</strong> 
+            
+            @if (@Model.Missao == "Antiaérea")
+            {
+                @:20
+
+            }
+            else
+            {
+                @:50
+
+            }
 
 
         </p>
