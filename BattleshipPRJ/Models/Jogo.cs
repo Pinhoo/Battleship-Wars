@@ -14,6 +14,8 @@ namespace BattleshipPRJ.Models
         [Required(ErrorMessage = "Por favor seleciona a missão pretendida!")]
         public string Missao { get; set; }
 
+        public int ID { get; set; } = 1;
+
         public int Misseis { get; set; }
         
         public int Score { get; set; }

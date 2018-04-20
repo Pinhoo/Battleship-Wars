@@ -12,7 +12,7 @@ namespace BattleshipPRJ.Controllers
 
     public class GameController : Controller
     {
-
+      
 
         [HttpGet]
         public IActionResult NovoJogo()
@@ -31,6 +31,8 @@ namespace BattleshipPRJ.Controllers
 
             if (ModelState.IsValid)
             {
+
+                Repository.CriarJogo(jogo);
                 return View("Game", jogo);
             }
             else
@@ -53,7 +55,7 @@ namespace BattleshipPRJ.Controllers
         [HttpPost]
         public IActionResult Game(Jogo jogo)
         {
-
+           
             // EspacoOcupado espacoOcupado = new EspacoOcupado();
             //
             // jogo.Grelha[jogo.coordy, jogo.coordx] = espacoOcupado.BarcosO[jogo.coordy, jogo.coordx] ;
@@ -72,6 +74,12 @@ namespace BattleshipPRJ.Controllers
             return View();
         }
 
-        
+        public IActionResult JogosCriadosTeste()
+        {
+            List<Jogo> jogos = Repository.Jogos;
+
+            return View(jogos);
+
+        }
     }
 }
