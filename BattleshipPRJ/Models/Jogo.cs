@@ -8,7 +8,7 @@ namespace BattleshipPRJ.Models
 {
     public class Jogo
     {
-        [Required( ErrorMessage ="Por favor preenche o campo Nome!")]
+        [Required(ErrorMessage = "Por favor preenche o campo Nome!")]
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Por favor seleciona a missão pretendida!")]
@@ -17,7 +17,7 @@ namespace BattleshipPRJ.Models
         public int ID { get; set; } = 1;
 
         public int Misseis { get; set; }
-        
+
         public int Score { get; set; }
 
         public int coordx { get; set; }
@@ -28,8 +28,8 @@ namespace BattleshipPRJ.Models
 
 
         private int[,] grelha;
-        
-        
+
+
 
         public int[,] Grelha
         {
@@ -37,33 +37,32 @@ namespace BattleshipPRJ.Models
             {
                 return grelha;
             }
-            
+
         }
 
-        
+
+        public void AltMissao()
+        {
+            if (Missao == "Antiaérea")
+            {
+                Misseis = 20;
+
+            }
+            else
+            {
+
+                Misseis = 50;
+
+            }
+
+        }
+
+
+
         public Jogo()
         {
 
-            Score = 0;
 
-            Nome = Nome;
-
-            Missao = Missao;
-
-
-          // if (Missao == "Antiaérea")
-          // {
-          //     Misseis = 20;
-          //
-          // }
-          // else
-          // {
-          //
-          //     Misseis = 50;
-          //
-          // }
-
-            Misseis = 90;
 
             grelha = new int[10, 10]
             {
@@ -98,6 +97,6 @@ namespace BattleshipPRJ.Models
 
 
 
-        
+
     }
 }

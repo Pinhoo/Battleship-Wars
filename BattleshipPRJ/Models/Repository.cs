@@ -28,7 +28,20 @@ namespace BattleshipPRJ.Models
 
         }
 
-       
+        public static Jogo ObterJogo()
+        {
+            if(jogos.Count==0)
+            {
+
+                return null;
+            }
+            else
+            {
+                return jogos[0];
+
+            }
+            
+        }
 
         
     }

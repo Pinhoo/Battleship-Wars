@@ -33,6 +33,7 @@ namespace BattleshipPRJ.Controllers
             {
 
                 Repository.CriarJogo(jogo);
+                jogo.AltMissao();
                 return View("Game", jogo);
             }
             else
@@ -45,25 +46,28 @@ namespace BattleshipPRJ.Controllers
         }
         
 
-        [HttpGet]
-        public IActionResult Game()
-        {
-            return View();
-
-        }
+        
 
         [HttpPost]
         public IActionResult Game(Jogo jogo)
         {
-           
+
             // EspacoOcupado espacoOcupado = new EspacoOcupado();
             //
             // jogo.Grelha[jogo.coordy, jogo.coordx] = espacoOcupado.BarcosO[jogo.coordy, jogo.coordx] ;
-
-            jogo.Grelha[jogo.coordy, jogo.coordx] = 0;
             
 
-            return View(jogo);
+            Jogo jogue = Repository.ObterJogo();
+
+            jogue.coordx = jogo.coordx;
+
+            jogue.coordy = jogo.coordy;
+            
+
+            jogue.Grelha[jogue.coordy, jogue.coordx] = 7;
+            
+
+            return View(jogue);
 
         }
 

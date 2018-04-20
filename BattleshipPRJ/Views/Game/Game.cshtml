@@ -15,7 +15,10 @@
 
         <form class="form-inline" method="post" asp-action="Game">
 
-            <select class="form-control" id="opcaox" asp-for="coordx">
+           @*<input type="hidden" name="Nome" value="@Model.Nome" />*@
+         @*  <input type="hidden" name="Missao" value="@Model.Missao" />*@
+
+            <select class="form-control" id="opcaoX" asp-for="coordx">
                 <option value="0">A</option>
                 <option value="1">B</option>
                 <option value="2">C</option>
@@ -44,7 +47,7 @@
             </select>
 
 
-            <button class="btn btn-default" type="submit" value="Submit">Disparar</button>
+            <button class="btn btn-default" type="submit" value="Submit">Marcar </button>
 
 
 
@@ -64,18 +67,7 @@
             <strong>Score:</strong> @Model.Score
         </p>
         <p>
-            <strong>Mísseis restantes:</strong> 
-            
-            @if (@Model.Missao == "Antiaérea")
-            {
-                @:20
-
-            }
-            else
-            {
-                @:50
-
-            }
+            <strong>Mísseis restantes:</strong> @Model.Misseis
 
 
         </p>
@@ -106,7 +98,7 @@
 
         </p>
 
-        
+
 
 
         <a asp-action="NovoJogo" class="btn btn-default">
@@ -150,13 +142,16 @@
                             case 3:
                             case 4:
                             case 5:
-                                <td id="@(linha)@(coluna)" class="tile hit">000</td>
+                                <td id="@(linha)@(coluna)" class="tile hit"></td>
+                                break;
+                            case 7:
+                                <td id="@(linha)@(coluna)" class="fill"></td>
                                 break;
                             case 0:
-                                <td id="@(linha)@(coluna)" class="tile misses">000</td>
+                                <td id="@(linha)@(coluna)" class="tile misses"></td>
                                 break;
                             default:
-                                <td id="@(linha)@(coluna)" class="tile">000</td>
+                                <td id="@(linha)@(coluna)" class="tile"></td>
                                 break;
                         }
                     }
@@ -164,7 +159,7 @@
             }
         </table>
 
-        
+
 
     </div>
 
