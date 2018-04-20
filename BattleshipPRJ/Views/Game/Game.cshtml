@@ -15,8 +15,8 @@
 
         <form class="form-inline" method="post" asp-action="Game">
 
-           @*<input type="hidden" name="Nome" value="@Model.Nome" />*@
-         @*  <input type="hidden" name="Missao" value="@Model.Missao" />*@
+            @*<input type="hidden" name="Nome" value="@Model.Nome" />*@
+            @*  <input type="hidden" name="Missao" value="@Model.Missao" />*@
 
             <select class="form-control" id="opcaoX" asp-for="coordx">
                 <option value="0">A</option>
@@ -52,7 +52,10 @@
 
 
         </form>
+        <div class="botao_disparar">
 
+            <button class="btn btn-default" type="submit" value="Submit">Disparar </button>
+        </div>
 
 
         <p>
