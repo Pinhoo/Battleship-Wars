@@ -9,8 +9,6 @@ namespace BattleshipPRJ.Models
     {
         private static List<Jogo> jogos = new List<Jogo>();
 
-        //private static int [] = new 
-
         public static List<Jogo> Jogos
         {
 
@@ -41,6 +39,13 @@ namespace BattleshipPRJ.Models
 
             }
             
+        }
+
+        public static void ApagarJogos()
+        {
+
+            jogos.Clear();
+
         }
 
         

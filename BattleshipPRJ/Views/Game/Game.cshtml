@@ -18,7 +18,7 @@
             @*<input type="hidden" name="Nome" value="@Model.Nome" />*@
             @*  <input type="hidden" name="Missao" value="@Model.Missao" />*@
 
-            <select class="form-control" id="opcaoX" asp-for="coordx">
+            <select class="form-control" id="opcaoX" asp-for="Coordx">
                 <option value="0">A</option>
                 <option value="1">B</option>
                 <option value="2">C</option>
@@ -33,7 +33,7 @@
 
 
 
-            <select class="form-control" id="opcaoY" asp-for="coordy">
+            <select class="form-control" id="opcaoY" asp-for="Coordy">
                 <option value="0">1</option>
                 <option value="1">2</option>
                 <option value="2">3</option>
@@ -77,27 +77,27 @@
         </p>
 
         <p>
-            <strong>Porta aviões restantes:</strong> 1
+            <strong>Porta aviões restantes:</strong> @Model.Portaavioesrest
 
 
         </p>
         <p>
-            <strong>4 canos restantes:</strong> 1
+            <strong>4 canos restantes:</strong> @Model.Quatrocanosrest
 
 
         </p>
         <p>
-            <strong>3 canos restantes:</strong> 2
+            <strong>3 canos restantes:</strong> @Model.Trescanosrest
 
 
         </p>
         <p>
-            <strong>2 canos restantes:</strong> 3
+            <strong>2 canos restantes:</strong> @Model.Doiscanosrest
 
 
         </p>
         <p>
-            <strong>Submarinos restantes:</strong> 4
+            <strong>Submarinos restantes:</strong> @Model.Submanrinosrest
 
 
         </p>

@@ -55,11 +55,11 @@ namespace BattleshipPRJ.Controllers
         {                      
             Jogo jogue = Repository.ObterJogo();
 
-            jogue.coordx = jogo.coordx;
+            jogue.Coordx = jogo.Coordx;
 
-            jogue.coordy = jogo.coordy;
+            jogue.Coordy = jogo.Coordy;
 
-            jogue.Grelha[jogo.coordy, jogo.coordx] = 7;
+            jogue.Grelha[jogo.Coordy, jogo.Coordx] = 7;
 
             //jogue.Grelha[jogo.coordy, jogo.coordx] = EspacoOcupado.BarcosO[jogo.coordy, jogo.coordx] ;
 
@@ -82,6 +82,14 @@ namespace BattleshipPRJ.Controllers
             List<Jogo> jogos = Repository.Jogos;
 
             return View(jogos);
+
+        }
+
+        public IActionResult Teste(List<Jogo> jogues)
+        {
+            Repository.ApagarJogos();
+
+            return View("JogosCriadosTeste" , jogues);
 
         }
     }

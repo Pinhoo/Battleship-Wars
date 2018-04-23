@@ -14,15 +14,28 @@ namespace BattleshipPRJ.Models
         [Required(ErrorMessage = "Por favor seleciona a missão pretendida!")]
         public string Missao { get; set; }
 
-        public int ID { get; set; } = 1;
+        public int ID { get; set; } 
 
         public int Misseis { get; set; }
 
         public int Score { get; set; }
 
-        public int coordx { get; set; }
+        public int Coordx { get; set; }
 
-        public int coordy { get; set; }
+        public int Coordy { get; set; }
+
+        public int Portaavioesrest { get; set; } 
+
+        public int Quatrocanosrest { get; set; } 
+
+        public int Trescanosrest { get; set; } 
+
+        public int Doiscanosrest { get; set; } 
+
+        public int Submanrinosrest { get; set; } 
+
+
+
 
 
 
@@ -61,6 +74,13 @@ namespace BattleshipPRJ.Models
 
         public Jogo()
         {
+            ID = 1;
+            Portaavioesrest = 1;
+            Quatrocanosrest = 1;
+            Trescanosrest = 2;
+            Doiscanosrest = 3;
+            Submanrinosrest = 4;
+
 
             grelha = new int[10, 10]
             {
