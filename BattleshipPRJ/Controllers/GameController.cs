@@ -51,15 +51,15 @@ namespace BattleshipPRJ.Controllers
         
 
         [HttpPost]
-        public IActionResult Game(Jogo jogo)
+        public IActionResult Game(int id,  int opcaoX, int opcaoY)
         {                      
-            Jogo jogue = Repository.ObterJogo();
+            Jogo jogue = Repository.ObterJogo(id);
+            
+            jogue.Coordx = opcaoX;
 
-            jogue.Coordx = jogo.Coordx;
+            jogue.Coordy = opcaoY;
 
-            jogue.Coordy = jogo.Coordy;
-
-            jogue.Grelha[jogo.Coordy, jogo.Coordx] = 7;
+            jogue.Grelha[opcaoY, opcaoX] = 7;
 
             //jogue.Grelha[jogo.coordy, jogo.coordx] = EspacoOcupado.BarcosO[jogo.coordy, jogo.coordx] ;
 

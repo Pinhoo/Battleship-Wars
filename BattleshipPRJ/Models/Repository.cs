@@ -26,18 +26,28 @@ namespace BattleshipPRJ.Models
 
         }
 
-        public static Jogo ObterJogo()
+        public static Jogo ObterJogo(int id)
         {
-            if(jogos.Count==0)
-            {
+            
+            
+            
+                foreach (Jogo j in jogos)
+                {
+
+                    if (j.ID == id)
+                    {
+
+                        return j;
+
+                    }
+
+                    
+                }
 
                 return null;
-            }
-            else
-            {
-                return jogos[0];
 
-            }
+            
+            
             
         }
 

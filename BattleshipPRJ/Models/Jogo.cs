@@ -70,11 +70,24 @@ namespace BattleshipPRJ.Models
 
         }
 
+        public int GerarID()
+        {
+            Random rnd = new Random();
+
+            int ID = rnd.Next(0, 1000);
+
+            return ID;
+
+        }
 
 
         public Jogo()
         {
-            ID = 1;
+
+
+            // criar um método gerar id que me vai gerar um id aleatório
+
+            ID = GerarID();
             Portaavioesrest = 1;
             Quatrocanosrest = 1;
             Trescanosrest = 2;
