@@ -57,7 +57,7 @@
             <button class="btn btn-default" type="submit" value="Submit">Disparar </button>
         </div>
 
-        <p>
+        <p class="id">
             <strong>ID:</strong> @Model.ID
         </p>
 
@@ -79,31 +79,38 @@
 
         </p>
 
-        <p>
-            <strong>Porta aviões restantes:</strong> @Model.Portaavioesrest
+        <div>
+            <img class="barcosrestantessub" src="~/images/1.png" />  @Model.Submanrinosrest
 
 
-        </p>
-        <p>
-            <strong>4 canos restantes:</strong> @Model.Quatrocanosrest
+        </div>
+
+        <div>
+            <img class="barcosrestantes" src="~/images/portaavioes.png" /> @Model.Portaavioesrest
 
 
-        </p>
-        <p>
-            <strong>3 canos restantes:</strong> @Model.Trescanosrest
+        </div>
+
+        <div>
+            <img class="barcosrestantes" src="~/images/2.png" /> @Model.Doiscanosrest
 
 
-        </p>
-        <p>
-            <strong>2 canos restantes:</strong> @Model.Doiscanosrest
+        </div>
+        <div>
+            <img class="barcosrestantes" src="~/images/4.png" /> @Model.Quatrocanosrest
 
 
-        </p>
-        <p>
-            <strong>Submarinos restantes:</strong> @Model.Submanrinosrest
+        </div>
+
+        <div>
+            <img class="barcosrestantes" src="~/images/3.png" /> @Model.Trescanosrest
 
 
-        </p>
+        </div>
+
+
+
+
 
 
 

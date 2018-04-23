@@ -177,6 +177,20 @@ hr {
     font-style: italic;
 }
 
+.barcosrestantes {
 
+    padding-top: 10px;
+    width: 30%;
+}
+
+.barcosrestantessub {
+    width: 10%;
+}
+
+.id{
+
+    padding-top:50px;
+    
+}
 
 
