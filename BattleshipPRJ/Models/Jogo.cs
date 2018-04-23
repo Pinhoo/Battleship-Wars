@@ -8,6 +8,8 @@ namespace BattleshipPRJ.Models
 {
     public class Jogo
     {
+        private static int heidi = 0;
+
         [Required(ErrorMessage = "Por favor preenche o campo Nome!")]
         public string Nome { get; set; }
 
@@ -70,24 +72,26 @@ namespace BattleshipPRJ.Models
 
         }
 
-        public int GerarID()
-        {
-            Random rnd = new Random();
+        //public int GerarID()
+        //{
+        //    Random rnd = new Random();
 
-            int ID = rnd.Next(0, 1000);
+        //    int ID = rnd.Next(0, 1000);
 
-            return ID;
+        //    return ID;
 
-        }
+        //}
 
 
         public Jogo()
         {
-
+            heidi++;
 
             // criar um método gerar id que me vai gerar um id aleatório
 
-            ID = GerarID();
+            //ID = GerarID();
+
+            ID=heidi;
             Portaavioesrest = 1;
             Quatrocanosrest = 1;
             Trescanosrest = 2;
