@@ -32,7 +32,7 @@ namespace BattleshipPRJ.Controllers
             return View();
         }
 
-        
-        
+     
+
     }
 }

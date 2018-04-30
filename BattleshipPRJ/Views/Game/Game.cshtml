@@ -57,29 +57,34 @@
             <button class="btn btn-default" type="submit" value="Submit">Disparar </button>
         </div>
 
-        <p class="id">
-            <strong>ID:</strong> @Model.ID
-        </p>
+        <div id="contain">
 
 
-        <p>
-            <strong>Nome:</strong> @Model.Nome
-        </p>
-
-        <p>
-            <strong>Missão:</strong> @Model.Missao
-        </p>
-
-        <p>
-            <strong>Score:</strong> @Model.Score
-        </p>
-        <p>
-            <strong>Mísseis restantes:</strong> @Model.Misseis
+            <p>
+                <strong>ID:</strong> @Model.ID
+            </p>
 
 
-        </p>
+            <p>
+                <strong>Nome:</strong> @Model.Nome
+            </p>
 
-        <div>
+            <p>
+                <strong>Missão:</strong> @Model.Missao
+            </p>
+
+            <p>
+                <strong>Score:</strong> @Model.Score
+            </p>
+            <p>
+                <strong>Mísseis restantes:</strong> @Model.Misseis
+
+
+            </p>
+
+
+        </div>
+        <div id="contain">
             <img class="barcosrestantessub" src="~/images/1.png" />  @Model.Submanrinosrest
             <img class="barcosrestantes" src="~/images/portaavioes.png" /> @Model.Portaavioesrest
             <img class="barcosrestantes" src="~/images/2.png" /> @Model.Doiscanosrest
@@ -88,7 +93,7 @@
 
 
         </div>
-        
+
 
         <a asp-action="NovoJogo" class="btn btn-default">
             Desistir

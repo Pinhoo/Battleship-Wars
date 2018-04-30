@@ -2,23 +2,24 @@
     ViewData["Title"] = "";
 }
 
-<div>
+<div class="page-header">
 
-    <img class="imgcenterfront" src="~/images/frontbs.png" alt="Battleship Wars" title="Battleship Wars" />
+    <img class="imgcenterfront" src="~/images/Sem título.png" alt="Battleship Wars" title="Battleship Wars" />
 </div>
 
-<hr/>
 
 <div class="row">
 
-    <div class="col-md-4">
-        <h2>Começa a jogar</h2>
-        <p class="homep">
-            Basta introduzires o teu nome e escolher uma das duas missões disponíveis.
+    <div id="contain" class="col-md-4">
+        <h2 class="text-center">Começa a jogar</h2>
 
+        <img class="imgcenterfront" src="~/images/jogar1.png" width="200" alt="Jogar" title="Jogar" />
+
+        <p>
+            Basta introduzires o teu nome e escolher uma das duas missões disponíveis.
         </p>
 
-        <a asp-controller="Game" asp-action="NovoJogo" class="btn btn-default">
+        <a asp-controller="Game" asp-action="NovoJogo" id="btncenter" class="btn btn-primary">
 
             Criar Novo Jogo &raquo
 
@@ -27,16 +28,18 @@
 
     </div>
 
-    <div class="col-md-4">
-        <h2>Melhores resultados</h2>
+    <div id="contain" class="col-md-4">
+        <h2 class="text-center">Melhores resultados</h2>
 
-        <p class="homep">
+        <img class="imgcenterfront" src="~/images/leaderboard.png" width="200" alt="hiscores" title="hiscores" />
+
+        <p>
             Consulta os melhores resultados para cada uma das missões.
 
         </p>
 
 
-        <a asp-controller="Game" asp-action="HiScores" class="btn btn-default">
+        <a asp-controller="Game" asp-action="HiScores" id="btncenter" class="btn btn-primary">
             Hi-Scores &raquo
 
         </a>
@@ -45,15 +48,18 @@
 
 
 
-    <div class="col-md-4">
-        <h2>A nossa equipa</h2>
-        <p class="homep">
+    <div id="contain" class="col-md-4">
+        <h2 class="text-center">A nossa equipa</h2>
+
+        <img class="imgcenterfront" src="~/images/team.png" width="200" alt="Equipa" title="Equipa" />
+
+        <p>
             Conhece a equipa por detrás desta trabalhosa aplicação.
 
         </p>
 
 
-        <a asp-action="Equipa" class="btn btn-default">
+        <a asp-action="Equipa" id="btncenter" class="btn btn-primary">
             Equipa &raquo
 
         </a>
@@ -64,14 +70,14 @@
 </div>
 
 
+<hr />
 
 
+<div id="contain" class="row">
 
-<div class="row, regras">
+    <h2 class="text-center">Regras do jogo</h2>
 
-    <h2 class="howtoplay">How to play</h2>
-
-    <div class="col-md-7">
+    <div id="contain" class="col-md-7">
 
 
 
@@ -96,7 +102,7 @@
         </ul>
     </div>
 
-    <div class="col-md-5">
+    <div id="contain" class="col-md-5">
         <figure>
 
             <img class="imgcenter" src="~/images/grid.jpg" alt="Grelha de Jogo" title="Grelha de Jogo" />
@@ -105,13 +111,7 @@
 
         </figure>
 
-        <figure>
 
-            <img class="imgcenter" src="~/images/Screenshot_2.png" alt="Armada do adversário" title="Armada do adversário" />
-
-            <figcaption>Figura 2: Armada do adversário</figcaption>
-
-        </figure>
     </div>
 </div>
 
@@ -119,17 +119,25 @@
 
 
 
+<figure>
+
+    <img class="imgcenter" src="~/images/Screenshot_2.png" alt="Armada do adversário" title="Armada do adversário" />
+
+    <figcaption>Figura 2: Armada do adversário</figcaption>
+
+</figure>
 
 
 
 
-
-<p>A colocação da armada na grelha obedece a duas regras importantes:</p>
+<p>A colocação da armada na grelha obedece a duas regras importantes: </p>
 
 <ul>
     <li>a orientação dos barcos pode ser em qualquer das quatro direções;</li>
     <li>os barcos não se podem tocar, nem mesmo na diagonal.</li>
 </ul>
+
+
 
 
 
@@ -244,9 +252,11 @@
 </p>
 
 
-<p class="italic">
-    Baseado em  <a href="https://aindasoudotempo.blogspot.pt/2016/10/do-jogo-da-batalha-naval.html" target="_blank"> https://aindasoudotempo.blogspot.pt/2016/10/do-jogo-da-batalha-naval.html</a>, adaptado e
-    modificado para este projeto.
+<p>
+    <i>
+        Baseado em  <a href="https://aindasoudotempo.blogspot.pt/2016/10/do-jogo-da-batalha-naval.html" target="_blank"> https://aindasoudotempo.blogspot.pt/2016/10/do-jogo-da-batalha-naval.html</a>, adaptado e
+        modificado para este projeto.
+    </i>
 </p>
 
 

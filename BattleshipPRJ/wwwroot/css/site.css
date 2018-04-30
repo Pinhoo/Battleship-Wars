@@ -29,27 +29,12 @@
 }
 
 
-
-.homep {
-    margin-top: 25px;
-    padding-top: 25px;
-    margin-bottom: 25px;
-    padding-bottom: 25px;
-}
-
-
 h3 {
     
     text-align:center;
     font-size: 25px;
     line-height: 1.5;
     
-}
-
-.regras{
-
-    padding-top:100px;
-
 }
 
 p {
@@ -67,14 +52,14 @@ li {
 }
 
 caption {
-    color: black;
+    color: white;
     text-align: center;
     font-size: x-large;
 }
 
 td {
     color: black;
-    background-color: gainsboro;
+    background-color: white;
     padding: 15px;
     border: 1px solid black;
     text-align: center;
@@ -111,7 +96,7 @@ table {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 25px;
-    font-family: 'Lucida Sans';
+    font-family: Lucida Sans;
     font-size: 15px;
     line-height: 1.5;
 }
@@ -137,44 +122,22 @@ figcaption {
     padding-bottom: 50px;
 }
 
-
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-image: url(/images/notebook.png);
-    font-family: 'Lucida Sans' ;
-    color: black;
+    background-image: url(/images/batthern.png);
+    background-color: #004173;
+    font-family: Lucida Sans;
+    color: white;
 }
 
-hr {
-    
-    height: 1px;
-    border-width: 1px;
-    border-color:black;
-    
-}
 
 .botao_disparar {
     position: absolute;
     top: 0px;
-    left: 232px;
+    left: 225px;
     margin: 0px;
     padding: 0px;
-}
-
-.howtoplay {
-    text-align: center;
-    padding-bottom: 50px;
-}
-
-.missoes {
-    padding-bottom: 50px;
-    padding-top:50px;
-}
-
-.italic {
-    font-size: small;
-    font-style: italic;
 }
 
 .barcosrestantes {
@@ -187,10 +150,14 @@ hr {
     width: 10%;
 }
 
-.id{
 
-    padding-top:50px;
-    
+#contain{
+
+    padding: 20px;
 }
 
+#btncenter {
+    display: block;
+    margin: 0 auto;
+}
 
