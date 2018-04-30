@@ -4,55 +4,101 @@
 
 }
 
-<div>
+<div id="contain" class="page-header">
     <h1>Ti Delian</h1>
 </div>
 
-<hr />
 
-<div> 
+<div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'Projeto')" id="defaultOpen">Projeto</button>
+    <button class="tablinks" onclick="openTab(event, 'Equipa')">Equipa</button>
+    <button class="tablinks" onclick="openTab(event, 'MEquipa')">Membros da equipa</button>
+</div>
 
-    
-        <p>Com vista à realização de um projeto no âmbito da UC de Desenvolvimento de Aplicações II, foi criada a equipa "Ti Delian" cujo nome foi inspirado na expressão "Nailed it". O truque, caso ainda não tenhas reparado, foi escrever a expressão de trás para a frente.</p>
+<div id="contain">
+
+
+
+    <div id="Projeto" class="tabcontent">
+
+        <h3 id="contain" class="text-center">
+
+            Projeto
+
+        </h3>
+
         <p>O objetivo passa pela elaboração de uma aplicação Web que implementa uma versão modificada do popular jogo de tabuleiro Batalha Naval, aplicando os conhecimentos adquiridos ao longo do semestre.</p>
+        <img class="imgcenter" src="~/images/wb.jpg" alt="Projeto" title="Projeto">
+    </div>
+    <div id="Equipa" class="tabcontent">
+
+        <h3 id="contain" class="text-center">
+
+            Equipa
+
+        </h3>
+
+        <p>
+            Com vista à realização de um projeto no âmbito da UC de Desenvolvimento de Aplicações II,
+            foi criada a equipa "Ti Delian".
+        </p>
+
+        <p>
+            O nome foi inspirado na expressão "Nailed it".
+            O truque, caso ainda não tenhas reparado, foi escrever a expressão de trás para a frente.
+        </p>
+
+
+
     </div>
 
+    <div id="MEquipa" class="tabcontent">
+
+        <h3 id="contain" class="text-center">
+
+            Membros da equipa
+
+        </h3>
 
 
-    <div class="row">
-        
-        <div class="col-md-3">
-            <p>Membros da equipa:</p>
+        <table>
 
-        </div>
 
-        <div class="col-md-3">
-            <p> <span class="glyphicon glyphicon-user"></span> <b>André Pinho</b></p>
-            <p>160323023</p>
-            <p>GSI21</p>
 
-        </div>
+            <tr>
+                <td><img src="~/images/letter-a.png" width="100" title="A" /></td>
+                <td>André Pinho</td>
+                <td>160323023</td>
+                <td>GSI21</td>
 
-        <div class="col-md-3">
-            <p><span class="glyphicon glyphicon-user"></span> <b>Myke Palma</b></p>
-            <p>160323028</p>
-            <p>GSI21</p>
 
-        </div>
+            </tr>
 
-        <div class="col-md-3">
-            <p><span class="glyphicon glyphicon-user"></span> <b>Ricardo Carvalho</b></p>
-            <p>160323001</p>
-            <p>GSI21</p>
+            <tr>
+                <td><img src="~/images/letter-m.png" width="100" title="M" /></td>
+                <td>Myke Palma</td>
+                <td>160323028</td>
+                <td>GSI21</td>
 
-        </div>
 
-        </div>
-    
+            </tr>
 
-    
-    
+            <tr>
+                <td><img src="~/images/letter-r.png" width="100" title="R" /></td>
+                <td>Ricardo Carvalho</td>
+                <td>160323001</td>
+                <td>GSI21</td>
 
+
+            </tr>
+
+
+        </table>
+
+
+
+    </div>
+</div>
     
 
 
