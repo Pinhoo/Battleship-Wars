@@ -34,7 +34,9 @@ namespace BattleshipPRJ.Models
 
         public int Doiscanosrest { get; set; } 
 
-        public int Submanrinosrest { get; set; } 
+        public int Submanrinosrest { get; set; }
+
+        public int Quadradosabater { get; set; }
 
 
 
@@ -61,12 +63,14 @@ namespace BattleshipPRJ.Models
             if (Missao == "Antiaérea")
             {
                 Misseis = 20;
+                Quadradosabater = 5;
 
             }
             else
             {
 
                 Misseis = 50;
+                Quadradosabater = 25;
 
             }
 
