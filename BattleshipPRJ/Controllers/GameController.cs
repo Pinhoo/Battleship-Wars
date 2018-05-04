@@ -51,7 +51,7 @@ namespace BattleshipPRJ.Controllers
         
 
         [HttpPost]
-        public IActionResult Game(int id,  int opcaoX, int opcaoY)
+        public IActionResult Game(int id,  int opcaoX, int opcaoY, string submitButton)
         {                      
             Jogo jogue = Repository.ObterJogo(id);
             
@@ -59,7 +59,19 @@ namespace BattleshipPRJ.Controllers
 
             jogue.Coordy = opcaoY;
 
-            jogue.Grelha[opcaoY, opcaoX] = 7;
+
+            if(submitButton=="Disparar")
+            {
+                jogue.Grelha[opcaoY, opcaoX] = EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx];
+
+            }
+            else if(submitButton == "Marcar")
+            {
+                jogue.Grelha[opcaoY, opcaoX] = 7;
+
+            }
+
+            
 
             //jogue.Grelha[jogo.coordy, jogo.coordx] = EspacoOcupado.BarcosO[jogo.coordy, jogo.coordx] ;
 
