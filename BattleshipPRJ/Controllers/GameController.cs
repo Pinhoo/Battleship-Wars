@@ -12,20 +12,20 @@ namespace BattleshipPRJ.Controllers
 
     public class GameController : Controller
     {
-      
+
 
         [HttpGet]
         public IActionResult NovoJogo()
         {
             return View();
         }
-        
+
 
         [HttpPost]
         public IActionResult NovoJogo(Jogo jogo)
         {
 
-            
+
 
             //jogo.Grelha[5,5] = 0;
 
@@ -43,40 +43,42 @@ namespace BattleshipPRJ.Controllers
                 return View();
             }
 
-            
+
 
         }
-        
 
-        
+
+
 
         [HttpPost]
-        public IActionResult Game(int id,  int opcaoX, int opcaoY, string submitButton)
-        {                      
+        public IActionResult Game(int id, int opcaoX, int opcaoY, string submitButton)
+        {
             Jogo jogue = Repository.ObterJogo(id);
-            
+
             jogue.Coordx = opcaoX;
 
             jogue.Coordy = opcaoY;
 
 
-            if(submitButton=="Disparar")
+            if (submitButton == "Disparar")
             {
                 jogue.Grelha[opcaoY, opcaoX] = EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx];
 
             }
-            else if(submitButton == "Marcar")
+            else if (submitButton == "Marcar")
             {
-                jogue.Grelha[opcaoY, opcaoX] = 7;
-
+                if (jogue.Grelha[opcaoY, opcaoX] == -1)
+                {
+                    jogue.Grelha[opcaoY, opcaoX] = 7;
+                }
             }
 
-            
+
 
             //jogue.Grelha[jogo.coordy, jogo.coordx] = EspacoOcupado.BarcosO[jogo.coordy, jogo.coordx] ;
 
 
-            
+
 
             return View(jogue);
 
@@ -101,7 +103,7 @@ namespace BattleshipPRJ.Controllers
         {
             Repository.ApagarJogos();
 
-            return View("JogosCriadosTeste" , jogues);
+            return View("JogosCriadosTeste", jogues);
 
         }
     }
