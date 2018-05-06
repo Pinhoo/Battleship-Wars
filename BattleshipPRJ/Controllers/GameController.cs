@@ -62,8 +62,15 @@ namespace BattleshipPRJ.Controllers
 
             if (submitButton == "Disparar")
             {
-                jogue.Grelha[opcaoY, opcaoX] = EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx];
-
+                if (jogue.Misseis != 0)
+                {
+                    jogue.Grelha[opcaoY, opcaoX] = EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx];
+                    jogue.Disparou(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]);
+                }
+                else
+                {
+                    return View("HiScores");
+                }
             }
             else if (submitButton == "Marcar")
             {

@@ -56,7 +56,7 @@
 
         <div class="botao_disparar">
 
-            
+
         </div>
 
         <div id="contain">
@@ -84,9 +84,39 @@
 
             </p>
             <p>
-                <strong>Mísseis restantes:</strong> @Model.Misseis
+                <strong>Mísseis restantes:</strong> @Model.Misseis <img src="~/images/gifmissil.gif" alt="Missil" height="80" width="80"/>
 
 
+            </p>
+            <p>
+                @if (Model.NumeroDeJogadas == 0)
+                {
+                    <i>Começe por disparar um missíl.</i>
+                }
+                else if (Model.UltimoTiroDisparado == 5)
+                {
+                    <i>Você acertou no porta-aviões!</i>
+                }
+                else if (Model.UltimoTiroDisparado == 4)
+                {
+                    <i>Você acertou num barco de quatro canos!</i>
+                }
+                else if (Model.UltimoTiroDisparado == 3)
+                {
+                    <i>Você acertou num barco de três canos!</i>
+                }
+                else if (Model.UltimoTiroDisparado == 2)
+                {
+                    <i>Você acertou num barco de dois canos!</i>
+                }
+                else if (Model.UltimoTiroDisparado == 1)
+                {
+                    <i>Você acertou num submarino!</i>
+                }
+                else if (Model.UltimoTiroDisparado == 0)
+                {
+                    <i>O seu missíl foi perdido no mar.</i>
+                }
             </p>
 
 

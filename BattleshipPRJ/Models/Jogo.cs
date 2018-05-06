@@ -38,9 +38,9 @@ namespace BattleshipPRJ.Models
 
         public int Quadradosabater { get; set; }
 
+        public int UltimoTiroDisparado { get; set; }
 
-
-
+        public int NumeroDeJogadas { get; set; }
 
 
 
@@ -127,7 +127,12 @@ namespace BattleshipPRJ.Models
 
         }
 
-
+        public void Disparou(int Tiro)
+        {
+            Misseis = Misseis - 1;
+            UltimoTiroDisparado = Tiro;
+            NumeroDeJogadas = NumeroDeJogadas + 1;
+        }
 
 
 
