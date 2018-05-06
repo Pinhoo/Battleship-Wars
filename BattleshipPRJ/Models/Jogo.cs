@@ -16,23 +16,23 @@ namespace BattleshipPRJ.Models
         [Required(ErrorMessage = "Por favor seleciona a missão pretendida!")]
         public string Missao { get; set; }
 
-        public int ID { get; set; } 
+        public int ID { get; set; }
 
         public int Misseis { get; set; }
 
-        public int Score { get; set; }
+        public double Score { get; set; }
 
         public int Coordx { get; set; }
 
         public int Coordy { get; set; }
 
-        public int Portaavioesrest { get; set; } 
+        public int Portaavioesrest { get; set; }
 
-        public int Quatrocanosrest { get; set; } 
+        public int Quatrocanosrest { get; set; }
 
-        public int Trescanosrest { get; set; } 
+        public int Trescanosrest { get; set; }
 
-        public int Doiscanosrest { get; set; } 
+        public int Doiscanosrest { get; set; }
 
         public int Submanrinosrest { get; set; }
 
@@ -95,7 +95,7 @@ namespace BattleshipPRJ.Models
 
             //ID = GerarID();
 
-            ID=heidi;
+            ID = heidi;
             Portaavioesrest = 1;
             Quatrocanosrest = 1;
             Trescanosrest = 2;
@@ -127,20 +127,34 @@ namespace BattleshipPRJ.Models
 
         }
 
-        public void Disparou(int Tiro)
+        public void Disparou(int Tiro, bool ganho)
         {
             Misseis = Misseis - 1;
             UltimoTiroDisparado = Tiro;
             NumeroDeJogadas = NumeroDeJogadas + 1;
+            if (Tiro == 1 || Tiro == 2 || Tiro == 3 || Tiro == 4 || Tiro==5)
+            {
+                if (ganho == false)
+                {
+                    Hi_score.AdicionarJogada(true, false, false, false, 0);
+                    Quadradosabater = Quadradosabater - 1;
+                }
+            }
+            else
+            {
+                Hi_score.AdicionarJogada(false, false, false, false, 0);
+            }
+            Score = Hi_score.Receber();
         }
 
-
-
-
-
-
-
-
+        public void DisparouNasMesmasCoords(int Tiro)
+        {
+            Misseis = Misseis - 1;
+            UltimoTiroDisparado = Tiro;
+            NumeroDeJogadas = NumeroDeJogadas + 1;
+            Hi_score.AdicionarJogada(false, false, true, false, 0);
+            Score = Hi_score.Receber();
+        }
 
     }
 }
