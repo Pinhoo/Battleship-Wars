@@ -62,8 +62,10 @@ namespace BattleshipPRJ.Controllers
 
             if (submitButton == "Disparar")
             {
+
+
                 if (jogue.Grelha[opcaoY, opcaoX] == EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx])
-                {                    
+                {
                     if (jogue.Misseis != 0)
                     {
                         jogue.DisparouNasMesmasCoords(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]);
@@ -75,10 +77,41 @@ namespace BattleshipPRJ.Controllers
                 }
                 else
                 {
-                    if (jogue.Misseis != 0)
+                    if (jogue.Misseis != 0)//EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]=1,2,3,4,5
                     {
+                        bool BarcoAoFundo = false;
+                        if (EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 2)
+                        {
+                            if (jogue.Grelha[opcaoY, opcaoX] == jogue.Grelha[opcaoY + 1, opcaoX])
+                            {
+                                BarcoAoFundo = true;
+                            }
+                            else if (jogue.Grelha[opcaoY, opcaoX] == jogue.Grelha[opcaoY - 1, opcaoX])
+                            {
+                                BarcoAoFundo = true;
+                            }
+                            else if (jogue.Grelha[opcaoY, opcaoX] == jogue.Grelha[opcaoY, opcaoX + 1])
+                            {
+                                BarcoAoFundo = true;
+                            }
+                            else if (jogue.Grelha[opcaoY, opcaoX] == jogue.Grelha[opcaoY, opcaoX - 1])
+                            {
+                                BarcoAoFundo = true;
+                            }
+                        }//2 canos
+                        else if (EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 3)
+                        {
+                            //Falta o de 3 canos
+                        }
+                        else if (EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 1 || EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 4 || EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 5)
+                        {
+                            BarcoAoFundo = Barco.AoFundo(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]);
+                        }//Subs, PortaAvioes e quatrocanos
+
+                        //grelha=espocupado
                         jogue.Grelha[opcaoY, opcaoX] = EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx];
-                        jogue.Disparou(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx], false);
+                        //disparou
+                        jogue.Disparou(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx], false, BarcoAoFundo);
                     }
                     else
                     {

@@ -28,7 +28,7 @@ namespace BattleshipPRJ.Models
             while (i <= 9)
             {
                 Barcos[i, a] = 0;
-                i++;              
+                i++;
                 if (i == 8)
                 {
                     Barcos[i + 1, a] = 0;
@@ -1349,6 +1349,52 @@ namespace BattleshipPRJ.Models
                 }
             }
         }
+    }
+
+    public static class Barco
+    {
+        public static int PortaAvioes { get; set; }
+        public static int QuatroCanos { get; set; }
+
+        public static bool AoFundo(int Barco)
+        {
+            if(Barco == 1)
+            {
+                return true;
+            }
+            if(Barco == 4)
+            {
+                QuatroCanos = QuatroCanos + 1;
+                if(QuatroCanos== 4)
+                {
+                    return true;           
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (Barco == 5)
+            {
+                PortaAvioes = PortaAvioes + 1;
+                if (PortaAvioes == 5)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        
+
 
     }
 }

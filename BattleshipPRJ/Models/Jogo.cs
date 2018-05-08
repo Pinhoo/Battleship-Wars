@@ -127,7 +127,7 @@ namespace BattleshipPRJ.Models
 
         }
 
-        public void Disparou(int Tiro, bool ganho)
+        public void Disparou(int Tiro, bool ganho,bool BarcoAoFundo)
         {
             Misseis = Misseis - 1;
             UltimoTiroDisparado = Tiro;
@@ -136,7 +136,7 @@ namespace BattleshipPRJ.Models
             {
                 if (ganho == false)
                 {
-                    Hi_score.AdicionarJogada(true, false, false, false, 0);
+                    Hi_score.AdicionarJogada(true, BarcoAoFundo, false, false, 0);
                     Quadradosabater = Quadradosabater - 1;
                 }
             }
