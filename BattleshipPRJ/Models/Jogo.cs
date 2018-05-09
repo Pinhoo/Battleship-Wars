@@ -96,11 +96,7 @@ namespace BattleshipPRJ.Models
             //ID = GerarID();
 
             ID = heidi;
-            Portaavioesrest = 1;
-            Quatrocanosrest = 1;
-            Trescanosrest = 2;
-            Doiscanosrest = 3;
-            Submanrinosrest = 4;
+
 
 
             grelha = new int[10, 10]
@@ -156,5 +152,13 @@ namespace BattleshipPRJ.Models
             Score = Hi_score.Receber();
         }
 
+        public void InicializarBarcos()
+        {
+            Portaavioesrest = 1;
+            Quatrocanosrest = 1;
+            Trescanosrest = 2;
+            Doiscanosrest = 3;
+            Submanrinosrest = 4;
+        }
     }
 }
