@@ -42,6 +42,10 @@ namespace BattleshipPRJ.Models
 
         public int NumeroDeJogadas { get; set; }
 
+        public bool Barcoaofundo { get; set; }
+
+        public bool TiroNaMesmaCoord { get; set; }
+
 
 
         private int[,] grelha;
@@ -135,12 +139,18 @@ namespace BattleshipPRJ.Models
                     Hi_score.AdicionarJogada(true, BarcoAoFundo, false, false, 0);
                     Quadradosabater = Quadradosabater - 1;
                 }
+                else
+                {
+                    Hi_score.AdicionarJogada(true, BarcoAoFundo, false, true, Misseis);
+                    Quadradosabater = Quadradosabater - 1;
+                }
             }
             else
             {
                 Hi_score.AdicionarJogada(false, false, false, false, 0);
             }
             Score = Hi_score.Receber();
+            Barcoaofundo = BarcoAoFundo;
         }
 
         public void DisparouNasMesmasCoords(int Tiro)
@@ -150,6 +160,7 @@ namespace BattleshipPRJ.Models
             NumeroDeJogadas = NumeroDeJogadas + 1;
             Hi_score.AdicionarJogada(false, false, true, false, 0);
             Score = Hi_score.Receber();
+            Barcoaofundo = false;
         }
 
         public void InicializarBarcos()

@@ -41,7 +41,7 @@ namespace BattleshipPRJ.Models
             }
             if (d_Ganho == true)
             {
-                Pontuacao = Pontuacao + (1000 * (1 + Bonus)) + (d_Missseis * (1 + Bonus));
+                Pontuacao = Pontuacao + 1000 + (d_Missseis * 250);
             }
 
         }
