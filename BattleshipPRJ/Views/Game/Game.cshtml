@@ -92,32 +92,32 @@
             <p>
                 @if (Model.NumeroDeJogadas == 0)
                 {
-                    <i>Começe por disparar um missíl.</i>
+                    <i>Começa por disparar um missíl.</i>
                 }
                 else if(Model.TiroNaMesmaCoord == true)
                 {
-                    <i>Foi penalizado por disparar no mesmo quadrado em <b>100 pontos</b>!</i>
+                    <i>Foste penalizado em <b>100 pontos</b> por disparar no mesmo quadrado!</i>
                 }
                 else if (Model.UltimoTiroDisparado == 5)
                 {
                     if (Model.Barcoaofundo == true)
                     {
-                        <i>Você afundou o porta-aviões!</i>
+                        <i>Afundaste o porta-aviões!</i>
                     }
                     else
                     {
-                        <i>Você acertou no porta-aviões!</i>
+                        <i>Acertaste no porta-aviões!</i>
                     }
                 }
                 else if (Model.UltimoTiroDisparado == 4)
                 {
                     if (Model.Barcoaofundo == true)
                     {
-                        <i>Você afundou o barco de quatro canos!</i>
+                        <i>Afundaste o barco de quatro canos!</i>
                     }
                     else
                     {
-                        <i>Você acertou num barco de quatro canos!</i>
+                        <i>Acertaste num barco de quatro canos!</i>
                     }
                 }
                 else if (Model.UltimoTiroDisparado == 3)
@@ -126,16 +126,16 @@
                     {
                         if (Model.Trescanosrest == 0)
                         {
-                            <i>Você afundou o <b>último</b> barco de três canos!</i>
+                            <i>Afundaste o <b>último</b> barco de três canos!</i>
                         }
                         else
                         {
-                            <i>Você afundou um barco de três canos!</i>
+                            <i>Afundaste um barco de três canos!</i>
                         }
                     }
                     else
                     {
-                        <i>Você acertou num barco de três canos!</i>
+                        <i>Acertaste num barco de três canos!</i>
                     }
                 }
                 else if (Model.UltimoTiroDisparado == 2)
@@ -144,34 +144,34 @@
                     {
                         if (Model.Doiscanosrest == 0)
                         {
-                            <i>Você afundou o último barco de dois canos</i>
+                            <i>Afundaste o último barco de dois canos</i>
                         }
                         else
                         {
-                            <i>Você afundou um barco de dois canos</i>
+                            <i>Afundaste um barco de dois canos</i>
                         }
                     }
                     else
                     {
-                        <i>Você acertou num barco de dois canos!</i>
+                        <i>Acertaste num barco de dois canos!</i>
                     }
                 }
                 else if (Model.UltimoTiroDisparado == 1)
                 {
                     if (Model.Submanrinosrest == 0)
                     {
-                        <i>Você o último submarino!</i>
+                        <i>Afundaste o último submarino!</i>
 
                     }
                     {
 
 
 
-                        <i>Você afundou um submarino!</i>}
+                        <i>Afundaste um submarino!</i>}
                 }
                 else if (Model.UltimoTiroDisparado == 0)
                 {
-                    <i>O seu missíl foi perdido no mar.</i>
+                    <i>O teu missíl foi perdido no mar.</i>
                 }
             </p><!--acertar/afundar/falhar barcos-->
 
