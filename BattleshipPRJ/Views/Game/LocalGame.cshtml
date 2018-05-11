@@ -1,0 +1,254 @@
+﻿@model BattleshipPRJ.Models.Jogo
+
+@{
+    ViewData["Title"] = "Game -";
+}
+<div id="contain" class="page-header">
+    <h1>Let's Play!</h1>
+</div>
+
+
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <form class="form-inline" method="post" asp-action="Game">
+
+            <input type="hidden" name="id" value="@Model.ID" />
+
+            <select class="form-control" name="opcaoX" id="opcaoX" asp-for="Coordx">
+                <option value="0">A</option>
+                <option value="1">B</option>
+                <option value="2">C</option>
+                <option value="3">D</option>
+                <option value="4">E</option>
+                <option value="5">F</option>
+                <option value="6">G</option>
+                <option value="7">H</option>
+                <option value="8">I</option>
+                <option value="9">J</option>
+            </select>
+
+
+
+            <select class="form-control" name="opcaoY" id="opcaoY" asp-for="Coordy">
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+                <option value="4">5</option>
+                <option value="5">6</option>
+                <option value="6">7</option>
+                <option value="7">8</option>
+                <option value="8">9</option>
+                <option value="9">10</option>
+            </select>
+
+            <button class="btn btn-default" type="submit" name="submitbutton" value="Disparar">Disparar </button>
+
+            <button class="btn btn-default" type="submit" name="submitbutton" value="Marcar">Marcar </button>
+
+
+
+
+
+        </form>
+
+        <div class="botao_disparar">
+
+
+        </div>
+
+        <div id="contain">
+
+
+            <p>
+                <strong>ID:</strong> @Model.ID
+            </p>
+
+
+            <p>
+                <strong>Nome:</strong> @Model.Nome
+            </p>
+
+            <p>
+                <strong>Missão:</strong> @Model.Missao
+            </p>
+
+            <p>
+                <strong>Score:</strong> @Model.Score
+            </p>
+            <p>
+                <strong>Quadrados a abater:</strong> @Model.Quadradosabater
+
+
+            </p>
+            <p>
+                <strong>Mísseis restantes:</strong> @Model.Misseis <img src="~/images/gifmissil.gif" alt="Missil" height="80" width="80" />
+
+
+            </p>
+            <p>
+                @if (Model.NumeroDeJogadas == 0)
+                {
+                    <i>Começa por disparar um missíl.</i>
+                }
+                else if(Model.TiroNaMesmaCoord == true)
+                {
+                    <i>Foste penalizado em <b>100 pontos</b> por disparar no mesmo quadrado!</i>
+                }
+                else if (Model.UltimoTiroDisparado == 5)
+                {
+                    if (Model.Barcoaofundo == true)
+                    {
+                        <i>Afundaste o porta-aviões!</i>
+                    }
+                    else
+                    {
+                        <i>Acertaste no porta-aviões!</i>
+                    }
+                }
+                else if (Model.UltimoTiroDisparado == 4)
+                {
+                    if (Model.Barcoaofundo == true)
+                    {
+                        <i>Afundaste o barco de quatro canos!</i>
+                    }
+                    else
+                    {
+                        <i>Acertaste num barco de quatro canos!</i>
+                    }
+                }
+                else if (Model.UltimoTiroDisparado == 3)
+                {
+                    if (Model.Barcoaofundo == true)
+                    {
+                        if (Model.Trescanosrest == 0)
+                        {
+                            <i>Afundaste o <b>último</b> barco de três canos!</i>
+                        }
+                        else
+                        {
+                            <i>Afundaste um barco de três canos!</i>
+                        }
+                    }
+                    else
+                    {
+                        <i>Acertaste num barco de três canos!</i>
+                    }
+                }
+                else if (Model.UltimoTiroDisparado == 2)
+                {
+                    if (Model.Barcoaofundo == true)
+                    {
+                        if (Model.Doiscanosrest == 0)
+                        {
+                            <i>Afundaste o último barco de dois canos</i>
+                        }
+                        else
+                        {
+                            <i>Afundaste um barco de dois canos</i>
+                        }
+                    }
+                    else
+                    {
+                        <i>Acertaste num barco de dois canos!</i>
+                    }
+                }
+                else if (Model.UltimoTiroDisparado == 1)
+                {
+                    if (Model.Submanrinosrest == 0)
+                    {
+                        <i>Afundaste o último submarino!</i>
+
+                    }
+                    {
+
+
+
+                        <i>Afundaste um submarino!</i>}
+                }
+                else if (Model.UltimoTiroDisparado == 0)
+                {
+                    <i>O teu missíl foi perdido no mar.</i>
+                }
+            </p><!--acertar/afundar/falhar barcos-->
+
+
+        </div>
+        <div id="contain">
+            <img class="barcosrestantessub" src="~/images/1.png" />  @Model.Submanrinosrest
+            <img class="barcosrestantes" src="~/images/portaavioes.png" /> @Model.Portaavioesrest
+            <img class="barcosrestantes" src="~/images/2.png" /> @Model.Doiscanosrest
+            <img class="b4rcosrestantes" src="~/images/4.png" /> @Model.Quatrocanosrest
+            <img class="barcosrestantes" src="~/images/3.png" /> @Model.Trescanosrest
+
+
+        </div>
+
+
+        <a asp-action="NovoJogo" class="btn btn-default">
+            Desistir
+        </a>
+
+
+
+    </div>
+
+
+    <div class="col-md-8">
+
+        <table id="gameBoard">
+            <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
+            <!--primeira linha: letras (coordenadas)-->
+            <tr>
+                <!-- célula vazia invisível no canto sup.esq. da tabela-->
+                <td class="tile-inv"></td>
+                @for (int coluna = 0; coluna < 10; coluna++)
+                {
+                    <td class="tile-inv tile-letras">
+                        <!--converter número da coluna para letra com o código ASCII ('A'=65) -->
+                        @Convert.ToChar(coluna + 65)
+                    </td>
+                }
+            </tr>
+            @for (int linha = 0; linha < 10; linha++) // para cada linha no array modelo, que varia entre 0 e 9
+            {
+                <tr>
+                    <td class="tile-inv tile-numeros">
+                        <!--primeira coluna: números (coordenadas)-->
+                        @(linha + 1)
+                    </td>
+                    @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
+                    {
+                        switch (Model.Grelha[linha, coluna])
+                        {
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                                <td id="@(linha)@(coluna)" class="tile hit"></td>
+                                break;
+                            case 7:
+                                <td id="@(linha)@(coluna)" class="fill"></td>
+                                break;
+                            case 0:
+                                <td id="@(linha)@(coluna)" class="tile misses"></td>
+                                break;
+                            default:
+                                <td id="@(linha)@(coluna)" class="tile"></td>
+                                break;
+                        }
+                    }
+                </tr>
+            }
+        </table>
+
+
+
+    </div>
+
+</div>
+
