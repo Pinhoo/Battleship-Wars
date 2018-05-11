@@ -10,7 +10,7 @@ namespace BattleshipPRJ.Models
     public static class MyHttpClient
     {
         private static HttpClient client;
-        private static string baseAddress = "http://193.137.46.2/swagger/v1";
+        private static string baseAddress = "http://193.137.46.2/";
         public static HttpClient Client
         {
             get
