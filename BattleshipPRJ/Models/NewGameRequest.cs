@@ -11,10 +11,15 @@ namespace BattleshipPRJ.Models
     {
 
         public string PlayerName { get; set; }
-
         public string GameMode { get; set; }
-
         public string Teamkey { get; set; }
+
+        public NewGameRequest(string playername, string gamemode)
+        {
+            PlayerName = playername;
+            GameMode = gamemode;
+            Teamkey = "90dff7381b604603b5145be5f610da0d";
+        }
 
     }
 
