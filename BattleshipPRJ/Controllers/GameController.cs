@@ -14,7 +14,7 @@ namespace BattleshipPRJ.Controllers
     {
 
 
-
+        [HttpGet]
         public IActionResult NewLocalGame()
         {
 
@@ -60,9 +60,17 @@ namespace BattleshipPRJ.Controllers
                 Repository.CriarJogo(jogo);
                 jogo.AltMissao();
 
+                string missao;
+
+                if (jogo.Missao == "Destruição Total")
+                    missao = "TotalDestruction";
+                else
+                    missao = "DestroyCarrier"; //perguntar o nome que está na API
+
+
                 HttpClient client = MyHttpClient.Client;
                 string path = "api/NewGame";
-                NewGameRequest ngreq = new NewGameRequest(jogo.Nome, jogo.Missao);
+                NewGameRequest ngreq = new NewGameRequest(jogo.Nome, missao);
                 string json = JsonConvert.SerializeObject(ngreq);
 
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
@@ -70,12 +78,12 @@ namespace BattleshipPRJ.Controllers
                 "application/json");
                 HttpResponseMessage response = await client.SendAsync(request);
 
-                //if (!response.IsSuccessStatusCode) { return Redirect("/"); }
-                //string json_r = await response.Content.ReadAsStringAsync();
-                //GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
+                if (!response.IsSuccessStatusCode) { return Redirect("/"); }
+                string json_r = await response.Content.ReadAsStringAsync();
+                GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
 
 
-                return View("Game", jogo);
+                return View("Game", jogo); //como é que mando outra cena para a view?
             }
             else
             {
@@ -91,12 +99,7 @@ namespace BattleshipPRJ.Controllers
         {
             Jogo jogue = Repository.ObterJogo(id);
 
-            if (jogue.NumeroDeJogadas == 0)
-            {
-                jogue.InicializarBarcos();
-            }
-
-
+            
             jogue.Coordx = opcaoX;
 
             jogue.Coordy = opcaoY;

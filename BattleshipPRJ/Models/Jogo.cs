@@ -79,28 +79,19 @@ namespace BattleshipPRJ.Models
             }
 
         }
-
-        //public int GerarID()
-        //{
-        //    Random rnd = new Random();
-
-        //    int ID = rnd.Next(0, 1000);
-
-        //    return ID;
-
-        //}
-
-
+        
         public Jogo()
         {
             heidi++;
-
-            // criar um método gerar id que me vai gerar um id aleatório
-
-            //ID = GerarID();
+            
 
             ID = heidi;
 
+            Portaavioesrest = 1;
+            Quatrocanosrest = 1;
+            Trescanosrest = 2;
+            Doiscanosrest = 3;
+            Submanrinosrest = 4;
 
 
             grelha = new int[10, 10]
@@ -163,13 +154,6 @@ namespace BattleshipPRJ.Models
             Barcoaofundo = false;
         }
 
-        public void InicializarBarcos()
-        {
-            Portaavioesrest = 1;
-            Quatrocanosrest = 1;
-            Trescanosrest = 2;
-            Doiscanosrest = 3;
-            Submanrinosrest = 4;
-        }
+        
     }
 }

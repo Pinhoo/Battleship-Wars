@@ -8,12 +8,11 @@
 </div>
 
 
-
 <div class="row">
 
     <div class="col-md-4">
 
-        <form class="form-inline" method="post" asp-action="Game">
+        <form class="form-inline" method="post" asp-action="LocalGame">
 
             <input type="hidden" name="id" value="@Model.ID" />
 
@@ -94,7 +93,7 @@
                 {
                     <i>Começa por disparar um missíl.</i>
                 }
-                else if(Model.TiroNaMesmaCoord == true)
+                else if (Model.TiroNaMesmaCoord == true)
                 {
                     <i>Foste penalizado em <b>100 pontos</b> por disparar no mesmo quadrado!</i>
                 }
@@ -251,4 +250,3 @@
     </div>
 
 </div>
-
