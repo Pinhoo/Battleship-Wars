@@ -119,6 +119,7 @@ namespace BattleshipPRJ.Controllers
                     else
                     {
                         //return View("HiScores");//gameover screen
+                        return View("GameOverScore");
                     }
                 }
                 else
@@ -260,6 +261,7 @@ namespace BattleshipPRJ.Controllers
                     else
                     {
                         //return View("HiScores");//gameover screen
+                        return View("GameOverScore");
                     }
                 }
             }
