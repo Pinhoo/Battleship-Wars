@@ -335,26 +335,32 @@ namespace BattleshipPRJ.Controllers
                     
                     jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                    jogue.Disparou(gs.DamagedShipSize, false, false);
 
                 }
                 else if (gs.Result == Resultado.SuccessMiss)
                 {
                     jogue.Grelha[opcaoY, opcaoX] = 0; //or gs.DamagedShipSize
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                    jogue.Disparou(0, false, false);
                 }
                 else if (gs.Result == Resultado.SuccessSink)
                 {
                     jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize; //or gs.DamagedShipSize
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                    jogue.Disparou(gs.DamagedShipSize, false, true);
                 }
                 else if (gs.Result == Resultado.SuccessRepeat)
                 {
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                    jogue.DisparouNasMesmasCoords();
                 }
                 else if (gs.Result == Resultado.SuccessVictory)
                 {
                     jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                    jogue.Disparou(gs.DamagedShipSize, true, true);
+                    return View("GameoverScore");
                 }
                 else if (gs.Result == Resultado.InvalidShot)
                 {
@@ -362,7 +368,6 @@ namespace BattleshipPRJ.Controllers
                 }
                 else if (gs.Result == Resultado.GameHasEnded)
                 {
-                    jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     return View("GameoverScore");
                 }
@@ -371,13 +376,7 @@ namespace BattleshipPRJ.Controllers
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                 }
 
-                
-
-
-
                 return View(jogue);
-
-
 
             }
             else if (submitButton == "Marcar")

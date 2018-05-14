@@ -188,10 +188,9 @@ namespace BattleshipPRJ.Models
             Barcoaofundo = BarcoAoFundo;
         }
 
-        public void DisparouNasMesmasCoords(int Tiro)
+        public void DisparouNasMesmasCoords()
         {
             Misseis = Misseis - 1;
-            UltimoTiroDisparado = Tiro;
             NumeroDeJogadas = NumeroDeJogadas + 1;
             Hi_score.AdicionarJogada(false, false, true, false, 0);
             Score = Hi_score.Receber();
