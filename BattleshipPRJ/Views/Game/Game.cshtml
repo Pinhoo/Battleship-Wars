@@ -17,6 +17,7 @@
 
             <input type="hidden" name="id" value="@Model.ID" />
 
+
             <select class="form-control" name="opcaoX" id="opcaoX" asp-for="Coordx">
                 <option value="0">A</option>
                 <option value="1">B</option>
@@ -89,7 +90,11 @@
 
 
             </p>
-            <p>
+
+
+            <h3>@Model.ResultadoJogada</h3>
+
+            @*<p>
                 @if (Model.NumeroDeJogadas == 0)
                 {
                     <i>Começa por disparar um missíl.</i>
@@ -173,7 +178,7 @@
                 {
                     <i>O teu missíl foi perdido no mar.</i>
                 }
-            </p><!--acertar/afundar/falhar barcos-->
+            </p>acertar/afundar/falhar barcos*@
 
 
         </div>
