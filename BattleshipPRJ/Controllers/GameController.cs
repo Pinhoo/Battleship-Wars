@@ -83,7 +83,15 @@ namespace BattleshipPRJ.Controllers
                 GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
 
 
-                return View("Game", jogo); //como é que mando outra cena para a view?
+                jogo.ID = gs.GameID;
+                jogo.Coordx = gs.FiredX;
+                jogo.Coordy = gs.FiredY;
+                
+
+                jogo.ResultadoJogada = jogo.ReceberResult(gs.Result);
+                
+
+                return View("Game", jogo); 
             }
             else
             {
@@ -99,7 +107,7 @@ namespace BattleshipPRJ.Controllers
         {
             Jogo jogue = Repository.ObterJogo(id);
 
-            
+
             jogue.Coordx = opcaoX;
 
             jogue.Coordy = opcaoY;
@@ -290,7 +298,7 @@ namespace BattleshipPRJ.Controllers
 
 
         [HttpPost]
-        public IActionResult Game(int id, int opcaoX, int opcaoY, string submitButton)
+        public async Task<IActionResult> Game(int id, int opcaoX, int opcaoY, string submitButton)
         {
 
             Jogo jogue = Repository.ObterJogo(id);
@@ -304,7 +312,70 @@ namespace BattleshipPRJ.Controllers
 
             if (submitButton == "Disparar")
             {
+              
+                HttpClient client = MyHttpClient.Client;
+                string path = "api/Play";
+                PlayRequest pr = new PlayRequest(id, opcaoX, opcaoY, 0);
+                string json = JsonConvert.SerializeObject(pr);
 
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
+                request.Content = new StringContent(json, System.Text.Encoding.UTF8,
+                "application/json");
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode) { return Redirect("/"); } 
+                string json_r = await response.Content.ReadAsStringAsync();
+                GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
+
+                gs.FiredX = jogue.Coordx;
+                gs.FiredY = jogue.Coordy;
+
+                if (gs.Result == Resultado.SuccessHit)
+                {
+                    
+                    jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+
+                }
+                else if (gs.Result == Resultado.SuccessMiss)
+                {
+                    jogue.Grelha[opcaoY, opcaoX] = 0; //or gs.DamagedShipSize
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                }
+                else if (gs.Result == Resultado.SuccessSink)
+                {
+                    jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize; //or gs.DamagedShipSize
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                }
+                else if (gs.Result == Resultado.SuccessRepeat)
+                {
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                }
+                else if (gs.Result == Resultado.SuccessVictory)
+                {
+                    jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                }
+                else if (gs.Result == Resultado.InvalidShot)
+                {
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                }
+                else if (gs.Result == Resultado.GameHasEnded)
+                {
+                    jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                    return View("GameoverScore");
+                }
+                else if (gs.Result == Resultado.NoResult)
+                {
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                }
+
+                
+
+
+
+                return View(jogue);
 
 
 

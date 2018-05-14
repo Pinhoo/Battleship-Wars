@@ -46,6 +46,10 @@ namespace BattleshipPRJ.Models
 
         public bool TiroNaMesmaCoord { get; set; }
 
+        public string ResultadoJogada { get; set; }
+
+        //public enum Result { Tiro, Água, Afundou, Repetido, Ganhou, Inválido, Perdeu}
+
 
 
         private int[,] grelha;
@@ -57,6 +61,46 @@ namespace BattleshipPRJ.Models
             get
             {
                 return grelha;
+            }
+
+        }
+
+
+        public string ReceberResult(Resultado result)
+        {
+
+            if (result == Resultado.SuccessHit)
+            {
+                return "Tiro num barco";
+
+            }
+            else if (result == Resultado.SuccessMiss)
+            {
+                return "Água!";
+            }
+            else if (result == Resultado.SuccessSink)
+            {
+                return "Um barco foi afundado";
+            }
+            else if (result == Resultado.SuccessRepeat)
+            {
+                return "Tiro em coordenadas repetidas!";
+            }
+            else if (result == Resultado.SuccessVictory)
+            {
+                return "Ganhaste ao afundar o último barco, parabéns!";
+            }
+            else if (result == Resultado.InvalidShot)
+            {
+                return "Tiro Inválido!";
+            }
+            else if (result == Resultado.GameHasEnded)
+            {
+                return "Não te restam mais mísseis, fica para a próxima!";
+            }
+            else
+            {
+                return "Comece por disparar num quadrado!";
             }
 
         }

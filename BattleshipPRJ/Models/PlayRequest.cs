@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace BattleshipPRJ.Models
 {
-    public class PlayerRequest
+    public enum PlayerAction { Fire, Quit }
+
+    public class PlayRequest
     {
 
         public int ID { get; set; }
@@ -18,9 +20,18 @@ namespace BattleshipPRJ.Models
 
         public int Y { get; set; }
 
-        public enum PlayerAction { Fire, Quit } //0 e 1
+        public PlayerAction PlayerAction { get; set; }
 
-        
+        public PlayRequest(int id,  int x, int y, PlayerAction action)
+        {
+            ID = id;
+            Key = "90dff7381b604603b5145be5f610da0d";
+            X = x;
+            Y = y;
+            PlayerAction = action;
+        }
+
+
 
 
     }

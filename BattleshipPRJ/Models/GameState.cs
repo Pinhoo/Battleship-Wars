@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace BattleshipPRJ.Models
 {
+    public enum Resultado { NoResult, SuccessHit, SuccessMiss, SuccessSink, SuccessRepeat, SuccessVictory, InvalidShot, GameHasEnded }
+
     public class GameState
     {
 
@@ -18,12 +20,21 @@ namespace BattleshipPRJ.Models
 
         public int FiredY { get; set; }
 
-        public enum Result { NoResult, SuccessHit, SuccessMiss, SuccessSink, SuccessRepeat, SuccessVictory, InvalidShot, GameHasEnded }
+        public Resultado Result { get; set; }
 
         public int DamagedShipSize { get; set; }
+
+
 
     }
 
 
+
 }
+
+
+
+
+
+
 
