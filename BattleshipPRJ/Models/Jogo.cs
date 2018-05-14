@@ -48,7 +48,7 @@ namespace BattleshipPRJ.Models
 
         public string ResultadoJogada { get; set; }
 
-        //public enum Result { Tiro, Água, Afundou, Repetido, Ganhou, Inválido, Perdeu}
+        public string FimdoJogo { get; set; }
 
 
 
@@ -71,7 +71,7 @@ namespace BattleshipPRJ.Models
 
             if (result == Resultado.SuccessHit)
             {
-                return "Tiro num barco";
+                return "Tiro num barco de ";
 
             }
             else if (result == Resultado.SuccessMiss)
@@ -80,7 +80,7 @@ namespace BattleshipPRJ.Models
             }
             else if (result == Resultado.SuccessSink)
             {
-                return "Um barco foi afundado";
+                return "Afundaste um barco de ";
             }
             else if (result == Resultado.SuccessRepeat)
             {
@@ -94,13 +94,9 @@ namespace BattleshipPRJ.Models
             {
                 return "Tiro Inválido!";
             }
-            else if (result == Resultado.GameHasEnded)
-            {
-                return "Não te restam mais mísseis, fica para a próxima!";
-            }
             else
             {
-                return "Comece por disparar num quadrado!";
+                return "Começa por disparar num quadrado!";
             }
 
         }

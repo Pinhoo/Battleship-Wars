@@ -13,6 +13,11 @@
 
     <div class="col-md-4">
 
+        <div id="contain">
+            <h3>@Model.ResultadoJogada</h3>
+        </div>
+
+
         <form class="form-inline" method="post" asp-action="Game">
 
             <input type="hidden" name="id" value="@Model.ID" />
@@ -56,10 +61,6 @@
 
         </form>
 
-        <div class="botao_disparar">
-
-
-        </div>
 
         <div id="contain">
 
@@ -92,96 +93,8 @@
             </p>
 
 
-            <h3>@Model.ResultadoJogada</h3>
-
-            @*<p>
-                @if (Model.NumeroDeJogadas == 0)
-                {
-                    <i>Começa por disparar um missíl.</i>
-                }
-                else if(Model.TiroNaMesmaCoord == true)
-                {
-                    <i>Foste penalizado em <b>100 pontos</b> por disparar no mesmo quadrado!</i>
-                }
-                else if (Model.UltimoTiroDisparado == 5)
-                {
-                    if (Model.Barcoaofundo == true)
-                    {
-                        <i>Afundaste o porta-aviões!</i>
-                    }
-                    else
-                    {
-                        <i>Acertaste no porta-aviões!</i>
-                    }
-                }
-                else if (Model.UltimoTiroDisparado == 4)
-                {
-                    if (Model.Barcoaofundo == true)
-                    {
-                        <i>Afundaste o barco de quatro canos!</i>
-                    }
-                    else
-                    {
-                        <i>Acertaste num barco de quatro canos!</i>
-                    }
-                }
-                else if (Model.UltimoTiroDisparado == 3)
-                {
-                    if (Model.Barcoaofundo == true)
-                    {
-                        if (Model.Trescanosrest == 0)
-                        {
-                            <i>Afundaste o <b>último</b> barco de três canos!</i>
-                        }
-                        else
-                        {
-                            <i>Afundaste um barco de três canos!</i>
-                        }
-                    }
-                    else
-                    {
-                        <i>Acertaste num barco de três canos!</i>
-                    }
-                }
-                else if (Model.UltimoTiroDisparado == 2)
-                {
-                    if (Model.Barcoaofundo == true)
-                    {
-                        if (Model.Doiscanosrest == 0)
-                        {
-                            <i>Afundaste o último barco de dois canos</i>
-                        }
-                        else
-                        {
-                            <i>Afundaste um barco de dois canos</i>
-                        }
-                    }
-                    else
-                    {
-                        <i>Acertaste num barco de dois canos!</i>
-                    }
-                }
-                else if (Model.UltimoTiroDisparado == 1)
-                {
-                    if (Model.Submanrinosrest == 0)
-                    {
-                        <i>Afundaste o último submarino!</i>
-
-                    }
-                    {
-
-
-
-                        <i>Afundaste um submarino!</i>}
-                }
-                else if (Model.UltimoTiroDisparado == 0)
-                {
-                    <i>O teu missíl foi perdido no mar.</i>
-                }
-            </p>acertar/afundar/falhar barcos*@
-
-
         </div>
+
         <div id="contain">
             <img class="barcosrestantessub" src="~/images/1.png" />  @Model.Submanrinosrest
             <img class="barcosrestantes" src="~/images/portaavioes.png" /> @Model.Portaavioesrest

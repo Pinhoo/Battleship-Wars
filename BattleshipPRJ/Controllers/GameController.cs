@@ -121,7 +121,7 @@ namespace BattleshipPRJ.Controllers
                 {
                     if (jogue.Misseis != 0)
                     {
-                        jogue.DisparouNasMesmasCoords(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]);
+                        jogue.DisparouNasMesmasCoords();
                         jogue.TiroNaMesmaCoord = true;
                     }
                     else
@@ -334,7 +334,19 @@ namespace BattleshipPRJ.Controllers
                 {
                     
                     jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
-                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                    if(gs.DamagedShipSize==1)
+                    {
+                        jogue.ResultadoJogada = "Tiro num submarino!";
+
+                    }
+                    else if (gs.DamagedShipSize == 5)
+                    {
+                        jogue.ResultadoJogada = "Tiro no porta-aviões!";
+                    }
+                    else
+                    { jogue.ResultadoJogada = jogue.ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
+                    }
+                    
                     jogue.Disparou(gs.DamagedShipSize, false, false);
 
                 }
@@ -347,7 +359,21 @@ namespace BattleshipPRJ.Controllers
                 else if (gs.Result == Resultado.SuccessSink)
                 {
                     jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize; //or gs.DamagedShipSize
-                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+
+                    if (gs.DamagedShipSize == 1)
+                    {
+                        jogue.ResultadoJogada = "Afundaste um submarino!";
+
+                    }
+                    else if(gs.DamagedShipSize == 5)
+                    {
+                        jogue.ResultadoJogada = "Afundaste o porta-aviões!";
+                    }
+                    else
+                    {
+                        jogue.ResultadoJogada = jogue.ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
+                    }
+                    
                     jogue.Disparou(gs.DamagedShipSize, false, true);
                 }
                 else if (gs.Result == Resultado.SuccessRepeat)
@@ -360,7 +386,9 @@ namespace BattleshipPRJ.Controllers
                     jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     jogue.Disparou(gs.DamagedShipSize, true, true);
-                    return View("GameoverScore");
+                    jogue.FimdoJogo = "Ganhaste!";
+
+                    return View("GameOver", jogue);
                 }
                 else if (gs.Result == Resultado.InvalidShot)
                 {
@@ -368,8 +396,9 @@ namespace BattleshipPRJ.Controllers
                 }
                 else if (gs.Result == Resultado.GameHasEnded)
                 {
-                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
-                    return View("GameoverScore");
+                    jogue.FimdoJogo = "Perdeste!"; //PROBLEMA
+
+                    return View("GameOver", jogue);
                 }
                 else if (gs.Result == Resultado.NoResult)
                 {
@@ -390,9 +419,7 @@ namespace BattleshipPRJ.Controllers
                     jogue.Grelha[opcaoY, opcaoX] = -1;
                 }
             }
-
-
-
+            
 
             return View(jogue);
 
@@ -404,6 +431,7 @@ namespace BattleshipPRJ.Controllers
         {
             return View();
         }
+        
 
         //public IActionResult JogosCriadosTeste()
         //{
