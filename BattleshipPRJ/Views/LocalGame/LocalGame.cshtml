@@ -1,7 +1,7 @@
 ﻿@model BattleshipPRJ.Models.Jogo
 
 @{
-    ViewData["Title"] = "Game -";
+    ViewData["Title"] = "Local Game -";
 }
 <div id="contain" class="page-header">
     <h1>Let's Play!</h1>
@@ -54,7 +54,7 @@
 
         </form>
 
-        <div class="botao_disparar">
+        
 
 
         </div>
@@ -72,11 +72,7 @@
             <p>
                 <strong>Score:</strong> @Model.Score
             </p>
-            <p>
-                <strong>Quadrados a abater:</strong> @Model.Quadradosabater
-
-
-            </p>
+            
             <p>
                 <strong>Mísseis restantes:</strong> @Model.Misseis <img src="~/images/gifmissil.gif" alt="Missil" height="80" width="80" />
 
@@ -181,7 +177,7 @@
         </div>
 
 
-        <a asp-action="NovoJogo" class="btn btn-default">
+        <a asp-action="NewLocalGame" class="btn btn-default">
             Desistir
         </a>
 
