@@ -119,11 +119,11 @@ namespace BattleshipPRJ.Models
             }
 
         }
-        
+
         public Jogo()
         {
             heidi++;
-            
+
 
             ID = heidi;
 
@@ -158,22 +158,43 @@ namespace BattleshipPRJ.Models
 
         }
 
-        public void Disparou(int Tiro, bool ganho,bool BarcoAoFundo)
+        public void Disparou(int Tiro, bool ganho, bool BarcoAoFundo)
         {
             Misseis = Misseis - 1;
             UltimoTiroDisparado = Tiro;
             NumeroDeJogadas = NumeroDeJogadas + 1;
-            if (Tiro == 1 || Tiro == 2 || Tiro == 3 || Tiro == 4 || Tiro==5)
+            if (Tiro == 1 || Tiro == 2 || Tiro == 3 || Tiro == 4 || Tiro == 5)
             {
                 if (ganho == false)
                 {
                     Hi_score.AdicionarJogada(true, BarcoAoFundo, false, false, 0);
-                    Quadradosabater = Quadradosabater - 1;
+                    if (Missao == "Antiaérea")
+                    {
+                        if (Tiro == 5)
+                        {
+                            Quadradosabater = Quadradosabater - 1;
+                        }
+                    }
+                    else
+                    {
+                        Quadradosabater = Quadradosabater - 1;
+                    }
+
                 }
                 else
                 {
                     Hi_score.AdicionarJogada(true, BarcoAoFundo, false, true, Misseis);
-                    Quadradosabater = Quadradosabater - 1;
+                    if (Missao == "Antiaérea")
+                    {
+                        if (Tiro == 5)
+                        {
+                            Quadradosabater = Quadradosabater - 1;
+                        }
+                    }
+                    else
+                    {
+                        Quadradosabater = Quadradosabater - 1;
+                    }
                 }
             }
             else
@@ -195,11 +216,11 @@ namespace BattleshipPRJ.Models
 
         public void Afundou(int shipsize)
         {
-            if(shipsize==1)
+            if (shipsize == 1)
             {
                 Submanrinosrest--;
             }
-            else if(shipsize==2)
+            else if (shipsize == 2)
             {
                 Doiscanosrest--;
             }
@@ -217,6 +238,6 @@ namespace BattleshipPRJ.Models
             }
 
         }
-        
+
     }
 }

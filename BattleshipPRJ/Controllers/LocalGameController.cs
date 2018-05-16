@@ -73,6 +73,7 @@ namespace BattleshipPRJ.Controllers
                 }
                 else
                 {
+
                     if (jogue.Misseis != 0)//EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]=1,2,3,4,5
                     {
                         bool BarcoAoFundo = false;
@@ -196,6 +197,7 @@ namespace BattleshipPRJ.Controllers
 
                         if (jogue.Quadradosabater == 0)
                         {
+                            jogoganho = true;
                             //grelha=espocupado
                         }
                         jogue.Grelha[opcaoY, opcaoX] = EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx];
@@ -204,12 +206,13 @@ namespace BattleshipPRJ.Controllers
                         jogue.TiroNaMesmaCoord = false;
                         if (jogoganho == true)
                         {
+                            return View("GameOverScore");
                             //gameover screen ganhou
                         }
                     }
                     else
                     {
-                        //return View("HiScores");//gameover screen
+                        //gameover screen
                         return View("GameOverScore");
                     }
                 }

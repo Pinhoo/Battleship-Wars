@@ -24,7 +24,7 @@ namespace BattleshipPRJ.Models
             }
             else
             {
-                Bonus = 0;
+                Bonus = -0.25;
             }
 
             if (d_BarcoAtingido == true)
@@ -33,7 +33,7 @@ namespace BattleshipPRJ.Models
             }
             if (d_BarcoAfundado == true)
             {
-                Pontuacao = Pontuacao + (200 * (1 + Bonus));
+                Pontuacao = Pontuacao + 200;
             }
             if (d_Penalizacao == true)
             {
