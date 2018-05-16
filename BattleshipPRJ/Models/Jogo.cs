@@ -193,6 +193,30 @@ namespace BattleshipPRJ.Models
             Barcoaofundo = false;
         }
 
+        public void Afundou(int shipsize)
+        {
+            if(shipsize==1)
+            {
+                Submanrinosrest--;
+            }
+            else if(shipsize==2)
+            {
+                Doiscanosrest--;
+            }
+            else if (shipsize == 3)
+            {
+                Trescanosrest--;
+            }
+            else if (shipsize == 4)
+            {
+                Quatrocanosrest--;
+            }
+            else if (shipsize == 5)
+            {
+                Portaavioesrest--;
+            }
+
+        }
         
     }
 }

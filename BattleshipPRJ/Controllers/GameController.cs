@@ -359,6 +359,8 @@ namespace BattleshipPRJ.Controllers
                 else if (gs.Result == Resultado.SuccessSink)
                 {
                     jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize; //or gs.DamagedShipSize
+                    
+                    jogue.Afundou(gs.DamagedShipSize);
 
                     if (gs.DamagedShipSize == 1)
                     {
@@ -396,7 +398,7 @@ namespace BattleshipPRJ.Controllers
                 }
                 else if (gs.Result == Resultado.GameHasEnded)
                 {
-                    jogue.FimdoJogo = "Perdeste!"; //PROBLEMA
+                    jogue.FimdoJogo = "Perdeste!";
 
                     return View("GameOver", jogue);
                 }
