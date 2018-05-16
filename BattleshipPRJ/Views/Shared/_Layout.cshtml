@@ -42,12 +42,21 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li class="dropdown-item"> <a asp-area="" asp-controller="Game" asp-action="NovoJogo">Jogo Online</a></li>
-                            <li class="dropdown-item"> <a asp-area="" asp-controller="Game" asp-action="NewLocalGame">Jogo Local</a></li>
+                            <li class="dropdown-item"> <a asp-area="" asp-controller="LocalGame" asp-action="NewLocalGame">Jogo Local</a></li>
                         </ul>
                     </li>
-                    <li><a asp-area="" asp-controller="Game" asp-action="HiScores">Hi-Scores</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hi-Scores
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li class="dropdown-item"> <a asp-area="" asp-controller="Game" asp-action="HiScores">Online Hi-Scores</a></li>
+                            <li><a asp-area="" asp-controller="LocalGame" asp-action="LocalHiScores">Local Hi-Scores</a></li>
+                        </ul>
+                    </li>
+                    
                     <li><a asp-area="" asp-controller="Home" asp-action="Equipa">Equipa</a></li>
-                   
+
 
                 </ul>
             </div>
