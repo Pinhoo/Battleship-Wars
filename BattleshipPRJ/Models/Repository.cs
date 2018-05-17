@@ -8,7 +8,6 @@ namespace BattleshipPRJ.Models
     public static class Repository
     {
         private static List<Jogo> jogos = new List<Jogo>();
-        
 
         public static List<Jogo> Jogos
         {
@@ -29,27 +28,22 @@ namespace BattleshipPRJ.Models
 
         public static Jogo ObterJogo(int id)
         {
-            
-            
-            
-                foreach (Jogo j in jogos)
+
+            foreach (Jogo j in jogos)
+            {
+
+                if (j.ID == id)
                 {
 
-                    if (j.ID == id)
-                    {
+                    return j;
 
-                        return j;
-
-                    }
-
-                    
                 }
 
-                return null;
 
-            
-            
-            
+            }
+
+            return null;
+
         }
 
         public static void ApagarJogos()
@@ -59,6 +53,5 @@ namespace BattleshipPRJ.Models
 
         }
 
-        
     }
 }
