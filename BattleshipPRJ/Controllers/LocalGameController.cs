@@ -242,7 +242,7 @@ namespace BattleshipPRJ.Controllers
 
         
 
-        public IActionResult HiScores()
+        public IActionResult LocalHiScores()
         {
             return View();
         }
