@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BattleshipPRJ.Models
 {
-    public class Jogo
+    public class Jogo :IComparable
     {
         private static int heidi = 0;
 
@@ -237,6 +237,14 @@ namespace BattleshipPRJ.Models
                 Portaavioesrest--;
             }
 
+
+
+        }
+
+        public int CompareTo(object obj)
+        {
+            Jogo j2 = (Jogo) obj;
+            return Score.CompareTo(j2.Score);
         }
 
     }

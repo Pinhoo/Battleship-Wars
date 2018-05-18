@@ -206,9 +206,12 @@ namespace BattleshipPRJ.Controllers
 
 
 
-        public IActionResult HiScores()
+        public IActionResult Hi_Scores()
+
         {
-            return View();
+            List<Jogo> j = Repository.Jogos;
+            j.Sort();
+            return View(j);
         }
 
         public IActionResult ModoAutonomo()
