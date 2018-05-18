@@ -206,7 +206,7 @@ namespace BattleshipPRJ.Controllers
 
 
 
-        public IActionResult Hi_Scores()
+        public IActionResult HiScores()
 
         {
             List<Jogo> j = Repository.Jogos;
