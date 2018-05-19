@@ -223,6 +223,7 @@ namespace BattleshipPRJ.Controllers
             else if(submitButton== "Desistir")
             {
                 jogue.FimdoJogo = "Derrota!";
+                jogue.Gameover = true;
                 return View(jogue);
 
             }
