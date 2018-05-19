@@ -18,6 +18,8 @@ namespace BattleshipPRJ.Models
 
         public int ID { get; set; }
 
+        public bool Gameover { get; set; }
+
         public int Misseis { get; set; }
 
         public double Score { get; set; }
@@ -84,15 +86,20 @@ namespace BattleshipPRJ.Models
             }
             else if (result == Resultado.SuccessRepeat)
             {
-                return "Tiro em coordenadas repetidas!";
+                return "Foste penalizado em 100 pontos por disparar no mesmo quadrado";
             }
             else if (result == Resultado.SuccessVictory)
             {
-                return "Ganhaste ao afundar o último barco, parabéns!";
+                return "Ganhaste, parabéns!";
             }
             else if (result == Resultado.InvalidShot)
             {
                 return "Tiro Inválido!";
+            }
+            else if(result == Resultado.GameHasEnded)
+            {
+                return "Jogo acabou!";
+
             }
             else
             {
@@ -126,6 +133,8 @@ namespace BattleshipPRJ.Models
 
 
             ID = heidi;
+
+            Gameover = false;
 
             Portaavioesrest = 1;
             Quatrocanosrest = 1;

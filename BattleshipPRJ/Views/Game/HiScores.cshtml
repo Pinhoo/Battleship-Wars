@@ -1,13 +1,12 @@
 ﻿@model List<Jogo>
 @{
-    ViewData["Title"] = "Online Hi-Scores -";
+    ViewData["Title"] = "Hi-Scores -";
 
 }
 
 <div id="contain" class="page-header">
     <h1>Hi-Scores</h1>
 </div>
-
 
 
 <!-- Missão Antiaérea-->
@@ -46,6 +45,9 @@
         @foreach (Jogo j in Model)
         {
 
+            if (j.Missao == "Antiaérea")
+            { 
+
         <tr>
             <td>@j.Nome</td>
             <td>@j.Score </td>
@@ -55,9 +57,12 @@
             <td>  </td>
             <td> </td>
             <td> </td>
-        </tr>}
-
+        </tr>
         
+            }
+            
+        }
+
 
     </tbody>
 
@@ -96,17 +101,24 @@
         @foreach (Jogo j in Model)
         {
 
-            <tr>
-                <td>@j.Nome</td>
-                <td>@j.Score </td>
-                <td> </td>
-                <td>  </td>
-                <td> </td>
-                <td>  </td>
-                <td> </td>
-                <td> </td>
-            </tr>}
+            if (j.Missao == "Destruição Total")
+            {
 
+                <tr>
+                    <td>@j.Nome</td>
+                    <td>@j.Score </td>
+                    <td> </td>
+                    <td>  </td>
+                    <td> </td>
+                    <td>  </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+
+            }
+            
+
+        }
 
 
     </tbody>

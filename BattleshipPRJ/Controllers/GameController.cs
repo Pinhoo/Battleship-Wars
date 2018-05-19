@@ -118,6 +118,7 @@ namespace BattleshipPRJ.Controllers
                     else if (gs.DamagedShipSize == 5)
                     {
                         jogue.ResultadoJogada = "Tiro no porta-aviões!";
+                        
                     }
                     else
                     {
@@ -126,12 +127,16 @@ namespace BattleshipPRJ.Controllers
 
                     jogue.Disparou(gs.DamagedShipSize, false, false);
 
+                    
+
                 }
                 else if (gs.Result == Resultado.SuccessMiss)
                 {
+                    
                     jogue.Grelha[opcaoY, opcaoX] = 0; //or gs.DamagedShipSize
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     jogue.Disparou(0, false, false);
+                    
                 }
                 else if (gs.Result == Resultado.SuccessSink)
                 {
@@ -141,33 +146,49 @@ namespace BattleshipPRJ.Controllers
 
                     if (gs.DamagedShipSize == 1)
                     {
+                        if(jogue.Submanrinosrest==0)
+                        {
+                            jogue.ResultadoJogada = "Afundaste o último submarino!";
+                        }
                         jogue.ResultadoJogada = "Afundaste um submarino!";
 
                     }
                     else if (gs.DamagedShipSize == 5)
                     {
+                        if (jogue.Portaavioesrest == 0)
+                        {
+                            jogue.ResultadoJogada = "Afundaste o último porta-aviões!";
+                        }
                         jogue.ResultadoJogada = "Afundaste o porta-aviões!";
                     }
                     else
                     {
+                        if (jogue.Doiscanosrest == 0 || jogue.Trescanosrest == 0 || jogue.Quatrocanosrest==0)
+                        {
+                            jogue.ResultadoJogada = "Afundaste o último barco de" + gs.DamagedShipSize + " canos!";
+                        }
                         jogue.ResultadoJogada = jogue.ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
                     }
 
                     jogue.Disparou(gs.DamagedShipSize, false, true);
+
+                    
                 }
                 else if (gs.Result == Resultado.SuccessRepeat)
                 {
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     jogue.DisparouNasMesmasCoords();
+                    
                 }
                 else if (gs.Result == Resultado.SuccessVictory)
                 {
                     jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     jogue.Disparou(gs.DamagedShipSize, true, true);
-                    jogue.FimdoJogo = "Ganhaste!";
+                    jogue.FimdoJogo = "Vitória!";
+                    jogue.Gameover = true;
 
-                    return View("GameOver", jogue);
+                    return View(jogue);
                 }
                 else if (gs.Result == Resultado.InvalidShot)
                 {
@@ -175,16 +196,17 @@ namespace BattleshipPRJ.Controllers
                 }
                 else if (gs.Result == Resultado.GameHasEnded)
                 {
-                    jogue.FimdoJogo = "Perdeste!";
 
-                    return View("GameOver", jogue);
+                    jogue.FimdoJogo = "Derrota!";
+                    jogue.Gameover = true;
+
+                    return View( jogue);
                 }
                 else if (gs.Result == Resultado.NoResult)
                 {
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                 }
-
-                return View(jogue);
+                
 
             }
             else if (submitButton == "Marcar")
@@ -197,6 +219,12 @@ namespace BattleshipPRJ.Controllers
                 {
                     jogue.Grelha[opcaoY, opcaoX] = -1;
                 }
+            }
+            else if(submitButton== "Desistir")
+            {
+                jogue.FimdoJogo = "Derrota!";
+                return View(jogue);
+
             }
 
 

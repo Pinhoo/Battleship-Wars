@@ -68,7 +68,8 @@ namespace BattleshipPRJ.Controllers
                     else
                     {
                         //return View("HiScores");//gameover screen
-                        return View("GameOverScore");
+                        jogue.FimdoJogo = "Perdeste!";
+                        return View("LocalGameOver", jogue);
                     }
                 }
                 else
@@ -206,14 +207,16 @@ namespace BattleshipPRJ.Controllers
                         jogue.TiroNaMesmaCoord = false;
                         if (jogoganho == true)
                         {
-                            return View("GameOverScore");
+                            jogue.FimdoJogo = "Ganhaste!";
+                            return View("LocalGameOver", jogue);
                             //gameover screen ganhou
                         }
                     }
                     else
                     {
                         //gameover screen
-                        return View("GameOverScore");
+                        jogue.FimdoJogo = "Perdeste!";
+                        return View("LocalGameOver", jogue);
                     }
                 }
             }
@@ -228,23 +231,9 @@ namespace BattleshipPRJ.Controllers
                     jogue.Grelha[opcaoY, opcaoX] = -1;
                 }
             }
-
-
-
-            //jogue.Grelha[jogo.coordy, jogo.coordx] = EspacoOcupado.BarcosO[jogo.coordy, jogo.coordx] ;
-
-
-
-
+            
             return View(jogue);
 
-        }
-
-        
-
-        public IActionResult LocalHiScores()
-        {
-            return View();
         }
         
 
