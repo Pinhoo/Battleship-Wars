@@ -52,6 +52,17 @@ namespace BattleshipPRJ.Models
 
         public string FimdoJogo { get; set; }
 
+        public int Tiros { get; set; }
+
+        public int TiroAgua { get; set; }
+
+        public int TiroAlvo { get; set; }
+
+        public int TiroRepetido { get; set; }
+
+        public double PercentagemAlvo { get; set; }
+
+        public double PercentagemAfundado { get; set; }
 
 
         private int[,] grelha;
@@ -169,11 +180,13 @@ namespace BattleshipPRJ.Models
 
         public void Disparou(int Tiro, bool ganho, bool BarcoAoFundo)
         {
+            Tiros++;
             Misseis = Misseis - 1;
             UltimoTiroDisparado = Tiro;
             NumeroDeJogadas = NumeroDeJogadas + 1;
             if (Tiro == 1 || Tiro == 2 || Tiro == 3 || Tiro == 4 || Tiro == 5)
             {
+                TiroAlvo++;
                 if (ganho == false)
                 {
                     Hi_score.AdicionarJogada(true, BarcoAoFundo, false, false, 0);
@@ -208,19 +221,23 @@ namespace BattleshipPRJ.Models
             }
             else
             {
+                TiroAgua++;
                 Hi_score.AdicionarJogada(false, false, false, false, 0);
             }
             Score = Hi_score.Receber();
             Barcoaofundo = BarcoAoFundo;
+            CalcularPercentagens();
         }
 
         public void DisparouNasMesmasCoords()
         {
+            TiroRepetido++;
             Misseis = Misseis - 1;
             NumeroDeJogadas = NumeroDeJogadas + 1;
             Hi_score.AdicionarJogada(false, false, true, false, 0);
             Score = Hi_score.Receber();
             Barcoaofundo = false;
+            CalcularPercentagens();
         }
 
         public void Afundou(int shipsize)
@@ -249,6 +266,13 @@ namespace BattleshipPRJ.Models
 
 
         }
+
+        public void CalcularPercentagens()
+        {
+            PercentagemAlvo = 100 * TiroAlvo / Tiros;
+            PercentagemAfundado = 100 * (Submanrinosrest + Doiscanosrest + Trescanosrest + Quatrocanosrest + Portaavioesrest) / 11;
+        }
+
 
         public int CompareTo(object obj)
         {

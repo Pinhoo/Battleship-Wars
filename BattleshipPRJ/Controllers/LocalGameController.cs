@@ -48,6 +48,7 @@ namespace BattleshipPRJ.Controllers
         {
             Jogo jogue = Repository.ObterJogo(id);
 
+            int ResultTiro = EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx];
 
             jogue.Coordx = opcaoX;
 
@@ -58,7 +59,7 @@ namespace BattleshipPRJ.Controllers
             {
 
 
-                if (jogue.Grelha[opcaoY, opcaoX] == EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx])
+                if (jogue.Grelha[opcaoY, opcaoX] == ResultTiro)
                 {
                     if (jogue.Misseis != 0)
                     {
@@ -67,7 +68,6 @@ namespace BattleshipPRJ.Controllers
                     }
                     else
                     {
-                        //return View("HiScores");//gameover screen
                         jogue.FimdoJogo = "Perdeste!";
                         return View("LocalGameOver", jogue);
                     }
@@ -79,132 +79,21 @@ namespace BattleshipPRJ.Controllers
                     {
                         bool BarcoAoFundo = false;
                         bool jogoganho = false;
-                        if (EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 2)
-                        {
-                            if (opcaoY < 9)
-                            {
-                                if (jogue.Grelha[opcaoY + 1, opcaoX] == 2)
-                                {
-                                    BarcoAoFundo = true;
-                                    jogue.Doiscanosrest--;
-                                }
-                            }
-                            if (opcaoY > 0)
-                            {
-                                if (jogue.Grelha[opcaoY - 1, opcaoX] == 2)
-                                {
-                                    BarcoAoFundo = true;
-                                    jogue.Doiscanosrest--;
-                                }
-                            }
-                            if (opcaoX < 9)
-                            {
-                                if (jogue.Grelha[opcaoY, opcaoX + 1] == 2)
-                                {
-                                    BarcoAoFundo = true;
-                                    jogue.Doiscanosrest--;
-                                }
-                            }
-                            if (opcaoX > 0)
-                            {
-                                if (jogue.Grelha[opcaoY, opcaoX - 1] == 2)
-                                {
-                                    BarcoAoFundo = true;
-                                    jogue.Doiscanosrest--;
-                                }
-                            }
-                        }//2 canos
-                        else if (EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 3)
-                        {
-                            if (opcaoY < 8)
-                            {
-                                if (jogue.Grelha[opcaoY + 1, opcaoX] == 3 && jogue.Grelha[opcaoY + 2, opcaoX] == 3)
-                                {
-                                    jogue.Trescanosrest--;
-                                    BarcoAoFundo = true;
-                                }
-                            }
-                            if (opcaoY < 9 && opcaoY > 0)
-                            {
-                                if (jogue.Grelha[opcaoY + 1, opcaoX] == 3 && jogue.Grelha[opcaoY - 1, opcaoX] == 3)
-                                {
-                                    jogue.Trescanosrest--;
-                                    BarcoAoFundo = true;
-                                }
-                            }
-                            if (opcaoY > 1)
-                            {
-                                if (jogue.Grelha[opcaoY - 2, opcaoX] == 3 && jogue.Grelha[opcaoY - 1, opcaoX] == 3)
-                                {
-                                    jogue.Trescanosrest--;
-                                    BarcoAoFundo = true;
-                                }
-                            }
 
-                            if (opcaoX < 8)
-                            {
-                                if (jogue.Grelha[opcaoY, opcaoX + 1] == 3 && jogue.Grelha[opcaoY, opcaoX + 2] == 3)
-                                {
-                                    jogue.Trescanosrest--;
-                                    BarcoAoFundo = true;
-                                }
-                            }
-                            if (opcaoX > 1)
-                            {
-                                if (jogue.Grelha[opcaoY, opcaoX - 2] == 3 && jogue.Grelha[opcaoY, opcaoX - 1] == 3)
-                                {
-                                    jogue.Trescanosrest--;
-                                    BarcoAoFundo = true;
-                                }
-                            }
-                            if (opcaoX < 9 && opcaoX > 0)
-                            {
-                                if (jogue.Grelha[opcaoY, opcaoX - 1] == 3 && jogue.Grelha[opcaoY, opcaoX + 1] == 3)
-                                {
-                                    jogue.Trescanosrest--;
-                                    BarcoAoFundo = true;
-                                }
-                            }
-                        }//3 canos
-                        else if (EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 1)
-                        {
-                            BarcoAoFundo = Barco.AoFundo(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]);
-                            jogue.Submanrinosrest--;
-                        }//Subs
-                        else if (EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 4)
-                        {
-                            BarcoAoFundo = Barco.AoFundo(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]);
-                            if (BarcoAoFundo == true)
-                            {
-                                jogue.Quatrocanosrest--;
-                            }
-                        }//quatrocanos
-                        else if (EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx] == 5)
-                        {
-                            BarcoAoFundo = Barco.AoFundo(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]);
-                            if (BarcoAoFundo == true)
-                            {
-                                jogue.Portaavioesrest--;
+                        BarcoAoFundo = Barco.AoFundo(ResultTiro, jogue,opcaoY,opcaoX);
+                        jogue = Barco.Jog;
 
-                                if (jogue.Missao != "Antiaérea")
-                                {
-                                    if (jogue.Quadradosabater == 0)
-                                    {
-                                        jogoganho = true;
-                                    }
-                                }
-                            }
-                        }//portaavioes
+                        jogue.Grelha[opcaoY, opcaoX] = ResultTiro;
 
                         if (jogue.Quadradosabater == 0)
                         {
                             jogoganho = true;
-                            //grelha=espocupado
                         }
-                        jogue.Grelha[opcaoY, opcaoX] = EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx];
-                        //disparou
-                        jogue.Disparou(EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx], jogoganho, BarcoAoFundo);
+
+                        jogue.Disparou(ResultTiro, jogoganho, BarcoAoFundo);
+
                         jogue.TiroNaMesmaCoord = false;
+
                         if (jogoganho == true)
                         {
                             jogue.FimdoJogo = "Ganhaste!";

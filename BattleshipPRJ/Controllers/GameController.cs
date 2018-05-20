@@ -124,6 +124,10 @@ namespace BattleshipPRJ.Controllers
                     {
                         jogue.ResultadoJogada = jogue.ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
                     }
+                    if (jogue.Misseis < 5)
+                    {
+                        jogue.ResultadoJogada = jogue.ResultadoJogada + ", apenas te sobram " + jogue.Misseis + " Misseis!";
+                    }
 
                     jogue.Disparou(gs.DamagedShipSize, false, false);
 

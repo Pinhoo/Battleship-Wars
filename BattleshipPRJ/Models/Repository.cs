@@ -23,7 +23,7 @@ namespace BattleshipPRJ.Models
         {
 
             Jogos.Add(j);
-
+            Hi_score.inicializar();
         }
 
         public static Jogo ObterJogo(int id)

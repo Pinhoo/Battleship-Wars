@@ -11,6 +11,11 @@ namespace BattleshipPRJ.Models
         public static double Pontuacao { get; set; }
         public static double Bonus { get; set; }
 
+        public static void inicializar()
+        {
+            Bonus = -0.25;
+        }
+
         public static void AdicionarJogada(bool d_BarcoAtingido, bool d_BarcoAfundado, bool d_Penalizacao, bool d_Ganho, int d_Missseis)
         {
 
