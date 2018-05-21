@@ -283,8 +283,17 @@ namespace BattleshipPRJ.Models
 
         public int CompareTo(object obj)
         {
-            Jogo j2 = (Jogo) obj;
+            Jogo j2 = (Jogo)obj;
+
+            if (j2.Score > Score)
+                return 1;
+            if (j2.Score == Score)
+                return 0;
+            if (j2.Score < Score)
+                return -1;
             return Score.CompareTo(j2.Score);
+
+
         }
         
         public bool ConfirmarDesistir(bool Confirmado)
