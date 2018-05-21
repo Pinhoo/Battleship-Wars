@@ -123,7 +123,7 @@ namespace BattleshipPRJ.Models
         {
             if (Misseis < 6)
             {
-                return " Apenas te sobram " + Misseis + " mísseis!";
+                return " Restam-te " + Misseis;
             }
             else return null;
         }
