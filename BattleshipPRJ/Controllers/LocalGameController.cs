@@ -47,18 +47,17 @@ namespace BattleshipPRJ.Controllers
         public IActionResult LocalGame(int id, int opcaoX, int opcaoY, string submitButton)
         {
             Jogo jogue = Repository.ObterJogo(id);
-
-            int ResultTiro = EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx];
-
+            
             jogue.Coordx = opcaoX;
 
             jogue.Coordy = opcaoY;
 
+            int ResultTiro = EspacoOcupado.BarcosO[opcaoY, opcaoX];
 
             if (submitButton == "Disparar")
             {
 
-
+                
                 if (jogue.Grelha[opcaoY, opcaoX] == ResultTiro)
                 {
                     if (jogue.Misseis != 0)
