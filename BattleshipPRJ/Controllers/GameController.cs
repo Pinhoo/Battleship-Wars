@@ -226,9 +226,26 @@ namespace BattleshipPRJ.Controllers
             {
                 if(jogue.ConfirmarDesistir(true) == true)
                 { 
+            else if(submitButton== "Desistir")
+            {
+
+
+                HttpClient client = MyHttpClient.Client;
+                string path = "api/Play";
+                PlayRequest pr = new PlayRequest(id, opcaoX, opcaoY, PlayerAction.Quit);
+                string json = JsonConvert.SerializeObject(pr);
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
+                request.Content = new StringContent(json, System.Text.Encoding.UTF8,
+                "application/json");
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode) { return Redirect("/"); }
+                string json_r = await response.Content.ReadAsStringAsync();
+                GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
+
                 jogue.FimdoJogo = "Derrota!";
                 jogue.Gameover = true;
-                }
                 return View(jogue);
             }
             else
@@ -335,7 +352,7 @@ namespace BattleshipPRJ.Controllers
                     jogue.Disparou(gs.DamagedShipSize, true, true);
                     jogue.FimdoJogo = "Ganhaste!";
 
-                    return View("GameOver", jogue);
+                    return View(jogue);
                 }
                 else if (gs.Result == Resultado.InvalidShot)
                 {
@@ -345,7 +362,7 @@ namespace BattleshipPRJ.Controllers
                 {
                     jogue.FimdoJogo = "Perdeste!";
 
-                    return View("GameOver", jogue);
+                    return View(jogue);
                 }
                 else if (gs.Result == Resultado.NoResult)
                 {
