@@ -124,10 +124,7 @@ namespace BattleshipPRJ.Controllers
                     {
                         jogue.ResultadoJogada = jogue.ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
                     }
-                    if (jogue.Misseis < 5)
-                    {
-                        jogue.ResultadoJogada = jogue.ResultadoJogada + ", apenas te sobram " + jogue.Misseis + " Misseis!";
-                    }
+                    
 
                     jogue.Disparou(gs.DamagedShipSize, false, false);
 
@@ -210,7 +207,8 @@ namespace BattleshipPRJ.Controllers
                 {
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                 }
-                
+
+                jogue.ResultadoJogada = jogue.ResultadoJogada + jogue.AvisarMisseisRestantes();
 
             }
             else if (submitButton == "Marcar")
@@ -224,12 +222,18 @@ namespace BattleshipPRJ.Controllers
                     jogue.Grelha[opcaoY, opcaoX] = -1;
                 }
             }
-            else if(submitButton== "Desistir")
+            if(submitButton== "Desistir")
             {
+                if(jogue.ConfirmarDesistir(true) == true)
+                { 
                 jogue.FimdoJogo = "Derrota!";
                 jogue.Gameover = true;
+                }
                 return View(jogue);
-
+            }
+            else
+            {
+                jogue.ConfirmarDesistir(false);
             }
 
 

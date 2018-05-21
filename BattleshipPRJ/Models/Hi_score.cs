@@ -14,6 +14,7 @@ namespace BattleshipPRJ.Models
         public static void inicializar()
         {
             Bonus = -0.25;
+            Pontuacao = 0;
         }
 
         public static void AdicionarJogada(bool d_BarcoAtingido, bool d_BarcoAfundado, bool d_Penalizacao, bool d_Ganho, int d_Missseis)

@@ -64,6 +64,7 @@ namespace BattleshipPRJ.Models
 
         public double PercentagemAfundado { get; set; }
 
+        public bool Desistir { get; set; }
 
         private int[,] grelha;
 
@@ -116,9 +117,16 @@ namespace BattleshipPRJ.Models
             {
                 return "Começa por disparar num quadrado!";
             }
-
         }
 
+        public string AvisarMisseisRestantes()
+        {
+            if (Misseis < 5)
+            {
+                return " Apenas te sobram " + Misseis + " misseis!";
+            }
+            else return null;
+        }
 
         public void AltMissao()
         {
@@ -270,7 +278,7 @@ namespace BattleshipPRJ.Models
         public void CalcularPercentagens()
         {
             PercentagemAlvo = 100 * TiroAlvo / Tiros;
-            PercentagemAfundado = 100 * (Submanrinosrest + Doiscanosrest + Trescanosrest + Quatrocanosrest + Portaavioesrest) / 11;
+            PercentagemAfundado = 100 - (100 * (Submanrinosrest + Doiscanosrest + Trescanosrest + Quatrocanosrest + Portaavioesrest) / 11);
         }
 
 
@@ -278,6 +286,29 @@ namespace BattleshipPRJ.Models
         {
             Jogo j2 = (Jogo) obj;
             return Score.CompareTo(j2.Score);
+        }
+
+        
+
+        public bool ConfirmarDesistir(bool Confirmado)
+        {
+            if (Confirmado == true)
+            {
+                if (Desistir == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    Desistir = true;
+                    return false;
+                }
+            }
+            else
+            {
+                Desistir = false;
+                return false;
+            }
         }
 
     }
