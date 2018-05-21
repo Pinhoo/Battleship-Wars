@@ -118,26 +118,26 @@ namespace BattleshipPRJ.Controllers
                     else if (gs.DamagedShipSize == 5)
                     {
                         jogue.ResultadoJogada = "Tiro no porta-aviões!";
-                        
+
                     }
                     else
                     {
                         jogue.ResultadoJogada = jogue.ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
                     }
-                    
+
 
                     jogue.Disparou(gs.DamagedShipSize, false, false);
 
-                    
+
 
                 }
                 else if (gs.Result == Resultado.SuccessMiss)
                 {
-                    
+
                     jogue.Grelha[opcaoY, opcaoX] = 0; //or gs.DamagedShipSize
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     jogue.Disparou(0, false, false);
-                    
+
                 }
                 else if (gs.Result == Resultado.SuccessSink)
                 {
@@ -147,7 +147,7 @@ namespace BattleshipPRJ.Controllers
 
                     if (gs.DamagedShipSize == 1)
                     {
-                        if(jogue.Submanrinosrest==0)
+                        if (jogue.Submanrinosrest == 0)
                         {
                             jogue.ResultadoJogada = "Afundaste o último submarino!";
                         }
@@ -164,7 +164,7 @@ namespace BattleshipPRJ.Controllers
                     }
                     else
                     {
-                        if (jogue.Doiscanosrest == 0 || jogue.Trescanosrest == 0 || jogue.Quatrocanosrest==0)
+                        if (jogue.Doiscanosrest == 0 || jogue.Trescanosrest == 0 || jogue.Quatrocanosrest == 0)
                         {
                             jogue.ResultadoJogada = "Afundaste o último barco de" + gs.DamagedShipSize + " canos!";
                         }
@@ -173,13 +173,13 @@ namespace BattleshipPRJ.Controllers
 
                     jogue.Disparou(gs.DamagedShipSize, false, true);
 
-                    
+
                 }
                 else if (gs.Result == Resultado.SuccessRepeat)
                 {
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     jogue.DisparouNasMesmasCoords();
-                    
+
                 }
                 else if (gs.Result == Resultado.SuccessVictory)
                 {
@@ -201,7 +201,7 @@ namespace BattleshipPRJ.Controllers
                     jogue.FimdoJogo = "Derrota!";
                     jogue.Gameover = true;
 
-                    return View( jogue);
+                    return View(jogue);
                 }
                 else if (gs.Result == Resultado.NoResult)
                 {
@@ -222,30 +222,27 @@ namespace BattleshipPRJ.Controllers
                     jogue.Grelha[opcaoY, opcaoX] = -1;
                 }
             }
-            if(submitButton== "Desistir")
+            if (submitButton == "Desistir")
             {
-                if(jogue.ConfirmarDesistir(true) == true)
-                { 
-            else if(submitButton== "Desistir")
-            {
+                if (jogue.ConfirmarDesistir(true) == true)
+                {
+                    HttpClient client = MyHttpClient.Client;
+                    string path = "api/Play";
+                    PlayRequest pr = new PlayRequest(id, opcaoX, opcaoY, PlayerAction.Quit);
+                    string json = JsonConvert.SerializeObject(pr);
 
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
+                    request.Content = new StringContent(json, System.Text.Encoding.UTF8,
+                    "application/json");
+                    HttpResponseMessage response = await client.SendAsync(request);
 
-                HttpClient client = MyHttpClient.Client;
-                string path = "api/Play";
-                PlayRequest pr = new PlayRequest(id, opcaoX, opcaoY, PlayerAction.Quit);
-                string json = JsonConvert.SerializeObject(pr);
+                    if (!response.IsSuccessStatusCode) { return Redirect("/"); }
+                    string json_r = await response.Content.ReadAsStringAsync();
+                    GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
 
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
-                request.Content = new StringContent(json, System.Text.Encoding.UTF8,
-                "application/json");
-                HttpResponseMessage response = await client.SendAsync(request);
-
-                if (!response.IsSuccessStatusCode) { return Redirect("/"); }
-                string json_r = await response.Content.ReadAsStringAsync();
-                GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
-
-                jogue.FimdoJogo = "Derrota!";
-                jogue.Gameover = true;
+                    jogue.FimdoJogo = "Derrota!";
+                    jogue.Gameover = true;
+                }
                 return View(jogue);
             }
             else

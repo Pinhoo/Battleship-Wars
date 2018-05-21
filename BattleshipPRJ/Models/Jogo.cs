@@ -281,15 +281,12 @@ namespace BattleshipPRJ.Models
             PercentagemAfundado = 100 - (100 * (Submanrinosrest + Doiscanosrest + Trescanosrest + Quatrocanosrest + Portaavioesrest) / 11);
         }
 
-
         public int CompareTo(object obj)
         {
             Jogo j2 = (Jogo) obj;
             return Score.CompareTo(j2.Score);
         }
-
         
-
         public bool ConfirmarDesistir(bool Confirmado)
         {
             if (Confirmado == true)

@@ -73,21 +73,20 @@ else
                 <option value="9">10</option>
             </select>
 
-            <button class="btn btn-default" type="submit" name="submitbutton" value="Marcar">Marcar </button>
+            
             <button class="btn btn-danger" type="submit" name="submitbutton" value="Disparar"><span class="glyphicon glyphicon-screenshot"></span>Disparar </button>
             
-            <div class="btndesistir">
-                
+            <div class="btndesistir">                
                 <button class="btn btn-default" type="submit" name="submitbutton" value="Desistir">@if(Model.Desistir == true)
                 {
-                    @:Tem a certeza?
+                    @:Tens a certeza?
                 }
                 else
                 {
                     @:Desistir
                 }
                 </button>
-
+                <button class="btn btn-default" type="submit" name="submitbutton" value="Marcar">Marcar </button>
         </div>
 
     </form>
