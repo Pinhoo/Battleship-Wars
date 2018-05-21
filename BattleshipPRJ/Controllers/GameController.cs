@@ -128,6 +128,12 @@ namespace BattleshipPRJ.Controllers
 
                     jogue.Disparou(gs.DamagedShipSize, false, false);
 
+                    if (jogue.Misseis == 0)
+                    {
+                        jogue.FimdoJogo = "Derrota";
+                        jogue.Gameover = true;
+                    }
+
 
 
                 }
@@ -137,6 +143,12 @@ namespace BattleshipPRJ.Controllers
                     jogue.Grelha[opcaoY, opcaoX] = 0; //or gs.DamagedShipSize
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     jogue.Disparou(0, false, false);
+
+                    if (jogue.Misseis == 0)
+                    {
+                        jogue.FimdoJogo = "Derrota";
+                        jogue.Gameover = true;
+                    }
 
                 }
                 else if (gs.Result == Resultado.SuccessSink)
@@ -180,16 +192,21 @@ namespace BattleshipPRJ.Controllers
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     jogue.DisparouNasMesmasCoords();
 
+                    if(jogue.Misseis==0)
+                    {
+                        jogue.FimdoJogo = "Derrota";
+                        jogue.Gameover = true;
+                    }
+
                 }
                 else if (gs.Result == Resultado.SuccessVictory)
                 {
                     jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                     jogue.Disparou(gs.DamagedShipSize, true, true);
-                    jogue.FimdoJogo = "Vitória!";
+                    jogue.FimdoJogo = "Vitória";
                     jogue.Gameover = true;
-
-                    return View(jogue);
+                    
                 }
                 else if (gs.Result == Resultado.InvalidShot)
                 {
@@ -198,10 +215,9 @@ namespace BattleshipPRJ.Controllers
                 else if (gs.Result == Resultado.GameHasEnded)
                 {
 
-                    jogue.FimdoJogo = "Derrota!";
+                    jogue.FimdoJogo = "Derrota";
                     jogue.Gameover = true;
-
-                    return View(jogue);
+                    
                 }
                 else if (gs.Result == Resultado.NoResult)
                 {
@@ -240,10 +256,10 @@ namespace BattleshipPRJ.Controllers
                     string json_r = await response.Content.ReadAsStringAsync();
                     GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
 
-                    jogue.FimdoJogo = "Derrota!";
+                    jogue.FimdoJogo = "Derrota";
                     jogue.Gameover = true;
                 }
-                return View(jogue);
+                
             }
             else
             {

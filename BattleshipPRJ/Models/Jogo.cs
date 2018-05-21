@@ -98,11 +98,11 @@ namespace BattleshipPRJ.Models
             }
             else if (result == Resultado.SuccessRepeat)
             {
-                return "Foste penalizado em 100 pontos por disparar no mesmo quadrado";
+                return "Foste penalizado em 100 pontos por disparar no mesmo quadrado.";
             }
             else if (result == Resultado.SuccessVictory)
             {
-                return "Ganhaste, parabéns!";
+                return "Ganhaste, +1000!";
             }
             else if (result == Resultado.InvalidShot)
             {
@@ -121,9 +121,9 @@ namespace BattleshipPRJ.Models
 
         public string AvisarMisseisRestantes()
         {
-            if (Misseis < 5)
+            if (Misseis < 6)
             {
-                return " Apenas te sobram " + Misseis + " misseis!";
+                return " Apenas te sobram " + Misseis + " mísseis!";
             }
             else return null;
         }
