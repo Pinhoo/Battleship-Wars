@@ -224,12 +224,12 @@ namespace BattleshipPRJ.Controllers
                     jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
                 }
 
-                if (jogue.Misseis == 1)
+                if (jogue.Misseis == 1 && jogue.Gameover != true)
                 {
                     jogue.ResultadoJogada = jogue.ResultadoJogada + jogue.AvisarMisseisRestantes() + " míssil!";
                 }
 
-                if( jogue.Misseis < 6)
+                if( jogue.Misseis < 6 && jogue.Misseis != 1 && jogue.Gameover != true)
                 { 
                 jogue.ResultadoJogada = jogue.ResultadoJogada + jogue.AvisarMisseisRestantes() + " mísseis!";
                 }
