@@ -9,6 +9,9 @@ namespace BattleshipPRJ.Models
     {
         private static List<Jogo> jogos = new List<Jogo>();
 
+        private static ListasJogos lista;
+
+
         public static List<Jogo> Jogos
         {
 
@@ -18,10 +21,17 @@ namespace BattleshipPRJ.Models
 
             }
         }
-
-        public static void CriarJogo(Jogo j)
+        public static ListasJogos Lista
         {
 
+            get
+            {
+                return lista;
+
+            }
+        }
+        public static void CriarJogo(Jogo j)
+        {
             Jogos.Add(j);
             Hi_score.inicializar();
         }
@@ -54,4 +64,22 @@ namespace BattleshipPRJ.Models
         }
 
     }
+
+    public class ListasJogos
+    {
+        private List<Jogo> anti = new List<Jogo>(1);
+        private List<Jogo> dt = new List<Jogo>(1);
+
+        public List<Jogo> Anti
+        {
+            get { return anti; }
+            set { anti = value; }
+        }
+        public List<Jogo> Dt
+        {
+            get { return dt; }
+            set { dt = value; }
+        }
+    }
+    
 }

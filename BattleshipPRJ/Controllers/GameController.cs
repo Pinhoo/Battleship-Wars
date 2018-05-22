@@ -287,7 +287,33 @@ namespace BattleshipPRJ.Controllers
         {
             List<Jogo> j = Repository.Jogos;
             j.Sort();
-            return View(j);
+            List<Jogo> Anti = new List<Jogo>();
+            List<Jogo> Dt = new List<Jogo>();
+            foreach (Jogo J in j)
+            {
+                if (J.Missao == "Antiaérea")
+                {
+                    Anti.Add(J);
+                    if(Anti.Count > 1)
+                    {
+                        Anti.Remove(J);
+                    }
+                }
+                else
+                {
+                    Dt.Add(J);
+                    if (Dt.Count > 1)
+                    {
+                        Dt.Remove(J);
+                    }
+                }
+        }
+            List<List<Jogo>> Jogos = new List<List<Jogo>>();
+            if(Anti.Count!=0)
+            { Jogos.Add(Anti);}
+            if (Dt.Count != 0)
+            { Jogos.Add(Dt); }        
+            return View(Jogos);
         }
 
         public IActionResult ModoAutonomo()
