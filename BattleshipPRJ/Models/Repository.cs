@@ -9,8 +9,6 @@ namespace BattleshipPRJ.Models
     {
         private static List<Jogo> jogos = new List<Jogo>();
 
-        private static ListasJogos lista;
-
 
         public static List<Jogo> Jogos
         {
@@ -21,19 +19,10 @@ namespace BattleshipPRJ.Models
 
             }
         }
-        public static ListasJogos Lista
-        {
-
-            get
-            {
-                return lista;
-
-            }
-        }
         public static void CriarJogo(Jogo j)
         {
             Jogos.Add(j);
-            Hi_score.inicializar();
+            j.inicializar();
         }
 
         public static Jogo ObterJogo(int id)

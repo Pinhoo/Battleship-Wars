@@ -24,10 +24,6 @@ namespace BattleshipPRJ.Models
 
         public double Score { get; set; }
 
-        public int Coordx { get; set; }
-
-        public int Coordy { get; set; }
-
         public int Portaavioesrest { get; set; }
 
         public int Quatrocanosrest { get; set; }
@@ -46,7 +42,7 @@ namespace BattleshipPRJ.Models
 
         public bool Barcoaofundo { get; set; }
 
-        public bool TiroNaMesmaCoord { get; set; }
+       public bool TiroNaMesmaCoord { get; set; }
 
         public string ResultadoJogada { get; set; }
 
@@ -65,6 +61,14 @@ namespace BattleshipPRJ.Models
         public double PercentagemAfundado { get; set; }
 
         public bool Desistir { get; set; }
+
+        public double Bonus { get; set; }
+
+        public int Coordx { get; set; }
+
+        public int Coordy { get; set; }
+
+
 
         private int[,] grelha;
 
@@ -102,7 +106,7 @@ namespace BattleshipPRJ.Models
             }
             else if (result == Resultado.SuccessVictory)
             {
-                return "Ganhaste, +1000!";
+                return "Ganhaste!";
             }
             else if (result == Resultado.InvalidShot)
             {
@@ -197,7 +201,7 @@ namespace BattleshipPRJ.Models
                 TiroAlvo++;
                 if (ganho == false)
                 {
-                    Hi_score.AdicionarJogada(true, BarcoAoFundo, false, false, 0);
+                    AdicionarJogada(true, BarcoAoFundo, false, false, 0);
                     if (Missao == "Antiaérea")
                     {
                         if (Tiro == 5)
@@ -213,7 +217,7 @@ namespace BattleshipPRJ.Models
                 }
                 else
                 {
-                    Hi_score.AdicionarJogada(true, BarcoAoFundo, false, true, Misseis);
+                    AdicionarJogada(true, BarcoAoFundo, false, true, Misseis);
                     if (Missao == "Antiaérea")
                     {
                         if (Tiro == 5)
@@ -230,9 +234,9 @@ namespace BattleshipPRJ.Models
             else
             {
                 TiroAgua++;
-                Hi_score.AdicionarJogada(false, false, false, false, 0);
+                AdicionarJogada(false, false, false, false, 0);
             }
-            Score = Hi_score.Receber();
+            Score = Receber();
             Barcoaofundo = BarcoAoFundo;
             CalcularPercentagens();
         }
@@ -242,8 +246,8 @@ namespace BattleshipPRJ.Models
             TiroRepetido++;
             Misseis = Misseis - 1;
             NumeroDeJogadas = NumeroDeJogadas + 1;
-            Hi_score.AdicionarJogada(false, false, true, false, 0);
-            Score = Hi_score.Receber();
+            AdicionarJogada(false, false, true, false, 0);
+            Score = Receber();
             Barcoaofundo = false;
             CalcularPercentagens();
         }
@@ -317,5 +321,197 @@ namespace BattleshipPRJ.Models
             }
         }
 
+        public void inicializar()
+        {
+            Bonus = -0.25;
+            Score = 0;
+        }
+
+        public void AdicionarJogada(bool d_BarcoAtingido, bool d_BarcoAfundado, bool d_Penalizacao, bool d_Ganho, int d_Missseis)
+        {
+
+            if (d_BarcoAtingido == true)
+            {
+
+                if (Bonus < 1)
+                {
+                    Bonus = Bonus + 0.25;
+                }
+            }
+            else
+            {
+                Bonus = -0.25;
+            }
+
+            if (d_BarcoAtingido == true)
+            {
+                Score = Score + (100 * (1 + Bonus));
+            }
+            if (d_BarcoAfundado == true)
+            {
+                Score = Score + 200;
+            }
+            if (d_Penalizacao == true)
+            {
+                Score = Score - 100;
+            }
+            if (d_Ganho == true)
+            {
+                Score = Score + 1000 + (d_Missseis * 250);
+            }
+
+        }
+
+
+        public double Receber()
+        {
+            return Score;
+        }
+
+        public void Atualizar(GameState gs,int opcaoY,int opcaoX)
+        {
+            if (gs.Result == Resultado.SuccessHit)
+            {
+
+                Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
+                if (gs.DamagedShipSize == 1)
+                {
+                    ResultadoJogada = "Tiro num submarino!";
+
+                }
+                else if (gs.DamagedShipSize == 5)
+                {
+                    ResultadoJogada = "Tiro no porta-aviões!";
+
+                }
+                else
+                {
+                    ResultadoJogada = ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
+                }
+
+
+                Disparou(gs.DamagedShipSize, false, false);
+
+                if (Misseis == 0)
+                {
+                    FimdoJogo = "Derrota";
+                    Gameover = true;
+                }
+
+
+
+            }
+            else if (gs.Result == Resultado.SuccessMiss)
+            {
+
+                Grelha[opcaoY, opcaoX] = 0; //or gs.DamagedShipSize
+                ResultadoJogada = ReceberResult(gs.Result);
+                Disparou(0, false, false);
+
+                if (Misseis == 0)
+                {
+                    FimdoJogo = "Derrota";
+                    Gameover = true;
+                }
+
+            }
+            else if (gs.Result == Resultado.SuccessSink)
+            {
+                Grelha[opcaoY, opcaoX] = gs.DamagedShipSize; //or gs.DamagedShipSize
+
+                Afundou(gs.DamagedShipSize);
+
+                if (gs.DamagedShipSize == 1)
+                {
+                    if (Submanrinosrest == 0)
+                    {
+                        ResultadoJogada = "Afundaste o último submarino!";
+                    }
+                    ResultadoJogada = "Afundaste um submarino!";
+
+                }
+                else if (gs.DamagedShipSize == 5)
+                {
+                    if (Portaavioesrest == 0)
+                    {
+                        ResultadoJogada = "Afundaste o último porta-aviões!";
+                    }
+                    ResultadoJogada = "Afundaste o porta-aviões!";
+                }
+                else
+                {
+                    if (Doiscanosrest == 0 || Trescanosrest == 0 || Quatrocanosrest == 0)
+                    {
+                        ResultadoJogada = "Afundaste o último barco de" + gs.DamagedShipSize + " canos!";
+                    }
+                   ResultadoJogada = ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
+                }
+
+                Disparou(gs.DamagedShipSize, false, true);
+
+
+            }
+            else if (gs.Result == Resultado.SuccessRepeat)
+            {
+                ResultadoJogada = ReceberResult(gs.Result);
+                DisparouNasMesmasCoords();
+
+                if (Misseis == 0)
+                {
+                    FimdoJogo = "Derrota";
+                    Gameover = true;
+                }
+
+            }
+            else if (gs.Result == Resultado.SuccessVictory)
+            {
+                Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
+                ResultadoJogada = ReceberResult(gs.Result);
+                Disparou(gs.DamagedShipSize, true, true);
+                FimdoJogo = "Vitória";
+                Gameover = true;
+
+            }
+            else if (gs.Result == Resultado.InvalidShot)
+            {
+                ResultadoJogada = ReceberResult(gs.Result);
+            }
+            else if (gs.Result == Resultado.GameHasEnded)
+            {
+
+                FimdoJogo = "Derrota";
+                Gameover = true;
+
+            }
+            else if (gs.Result == Resultado.NoResult)
+            {
+                ResultadoJogada = ReceberResult(gs.Result);
+            }
+
+            if (Misseis == 1 && Gameover != true)
+            {
+                ResultadoJogada = ResultadoJogada + AvisarMisseisRestantes() + " míssil!";
+            }
+
+            if (Misseis < 6 && Misseis != 1 && Gameover != true)
+            {
+                ResultadoJogada = ResultadoJogada + AvisarMisseisRestantes() + " mísseis!";
+            }
+
+
+        }
+
+        public void Marcar(int opcaoY, int opcaoX)
+        {
+            if (Grelha[opcaoY, opcaoX] == -1)
+            {
+                Grelha[opcaoY, opcaoX] = 7;
+            }
+            else if (Grelha[opcaoY, opcaoX] == 7)
+            {
+                Grelha[opcaoY, opcaoX] = -1;
+            }
+
+        }
     }
 }

@@ -48,9 +48,6 @@ namespace BattleshipPRJ.Controllers
         {
             Jogo jogue = Repository.ObterJogo(id);
             
-            jogue.Coordx = opcaoX;
-
-            jogue.Coordy = opcaoY;
 
             int ResultTiro = EspacoOcupado.BarcosO[opcaoY, opcaoX];
 
@@ -123,22 +120,6 @@ namespace BattleshipPRJ.Controllers
             return View(jogue);
 
         }
-        
-
-        //public IActionResult JogosCriadosTeste()
-        //{
-        //    List<Jogo> jogos = Repository.Jogos;
-
-        //    return View(jogos);
-
-        //}
-
-        //public IActionResult Teste(List<Jogo> jogues)
-        //{
-        //    Repository.ApagarJogos();
-
-        //    return View("JogosCriadosTeste", jogues);
-
-        //}
+       
     }
 }

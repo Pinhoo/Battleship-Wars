@@ -36,7 +36,7 @@
 }
 else
 {
-
+    @Model.ID
     <div id="contain">
 
         <form class="form-inline" method="post" asp-action="Game">
@@ -73,27 +73,28 @@ else
                 <option value="9">10</option>
             </select>
 
-            
+
             <button class="btn btn-danger" type="submit" name="submitbutton" value="Disparar"><span class="glyphicon glyphicon-screenshot"></span>Disparar </button>
-            
-            <div class="btndesistir">                
-                <button class="btn btn-default" type="submit" name="submitbutton" value="Desistir">@if(Model.Desistir == true)
+
+            <div class="btndesistir">
+                <button class="btn btn-default" type="submit" name="submitbutton" value="Desistir">
+                    @if (Model.Desistir == true)
                 {
                     @:Tens a certeza?
-                }
-                else
-                {
-                    @:Desistir
-                }
-                </button>
-                <button class="btn btn-default" type="submit" name="submitbutton" value="Marcar">Marcar </button>
+            }
+            else
+            {
+                @:Desistir
+        }
+            </button>
+            <button class="btn btn-default" type="submit" name="submitbutton" value="Marcar">Marcar </button>
         </div>
 
     </form>
 
 
 
-</div>
+    </div>
 
 
 }
