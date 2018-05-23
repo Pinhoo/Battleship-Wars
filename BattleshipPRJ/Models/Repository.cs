@@ -56,22 +56,5 @@ namespace BattleshipPRJ.Models
 
 
     }
-
-    public class ListasJogos
-    {
-        private List<Jogo> anti = new List<Jogo>(1);
-        private List<Jogo> dt = new List<Jogo>(1);
-
-        public List<Jogo> Anti
-        {
-            get { return anti; }
-            set { anti = value; }
-        }
-        public List<Jogo> Dt
-        {
-            get { return dt; }
-            set { dt = value; }
-        }
-    }
     
 }

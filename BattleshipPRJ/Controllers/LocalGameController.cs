@@ -66,6 +66,7 @@ namespace BattleshipPRJ.Controllers
                     else
                     {
                         jogue.FimdoJogo = "Derrota";
+                        jogue.Gameover = true;
                     }
                 }
                 else
@@ -73,19 +74,47 @@ namespace BattleshipPRJ.Controllers
 
                     if (jogue.Misseis != 0)//EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]=1,2,3,4,5
                     {
-                        bool BarcoAoFundo = false;
                         bool jogoganho = false;
-
-                        BarcoAoFundo = Barco.AoFundo(ResultTiro, jogue, opcaoY, opcaoX);
-                        jogue = Barco.Jog;
+                        
+                        jogue.LocalAoFundo(ResultTiro, opcaoY, opcaoX);
 
                         jogue.Grelha[opcaoY, opcaoX] = ResultTiro;
 
-                        jogue.Disparou(ResultTiro, jogoganho, BarcoAoFundo);
+                        if(ResultTiro != 0)//tem de se utilizar isto para permitir o funcionamento da app online
+                        {
+                            if(jogue.Missao == "Antiaérea")
+                            {
+                                if(ResultTiro==5)
+                                {
+                                    jogue.Quadradosabater--;
+                                }
+                            }
+                            else
+                            {
+                                jogue.Quadradosabater --;
+                            }                            
+                        }
 
                         if (jogue.Quadradosabater == 0)
                         {
                             jogoganho = true;
+                        }
+
+                        jogue.Disparou(ResultTiro, jogoganho, jogue.Barcoaofundo);
+
+                        if (ResultTiro != 0)
+                        {
+                            if (jogue.Missao == "Antiaérea")
+                            {
+                                if (ResultTiro == 5)
+                                {
+                                    jogue.Quadradosabater++;
+                                }
+                            }
+                            else
+                            {
+                                jogue.Quadradosabater++;
+                            }
                         }
 
                         jogue.TiroNaMesmaCoord = false;
@@ -93,13 +122,13 @@ namespace BattleshipPRJ.Controllers
                         if (jogoganho == true)
                         {
                             jogue.FimdoJogo = "Vitória";
-                            //gameover screen ganhou
+                            jogue.Gameover = true;
                         }
                     }
                     else
                     {
-                        //gameover screen
                         jogue.FimdoJogo = "Derrota";
+                        jogue.Gameover = true;
                     }
                 }
             }

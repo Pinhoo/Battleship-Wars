@@ -70,6 +70,10 @@ namespace BattleshipPRJ.Models
 
         public bool ModoLocal { get; set; }
 
+        public int LocalPortaAvioes { get; set; }
+
+        public int Local4Canos { get; set; }
+
 
 
         private int[,] grelha;
@@ -204,17 +208,7 @@ namespace BattleshipPRJ.Models
                 if (ganho == false)
                 {
                     AdicionarJogada(true, BarcoAoFundo, false, false, 0);
-                    if (Missao == "Antiaérea")
-                    {
-                        if (Tiro == 5)
-                        {
-                            Quadradosabater = Quadradosabater - 1;
-                        }
-                    }
-                    else
-                    {
-                        Quadradosabater = Quadradosabater - 1;
-                    }
+                    
 
                 }
                 else
@@ -514,6 +508,134 @@ namespace BattleshipPRJ.Models
                 Grelha[opcaoY, opcaoX] = -1;
             }
 
+        }
+
+        public void LocalAoFundo(int Barco, int opcaoY, int opcaoX)
+        {
+            if (Barco == 1)
+            {
+                Submanrinosrest--;
+                Barcoaofundo = true;
+
+            }
+            if (Barco == 2)
+            {
+                if (opcaoY < 9)
+                {
+                    if (Grelha[opcaoY + 1, opcaoX] == 2)
+                    {
+
+                        Doiscanosrest--;
+                        Barcoaofundo = true;
+                    }
+                }
+                if (opcaoY > 0)
+                {
+                    if (Grelha[opcaoY - 1, opcaoX] == 2)
+                    {
+
+                        Doiscanosrest--;
+                        Barcoaofundo = true;
+
+                    }
+                }
+                if (opcaoX < 9)
+                {
+                    if (Grelha[opcaoY, opcaoX + 1] == 2)
+                    {
+                        Doiscanosrest--;
+                        Barcoaofundo = true;
+                    }
+                }
+                if (opcaoX > 0)
+                {
+                    if (Grelha[opcaoY, opcaoX - 1] == 2)
+                    {
+                        Doiscanosrest--;
+                        Barcoaofundo = true;
+                    }
+                }
+            }//2 canos
+            if (Barco == 3)
+            {
+                if (opcaoY < 8)
+                {
+                    if (Grelha[opcaoY + 1, opcaoX] == 3 && Grelha[opcaoY + 2, opcaoX] == 3)
+                    {
+                        Trescanosrest--;
+                        Barcoaofundo = true;
+                    }
+                }
+                if (opcaoY < 9 && opcaoY > 0)
+                {
+                    if (Grelha[opcaoY + 1, opcaoX] == 3 && Grelha[opcaoY - 1, opcaoX] == 3)
+                    {
+                        Trescanosrest--;
+                        Barcoaofundo = true;
+                    }
+                }
+                if (opcaoY > 1)
+                {
+                    if (Grelha[opcaoY - 2, opcaoX] == 3 && Grelha[opcaoY - 1, opcaoX] == 3)
+                    {
+                        Trescanosrest--;
+                        Barcoaofundo = true;
+                    }
+                }
+
+                if (opcaoX < 8)
+                {
+                    if (Grelha[opcaoY, opcaoX + 1] == 3 && Grelha[opcaoY, opcaoX + 2] == 3)
+                    {
+                        Trescanosrest--;
+                        Barcoaofundo = true;
+                    }
+                }
+                if (opcaoX > 1)
+                {
+                    if (Grelha[opcaoY, opcaoX - 2] == 3 && Grelha[opcaoY, opcaoX - 1] == 3)
+                    {
+                        Trescanosrest--;
+                        Barcoaofundo = true;
+                    }
+                }
+                if (opcaoX < 9 && opcaoX > 0)
+                {
+                    if (Grelha[opcaoY, opcaoX - 1] == 3 && Grelha[opcaoY, opcaoX + 1] == 3)
+                    {
+                        Trescanosrest--;
+                        Barcoaofundo = true;
+                    }
+                }
+            }//3 canos
+            if (Barco == 4)
+            {
+                Local4Canos++;
+                if (Local4Canos == 4)
+                {
+                    Quatrocanosrest--;
+                    Barcoaofundo = true;
+                }
+                else
+                {
+                    Barcoaofundo = false;
+                }
+            }
+            //quatrocanos
+            if (Barco == 5)
+            {
+                LocalPortaAvioes--;
+                if (LocalPortaAvioes == 5)
+                {
+                    Barcoaofundo = true;
+                }
+                else
+                {
+                    Barcoaofundo = false;
+                }
+            }//portaavioes
+            else
+                Barcoaofundo = false;
         }
     }
 }
