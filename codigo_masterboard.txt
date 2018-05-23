@@ -1,0 +1,110 @@
+---------VIEW Masterboard.cshtml
+
+
+
+@model int[,];
+@{
+    ViewData["Title"] = "Play Battleship!";
+    ViewData["MasterClient"] = "Client";
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table id="gameBoard">
+                <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
+                <!--primeira linha: letras (coordenadas)-->
+                <tr>
+                    <td class="tile-inv"></td> <!-- célula vazia no canto sup.esq. da tabela-->
+                    @for (int coluna = 0; coluna < 10; coluna++)
+                    {
+                    <td class="tile-inv tile-letras">
+                        @Convert.ToChar(coluna + 65)
+                    </td>
+                    }
+                </tr>
+
+                @for (int linha = 0; linha < 10; linha++) // para cada linha no array modelo, que varia entre 0 e 7
+                {
+                <tr>
+                    <td class="tile-inv tile-numeros">
+                        <!--primeira coluna: números (coordenadas)-->
+                        @(linha + 1)
+                    </td>
+
+                    @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 7
+                        {
+                            switch (Model[linha, coluna])
+                            {
+                                case 1:
+                                case 2:
+                                case 3:
+                                case 4:
+                                case 5:
+                    <td id="@(linha)@(coluna)" class="tile hit">000</td>
+                                    break;
+                                case 0:
+                    <td id="@(linha)@(coluna)" class="tile misses">000</td>
+                                    break;
+                                default:
+
+                    <td id="@(linha)@(coluna)" class="tile">000</td>
+                                    break;
+
+                            }
+                        }
+                </tr>
+                }
+
+            </table>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+
+
+--------------
+CONTROLLER
+-------------
+        [HttpPost]
+        public async Task<IActionResult> Masterboard(int gameID)
+        {
+                HttpClient client = /***OBJETO HttpClient***/;
+                string path = "/api/Masterboard/"+ /***TEAMKEY***/ + "/"+ gameID;
+
+                HttpResponseMessage response = client.GetAsync(path).Result;
+                string json = await response.Content.ReadAsStringAsync();
+                int[,] board = JsonConvert.DeserializeObject<int[,]>(json);
+
+                return View(board);
+            }
+            return Redirect("/");
+        }
+
+---------------
+FORM-----------------------------
+
+    <div class="row">
+        @using (Html.BeginForm("Masterboard", "GameClient"))
+    {
+        <input type="hidden" name="gameID" value="@Model.GameID" />
+        <input type="submit" class="btn btn-warning btn-lg" value="Masterboard" />
+
+}
+    </div>
+
+
+
+
+
+
+
+
+
+© 2018 GitHub, Inc.
