@@ -1,62 +1,63 @@
 ﻿@model List<List<Jogo>>
 @{
-    ViewData["Title"] = "Hi-Scores -";
+    ViewData["Title"] = "Online Hi-Scores -";
 
 }
 
 <div id="contain" class="page-header">
-    <h1>Hi-Scores</h1>
+    <h1>Online Hi-Scores</h1>
 </div>
 
-
-<!-- Missão Antiaérea-->
-@if(Model.Count == 0)
+@if (Model.Count == 0)
 {
     <h2>Ainda não há registos...</h2>
 
 }
-        @foreach (List<Jogo> l in Model)
-        {
-    <table>
-        <caption class="text-center tablecaption">Missão @l[0].Missao</caption>
+@foreach (List<Jogo> l in Model)
+{
+    if (l[0].ModoLocal == false)
+    {
+        <table>
+            <caption class="text-center tablecaption">Missão @l[0].Missao</caption>
 
-        <thead>
-            <tr>
-                <th rowspan="2">Nome do Jogador</th>
-                <th rowspan="2">Pontuação</th>
-                <th rowspan="2">Resultado final</th>
-                <th class="text-center" colspan="3">Nº de Mísseis lançados</th>
-                <th rowspan="2">% de tiros no alvo</th>
-                <th rowspan="2">% de barcos afundados</th>
+            <thead>
+                <tr>
+                    <th rowspan="2">Nome do Jogador</th>
+                    <th rowspan="2">Pontuação</th>
+                    <th rowspan="2">Resultado final</th>
+                    <th class="text-center" colspan="3">Nº de Mísseis lançados</th>
+                    <th rowspan="2">% de tiros no alvo</th>
+                    <th rowspan="2">% de barcos afundados</th>
 
-            </tr>
-
-
-            <tr>
-                <th>na água</th>
-                <th>no alvo</th>
-                <th>repetido</th>
+                </tr>
 
 
-            </tr>
+                <tr>
+                    <th>na água</th>
+                    <th>no alvo</th>
+                    <th>repetido</th>
 
-        </thead>
-        <tbody>
-            @foreach (Jogo j in l)
-        {
 
-            <tr>
-                <td>@j.Nome</td>
-                <td>@j.Score </td>
-                <td>@j.FimdoJogo</td>
-                <td>@j.TiroAgua</td>
-                <td>@j.TiroAlvo</td>
-                <td>@j.TiroRepetido</td>
-                <td>@j.PercentagemAlvo</td>
-                <td>@j.PercentagemAfundado</td>
-            </tr>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (Jogo j in l)
+                {
+
+                    <tr>
+                        <td>@j.Nome</td>
+                        <td>@j.Score </td>
+                        <td>@j.FimdoJogo</td>
+                        <td>@j.TiroAgua</td>
+                        <td>@j.TiroAlvo</td>
+                        <td>@j.TiroRepetido</td>
+                        <td>@j.PercentagemAlvo</td>
+                        <td>@j.PercentagemAfundado</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
     }
-        </tbody>
-
-    </table>
 }

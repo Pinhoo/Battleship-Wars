@@ -42,7 +42,7 @@ namespace BattleshipPRJ.Models
 
         public bool Barcoaofundo { get; set; }
 
-       public bool TiroNaMesmaCoord { get; set; }
+        public bool TiroNaMesmaCoord { get; set; }
 
         public string ResultadoJogada { get; set; }
 
@@ -68,6 +68,8 @@ namespace BattleshipPRJ.Models
 
         public int Coordy { get; set; }
 
+        public bool ModoLocal { get; set; }
+
 
 
         private int[,] grelha;
@@ -90,11 +92,10 @@ namespace BattleshipPRJ.Models
             if (result == Resultado.SuccessHit)
             {
                 return "Tiro num barco de ";
-
             }
             else if (result == Resultado.SuccessMiss)
             {
-                return "Água!";
+                return "O teu míssil foi perdido no mar!";
             }
             else if (result == Resultado.SuccessSink)
             {
@@ -152,8 +153,9 @@ namespace BattleshipPRJ.Models
 
         public Jogo()
         {
-            heidi++;
+            ModoLocal = false;
 
+            heidi++;
 
             ID = heidi;
 

@@ -12,48 +12,159 @@
 
     <div class="col-md-4">
 
-        <form class="form-inline" method="post" asp-action="LocalGame">
+        <div id="contain">
+            <h4>
+                    @if (Model.NumeroDeJogadas == 0)
+                    {
+                        <i>Começa por disparar um missíl.</i>
+                    }
+                    else if (Model.TiroNaMesmaCoord == true)
+                    {
+                        <i>Foste penalizado em <b>100 pontos</b> por disparar no mesmo quadrado!</i>
+                    }
+                    else if (Model.UltimoTiroDisparado == 5)
+                    {
+                        if (Model.Barcoaofundo == true)
+                        {
+                            <i>Afundaste o porta-aviões!</i>
+                        }
+                        else
+                        {
+                            <i>Acertaste no porta-aviões!</i>
+                        }
+                    }
+                    else if (Model.UltimoTiroDisparado == 4)
+                    {
+                        if (Model.Barcoaofundo == true)
+                        {
+                            <i>Afundaste o barco de quatro canos!</i>
+                        }
+                        else
+                        {
+                            <i>Acertaste num barco de quatro canos!</i>
+                        }
+                    }
+                    else if (Model.UltimoTiroDisparado == 3)
+                    {
+                        if (Model.Barcoaofundo == true)
+                        {
+                            if (Model.Trescanosrest == 0)
+                            {
+                                <i>Afundaste o <b>último</b> barco de três canos!</i>
+                            }
+                            else
+                            {
+                                <i>Afundaste um barco de três canos!</i>
+                            }
+                        }
+                        else
+                        {
+                            <i>Acertaste num barco de três canos!</i>
+                        }
+                    }
+                    else if (Model.UltimoTiroDisparado == 2)
+                    {
+                        if (Model.Barcoaofundo == true)
+                        {
+                            if (Model.Doiscanosrest == 0)
+                            {
+                                <i>Afundaste o último barco de dois canos</i>
+                            }
+                            else
+                            {
+                                <i>Afundaste um barco de dois canos</i>
+                            }
+                        }
+                        else
+                        {
+                            <i>Acertaste num barco de dois canos!</i>
+                        }
+                    }
+                    else if (Model.UltimoTiroDisparado == 1)
+                    {
+                        if (Model.Submanrinosrest == 0)
+                        {
+                            <i>Afundaste o último submarino!</i>
 
-            <input type="hidden" name="id" value="@Model.ID" />
-
-            <select class="form-control" name="opcaoX" id="opcaoX" asp-for="Coordx">
-                <option value="0">A</option>
-                <option value="1">B</option>
-                <option value="2">C</option>
-                <option value="3">D</option>
-                <option value="4">E</option>
-                <option value="5">F</option>
-                <option value="6">G</option>
-                <option value="7">H</option>
-                <option value="8">I</option>
-                <option value="9">J</option>
-            </select>
+                        }
+                        {
 
 
 
-            <select class="form-control" name="opcaoY" id="opcaoY" asp-for="Coordy">
-                <option value="0">1</option>
-                <option value="1">2</option>
-                <option value="2">3</option>
-                <option value="3">4</option>
-                <option value="4">5</option>
-                <option value="5">6</option>
-                <option value="6">7</option>
-                <option value="7">8</option>
-                <option value="8">9</option>
-                <option value="9">10</option>
-            </select>
+                            <i>Afundaste um submarino!</i>}
+                    }
+                    else if (Model.UltimoTiroDisparado == 0)
+                    {
+                        <i>O teu missíl foi perdido no mar.</i>
+                    }
+            </h4>
+        </div>
 
-            <button class="btn btn-default" type="submit" name="submitbutton" value="Disparar">Disparar </button>
-
-            <button class="btn btn-default" type="submit" name="submitbutton" value="Marcar">Marcar </button>
+        @if (Model.Gameover == true)
+        {
 
 
+            <h1>@Model.FimdoJogo</h1>
+
+            <a asp-action="NewLocalGame" class="btn btn-default">Jogar novamente (Local)</a>
+            <a asp-controller="LocalGame" asp-action="LocalHiScores" class="btn btn-default">Ver Local Hi-Scores</a>
+
+        }
+        else
+        {
+
+            <form class="form-inline" method="post" asp-action="LocalGame">
+
+                <input type="hidden" name="id" value="@Model.ID" />
+
+                <select class="form-control" name="opcaoX" id="opcaoX" asp-for="Coordx">
+                    <option value="0">A</option>
+                    <option value="1">B</option>
+                    <option value="2">C</option>
+                    <option value="3">D</option>
+                    <option value="4">E</option>
+                    <option value="5">F</option>
+                    <option value="6">G</option>
+                    <option value="7">H</option>
+                    <option value="8">I</option>
+                    <option value="9">J</option>
+                </select>
 
 
 
-        </form>
-              
+                <select class="form-control" name="opcaoY" id="opcaoY" asp-for="Coordy">
+                    <option value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                    <option value="5">6</option>
+                    <option value="6">7</option>
+                    <option value="7">8</option>
+                    <option value="8">9</option>
+                    <option value="9">10</option>
+                </select>
+
+                <button class="btn btn-default" type="submit" name="submitbutton" value="Disparar">Disparar </button>
+
+                <div class="btndesistir">
+                    <button class="btn btn-default" type="submit" name="submitbutton" value="Desistir">
+                        @if (Model.Desistir == true)
+                        {
+                            @:Tens a certeza?
+                        }
+                        else
+                        {
+                            @:Desistir
+                        }
+                    </button>
+                    <button class="btn btn-default" type="submit" name="submitbutton" value="Marcar">Marcar </button>
+                </div>
+
+
+
+            </form>
+        }
 
         <div id="contain">
 
@@ -66,99 +177,18 @@
             </p>
 
             <p>
+                <strong>Modo:</strong> Local
+
+            </p>
+            <p>
                 <strong>Score:</strong> @Model.Score
             </p>
-            
+
             <p>
                 <strong>Mísseis restantes:</strong> @Model.Misseis <img src="~/images/gifmissil.gif" alt="Missil" height="80" width="80" />
 
 
             </p>
-            <p>
-                @if (Model.NumeroDeJogadas == 0)
-                {
-                    <i>Começa por disparar um missíl.</i>
-                }
-                else if (Model.TiroNaMesmaCoord == true)
-                {
-                    <i>Foste penalizado em <b>100 pontos</b> por disparar no mesmo quadrado!</i>
-                }
-                else if (Model.UltimoTiroDisparado == 5)
-                {
-                    if (Model.Barcoaofundo == true)
-                    {
-                        <i>Afundaste o porta-aviões!</i>
-                    }
-                    else
-                    {
-                        <i>Acertaste no porta-aviões!</i>
-                    }
-                }
-                else if (Model.UltimoTiroDisparado == 4)
-                {
-                    if (Model.Barcoaofundo == true)
-                    {
-                        <i>Afundaste o barco de quatro canos!</i>
-                    }
-                    else
-                    {
-                        <i>Acertaste num barco de quatro canos!</i>
-                    }
-                }
-                else if (Model.UltimoTiroDisparado == 3)
-                {
-                    if (Model.Barcoaofundo == true)
-                    {
-                        if (Model.Trescanosrest == 0)
-                        {
-                            <i>Afundaste o <b>último</b> barco de três canos!</i>
-                        }
-                        else
-                        {
-                            <i>Afundaste um barco de três canos!</i>
-                        }
-                    }
-                    else
-                    {
-                        <i>Acertaste num barco de três canos!</i>
-                    }
-                }
-                else if (Model.UltimoTiroDisparado == 2)
-                {
-                    if (Model.Barcoaofundo == true)
-                    {
-                        if (Model.Doiscanosrest == 0)
-                        {
-                            <i>Afundaste o último barco de dois canos</i>
-                        }
-                        else
-                        {
-                            <i>Afundaste um barco de dois canos</i>
-                        }
-                    }
-                    else
-                    {
-                        <i>Acertaste num barco de dois canos!</i>
-                    }
-                }
-                else if (Model.UltimoTiroDisparado == 1)
-                {
-                    if (Model.Submanrinosrest == 0)
-                    {
-                        <i>Afundaste o último submarino!</i>
-
-                    }
-                    {
-
-
-
-                        <i>Afundaste um submarino!</i>}
-                }
-                else if (Model.UltimoTiroDisparado == 0)
-                {
-                    <i>O teu missíl foi perdido no mar.</i>
-                }
-            </p><!--acertar/afundar/falhar barcos-->
 
 
         </div>
@@ -172,11 +202,6 @@
 
 
         </div>
-
-
-        <a asp-action="NewLocalGame" class="btn btn-default">
-            Desistir
-        </a>
 
 
 

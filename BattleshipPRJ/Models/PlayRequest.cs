@@ -25,7 +25,7 @@ namespace BattleshipPRJ.Models
         public PlayRequest(int id,  int x, int y, PlayerAction action)
         {
             ID = id;
-            Key = "90dff7381b604603b5145be5f610da0d";
+            Key = Repository.TeamKey;
             X = x;
             Y = y;
             PlayerAction = action;

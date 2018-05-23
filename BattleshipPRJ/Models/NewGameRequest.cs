@@ -18,7 +18,7 @@ namespace BattleshipPRJ.Models
         {
             PlayerName = playername;
             GameMode = gamemode;
-            Teamkey = "90dff7381b604603b5145be5f610da0d";
+            Teamkey = Repository.TeamKey;
         }
 
     }

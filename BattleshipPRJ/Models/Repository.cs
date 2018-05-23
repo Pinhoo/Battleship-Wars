@@ -9,6 +9,12 @@ namespace BattleshipPRJ.Models
     {
         private static List<Jogo> jogos = new List<Jogo>();
 
+        private static string teamkey;
+
+        public static string TeamKey
+        {
+            get { return teamkey; }
+        }
 
         public static List<Jogo> Jogos
         {
@@ -19,10 +25,12 @@ namespace BattleshipPRJ.Models
 
             }
         }
+
         public static void CriarJogo(Jogo j)
         {
             Jogos.Add(j);
             j.inicializar();
+            teamkey = "90dff7381b604603b5145be5f610da0d";
         }
 
         public static Jogo ObterJogo(int id)
@@ -45,12 +53,7 @@ namespace BattleshipPRJ.Models
 
         }
 
-        public static void ApagarJogos()
-        {
 
-            jogos.Clear();
-
-        }
 
     }
 

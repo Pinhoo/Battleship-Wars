@@ -83,7 +83,7 @@ namespace BattleshipPRJ.Controllers
                 string json_r = await response.Content.ReadAsStringAsync();
                 GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
 
-                jogue.Atualizar(gs , opcaoY, opcaoX);
+                jogue.Atualizar(gs, opcaoY, opcaoX);
 
 
             }
@@ -112,7 +112,7 @@ namespace BattleshipPRJ.Controllers
                     jogue.FimdoJogo = "Derrota";
                     jogue.Gameover = true;
                 }
-                
+
             }
             else
             {
@@ -123,7 +123,6 @@ namespace BattleshipPRJ.Controllers
         }
 
         public IActionResult HiScores()
-
         {
             List<Jogo> j = Repository.Jogos;
             j.Sort();
@@ -133,28 +132,50 @@ namespace BattleshipPRJ.Controllers
             {
                 if (J.Missao == "Antiaérea")
                 {
-                    Anti.Add(J);
-                    if(Anti.Count > 10)
+                    
+                    if (J.ModoLocal == false)
                     {
-                        Anti.Remove(J);
+                        Anti.Add(J);
+                        if (Anti.Count > 10)
+                        {
+                            Anti.Remove(J);
+                        }
                     }
                 }
                 else
                 {
-                    Dt.Add(J);
-                    if (Dt.Count > 10)
+                    
+                    if (J.ModoLocal == false)
                     {
-                        Dt.Remove(J);
+                        Dt.Add(J);
+                        if (Dt.Count > 10)
+                        {
+                            Dt.Remove(J);
+                        }
                     }
                 }
-        }
+            }
             List<List<Jogo>> Jogos = new List<List<Jogo>>();
-            if(Anti.Count!=0)
-            { Jogos.Add(Anti);}
+            if (Anti.Count != 0)
+            { Jogos.Add(Anti); }
             if (Dt.Count != 0)
-            { Jogos.Add(Dt); }        
+            { Jogos.Add(Dt); }
             return View(Jogos);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Masterboard(int gameID)
+        {
+            HttpClient client = MyHttpClient.Client;
+            string path = "/api/Masterboard/" + Repository.TeamKey + "/" + gameID;
+
+            HttpResponseMessage response = client.GetAsync(path).Result;
+            string json = await response.Content.ReadAsStringAsync();
+            int[,] board = JsonConvert.DeserializeObject<int[,]>(json);
+
+            return View(board);
+        }
+
 
         //public IActionResult ModoAutonomo()
         //{

@@ -20,118 +20,121 @@
 
 
         @*<form method="get" action="/Game/ModoAutonomo/">
-            <button class="btn btn-default" type="submit" name="ModoAutonomo" value="ModoAutonomo">Modo Autonomo</button>
-        </form>*@
+                <button class="btn btn-default" type="submit" name="ModoAutonomo" value="ModoAutonomo">Modo Autonomo</button>
+            </form>*@
 
 
         @if (Model.Gameover == true)
-    {
+        {
 
 
-        <h1>@Model.FimdoJogo</h1>
+            <h1>@Model.FimdoJogo</h1>
 
-        <a asp-action="NovoJogo" class="btn btn-default">Jogar novamente (Online)</a>
-        <a asp-controller="Game" asp-action="HiScores" class="btn btn-default">Ver Hi-Scores</a>
+            <a asp-action="NovoJogo" class="btn btn-default">Jogar novamente (Online)</a>
+            <a asp-controller="Game" asp-action="HiScores" class="btn btn-default">Ver Hi-Scores</a>
 
-}
-else
-{
-    @Model.ID
-    <div id="contain">
-
-        <form class="form-inline" method="post" asp-action="Game">
-
-
-            <input type="hidden" name="id" value="@Model.ID" />
-
-
-            <select class="form-control" name="opcaoX" id="opcaoX" asp-for="Coordx">
-                <option value="0">A</option>
-                <option value="1">B</option>
-                <option value="2">C</option>
-                <option value="3">D</option>
-                <option value="4">E</option>
-                <option value="5">F</option>
-                <option value="6">G</option>
-                <option value="7">H</option>
-                <option value="8">I</option>
-                <option value="9">J</option>
-            </select>
-
-
-
-            <select class="form-control" name="opcaoY" id="opcaoY" asp-for="Coordy">
-                <option value="0">1</option>
-                <option value="1">2</option>
-                <option value="2">3</option>
-                <option value="3">4</option>
-                <option value="4">5</option>
-                <option value="5">6</option>
-                <option value="6">7</option>
-                <option value="7">8</option>
-                <option value="8">9</option>
-                <option value="9">10</option>
-            </select>
-
-
-            <button class="btn btn-danger" type="submit" name="submitbutton" value="Disparar"><span class="glyphicon glyphicon-screenshot"></span>Disparar </button>
-
-            <div class="btndesistir">
-                <button class="btn btn-default" type="submit" name="submitbutton" value="Desistir">
-                    @if (Model.Desistir == true)
-                {
-                    @:Tens a certeza?
-            }
-            else
-            {
-                @:Desistir
         }
-            </button>
-            <button class="btn btn-default" type="submit" name="submitbutton" value="Marcar">Marcar </button>
-        </div>
+        else
+        {
+            <div id="contain">
 
-    </form>
+                <form class="form-inline" method="post" asp-action="Game">
 
 
+                    <input type="hidden" name="id" value="@Model.ID" />
+
+
+                    <select class="form-control" name="opcaoX" id="opcaoX" asp-for="Coordx">
+                        <option value="0">A</option>
+                        <option value="1">B</option>
+                        <option value="2">C</option>
+                        <option value="3">D</option>
+                        <option value="4">E</option>
+                        <option value="5">F</option>
+                        <option value="6">G</option>
+                        <option value="7">H</option>
+                        <option value="8">I</option>
+                        <option value="9">J</option>
+                    </select>
+
+
+
+                    <select class="form-control" name="opcaoY" id="opcaoY" asp-for="Coordy">
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                        <option value="4">5</option>
+                        <option value="5">6</option>
+                        <option value="6">7</option>
+                        <option value="7">8</option>
+                        <option value="8">9</option>
+                        <option value="9">10</option>
+                    </select>
+
+
+                    <button class="btn btn-danger" type="submit" name="submitbutton" value="Disparar"><span class="glyphicon glyphicon-screenshot"></span>Disparar </button>
+
+                    <div class="btndesistir">
+                        <button class="btn btn-default" type="submit" name="submitbutton" value="Desistir">
+                            @if (Model.Desistir == true)
+                            {
+                                @:Tens a certeza?
+                            }
+                            else
+                            {
+                                @:Desistir
+                            }
+                        </button>
+                        <button class="btn btn-default" type="submit" name="submitbutton" value="Marcar">Marcar </button>
+                    </div>
+
+                </form>
+
+
+
+            </div>
+
+
+        }
+
+
+
+
+            <div id="contain">
+                <p>
+                    <strong>Nome:</strong> @Model.Nome
+                </p>
+
+                <p>
+                    <strong>Missão:</strong> @Model.Missao
+                </p>
+
+                <p>
+                    <strong>Modo:</strong> Online
+
+                </p>
+                <p>
+                    <strong>Score:</strong> @Model.Score
+                </p>
+
+                <p>
+                    <strong>Mísseis restantes:</strong> @Model.Misseis <img src="~/images/gifmissil.gif" alt="Missil" height="60" width="80" />
+
+
+                </p>
+
+                <img class="barcosrestantessub" src="~/images/1.png" />  @Model.Submanrinosrest
+                <img class="barcosrestantes" src="~/images/portaavioes.png" /> @Model.Portaavioesrest
+                <img class="barcosrestantes" src="~/images/2.png" /> @Model.Doiscanosrest
+                <img class="b4rcosrestantes" src="~/images/4.png" /> @Model.Quatrocanosrest
+                <img class="barcosrestantes" src="~/images/3.png" /> @Model.Trescanosrest
+
+            </div>
 
     </div>
 
 
-}
-
-
-
-
-        <div id="contain">
-            <p>
-                <strong>Nome:</strong> @Model.Nome
-            </p>
-
-            <p>
-                <strong>Missão:</strong> @Model.Missao
-            </p>
-
-            <p>
-                <strong>Score:</strong> @Model.Score
-            </p>
-
-            <p>
-                <strong>Mísseis restantes:</strong> @Model.Misseis <img src="~/images/gifmissil.gif" alt="Missil" height="60" width="80" />
-
-
-            </p>
-
-            <img class="barcosrestantessub" src="~/images/1.png" />  @Model.Submanrinosrest
-            <img class="barcosrestantes" src="~/images/portaavioes.png" /> @Model.Portaavioesrest
-            <img class="barcosrestantes" src="~/images/2.png" /> @Model.Doiscanosrest
-            <img class="b4rcosrestantes" src="~/images/4.png" /> @Model.Quatrocanosrest
-            <img class="barcosrestantes" src="~/images/3.png" /> @Model.Trescanosrest
-
-        </div>
-
-    </div>
-        
-        
 
     <div class="col-md-8">
 
@@ -187,3 +190,12 @@ else
     </div>
 
 </div>
+
+@*<div class="row">
+    @using (Html.BeginForm("Masterboard", "Game"))
+    {
+        <input type="hidden" name="gameID" value="@Model.ID" />
+        <input type="submit" class="btn btn-warning btn-lg" value="Masterboard" />
+
+    }
+</div>*@
