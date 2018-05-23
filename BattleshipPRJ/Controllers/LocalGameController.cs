@@ -81,12 +81,12 @@ namespace BattleshipPRJ.Controllers
 
                         jogue.Grelha[opcaoY, opcaoX] = ResultTiro;
 
+                        jogue.Disparou(ResultTiro, jogoganho, BarcoAoFundo);
+
                         if (jogue.Quadradosabater == 0)
                         {
                             jogoganho = true;
                         }
-
-                        jogue.Disparou(ResultTiro, jogoganho, BarcoAoFundo);
 
                         jogue.TiroNaMesmaCoord = false;
 
