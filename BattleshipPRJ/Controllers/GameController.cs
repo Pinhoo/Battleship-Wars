@@ -130,27 +130,31 @@ namespace BattleshipPRJ.Controllers
             List<Jogo> Dt = new List<Jogo>();
             foreach (Jogo J in j)
             {
-                if (J.Missao == "Antiaérea")
+                if (J.Gameover == true)
                 {
-                    
-                    if (J.ModoLocal == false)
+
+                    if (J.Missao == "Antiaérea")
                     {
-                        Anti.Add(J);
-                        if (Anti.Count > 10)
+
+                        if (J.ModoLocal == false)
                         {
-                            Anti.Remove(J);
+                            Anti.Add(J);
+                            if (Anti.Count > 10)
+                            {
+                                Anti.Remove(J);
+                            }
                         }
                     }
-                }
-                else
-                {
-                    
-                    if (J.ModoLocal == false)
+                    else
                     {
-                        Dt.Add(J);
-                        if (Dt.Count > 10)
+
+                        if (J.ModoLocal == false)
                         {
-                            Dt.Remove(J);
+                            Dt.Add(J);
+                            if (Dt.Count > 10)
+                            {
+                                Dt.Remove(J);
+                            }
                         }
                     }
                 }
