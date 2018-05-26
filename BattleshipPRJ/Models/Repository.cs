@@ -29,7 +29,7 @@ namespace BattleshipPRJ.Models
         public static void CriarJogo(Jogo j)
         {
             Jogos.Add(j);
-            j.inicializar();
+            j.Inicializar();
             teamkey = "90dff7381b604603b5145be5f610da0d";
         }
 

@@ -289,11 +289,9 @@ namespace BattleshipPRJ.Models
                 return 1;
             if (j2.Score == Score)
                 return 0;
-            if (j2.Score < Score)
                 return -1;
-            return Score.CompareTo(j2.Score);
-
-
+            
+            
         }
         
         public bool ConfirmarDesistir(bool Confirmado)
@@ -317,7 +315,7 @@ namespace BattleshipPRJ.Models
             }
         }
 
-        public void inicializar()
+        public void Inicializar()
         {
             Bonus = -0.25;
             Score = 0;
