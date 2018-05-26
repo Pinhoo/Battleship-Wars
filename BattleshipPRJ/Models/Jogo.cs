@@ -459,6 +459,7 @@ namespace BattleshipPRJ.Models
             }
             else if (gs.Result == Resultado.SuccessVictory)
             {
+                Afundou(5);
                 Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
                 ResultadoJogada = ReceberResult(gs.Result);
                 Disparou(gs.DamagedShipSize, true, true);
