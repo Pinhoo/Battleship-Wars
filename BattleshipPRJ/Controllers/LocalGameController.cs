@@ -75,24 +75,24 @@ namespace BattleshipPRJ.Controllers
                     if (jogue.Misseis != 0)//EspacoOcupado.BarcosO[jogue.Coordy, jogue.Coordx]=1,2,3,4,5
                     {
                         bool jogoganho = false;
-                        
+
                         jogue.LocalAoFundo(ResultTiro, opcaoY, opcaoX);
 
                         jogue.Grelha[opcaoY, opcaoX] = ResultTiro;
 
-                        if(ResultTiro != 0)//tem de se utilizar isto para permitir o funcionamento da app online
+                        if (ResultTiro != 0)//tem de se utilizar isto para permitir o funcionamento da app online
                         {
-                            if(jogue.Missao == "Antiaérea")
+                            if (jogue.Missao == "Antiaérea")
                             {
-                                if(ResultTiro==5)
+                                if (ResultTiro == 5)
                                 {
                                     jogue.Quadradosabater--;
                                 }
                             }
                             else
                             {
-                                jogue.Quadradosabater --;
-                            }                            
+                                jogue.Quadradosabater--;
+                            }
                         }
 
                         if (jogue.Quadradosabater == 0)
@@ -161,27 +161,31 @@ namespace BattleshipPRJ.Controllers
             List<Jogo> DtLocal = new List<Jogo>();
             foreach (Jogo J in j)
             {
-                if (J.Missao == "Antiaérea")
+                if (J.Gameover == true)
                 {
 
-                    if (J.ModoLocal == true)
+                    if (J.Missao == "Antiaérea")
                     {
-                        AntiLocal.Add(J);
-                        if (AntiLocal.Count > 10)
+
+                        if (J.ModoLocal == true)
                         {
-                            AntiLocal.Remove(J);
+                            AntiLocal.Add(J);
+                            if (AntiLocal.Count > 10)
+                            {
+                                AntiLocal.Remove(J);
+                            }
                         }
                     }
-                }
-                else
-                {
-
-                    if (J.ModoLocal == true)
+                    else
                     {
-                        DtLocal.Add(J);
-                        if (DtLocal.Count > 10)
+
+                        if (J.ModoLocal == true)
                         {
-                            DtLocal.Remove(J);
+                            DtLocal.Add(J);
+                            if (DtLocal.Count > 10)
+                            {
+                                DtLocal.Remove(J);
+                            }
                         }
                     }
                 }
