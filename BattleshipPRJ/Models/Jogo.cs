@@ -24,15 +24,15 @@ namespace BattleshipPRJ.Models
 
         public double Score { get; set; }
 
-        public int Portaavioesrest { get; set; }
+        public int Portaavioesrestantes { get; set; }
 
-        public int Quatrocanosrest { get; set; }
+        public int Quatrocanosrestantes { get; set; }
 
-        public int Trescanosrest { get; set; }
+        public int Trescanosrestantes { get; set; }
 
-        public int Doiscanosrest { get; set; }
+        public int Doiscanosrestantes { get; set; }
 
-        public int Submanrinosrest { get; set; }
+        public int Submarinosrestantes { get; set; }
 
         public int Quadradosabater { get; set; }
 
@@ -48,13 +48,13 @@ namespace BattleshipPRJ.Models
 
         public string FimdoJogo { get; set; }
 
-        public int Tiros { get; set; }
+        public int TirosDados { get; set; }
 
-        public int TiroAgua { get; set; }
+        public int TirosAgua { get; set; }
 
-        public int TiroAlvo { get; set; }
+        public int TirosAlvo { get; set; }
 
-        public int TiroRepetido { get; set; }
+        public int TirosRepetido { get; set; }
 
         public double PercentagemAlvo { get; set; }
 
@@ -111,7 +111,7 @@ namespace BattleshipPRJ.Models
             }
             else if (result == Resultado.SuccessVictory)
             {
-                return "Ganhaste!";
+                return "Cumpriste a missão escolhida!";
             }
             else if (result == Resultado.InvalidShot)
             {
@@ -137,7 +137,7 @@ namespace BattleshipPRJ.Models
             else return null;
         }
 
-        public void AltMissao()
+        public void AlterarMissao()
         {
             if (Missao == "Antiaérea")
             {
@@ -165,11 +165,11 @@ namespace BattleshipPRJ.Models
 
             Gameover = false;
 
-            Portaavioesrest = 1;
-            Quatrocanosrest = 1;
-            Trescanosrest = 2;
-            Doiscanosrest = 3;
-            Submanrinosrest = 4;
+            Portaavioesrestantes = 1;
+            Quatrocanosrestantes = 1;
+            Trescanosrestantes = 2;
+            Doiscanosrestantes = 3;
+            Submarinosrestantes = 4;
 
 
             grelha = new int[10, 10]
@@ -198,13 +198,13 @@ namespace BattleshipPRJ.Models
 
         public void Disparou(int Tiro, bool ganho, bool BarcoAoFundo)
         {
-            Tiros++;
+            TirosDados++;
             Misseis = Misseis - 1;
             UltimoTiroDisparado = Tiro;
             NumeroDeJogadas = NumeroDeJogadas + 1;
             if (Tiro == 1 || Tiro == 2 || Tiro == 3 || Tiro == 4 || Tiro == 5)
             {
-                TiroAlvo++;
+                TirosAlvo++;
                 if (ganho == false)
                 {
                     AdicionarJogada(true, BarcoAoFundo, false, false, 0);
@@ -229,7 +229,7 @@ namespace BattleshipPRJ.Models
             }
             else
             {
-                TiroAgua++;
+                TirosAgua++;
                 AdicionarJogada(false, false, false, false, 0);
             }
             Score = Receber();
@@ -239,7 +239,7 @@ namespace BattleshipPRJ.Models
 
         public void DisparouNasMesmasCoords()
         {
-            TiroRepetido++;
+            TirosRepetido++;
             Misseis = Misseis - 1;
             NumeroDeJogadas = NumeroDeJogadas + 1;
             AdicionarJogada(false, false, true, false, 0);
@@ -248,27 +248,27 @@ namespace BattleshipPRJ.Models
             CalcularPercentagens();
         }
 
-        public void Afundou(int shipsize)
+        public void AtualizarArmadaInimiga(int shipsize)
         {
             if (shipsize == 1)
             {
-                Submanrinosrest--;
+                Submarinosrestantes--;
             }
             else if (shipsize == 2)
             {
-                Doiscanosrest--;
+                Doiscanosrestantes--;
             }
             else if (shipsize == 3)
             {
-                Trescanosrest--;
+                Trescanosrestantes--;
             }
             else if (shipsize == 4)
             {
-                Quatrocanosrest--;
+                Quatrocanosrestantes--;
             }
             else if (shipsize == 5)
             {
-                Portaavioesrest--;
+                Portaavioesrestantes--;
             }
 
 
@@ -277,8 +277,8 @@ namespace BattleshipPRJ.Models
 
         public void CalcularPercentagens()
         {
-            PercentagemAlvo = 100 * TiroAlvo / Tiros;
-            PercentagemAfundado = 100 - (100 * (Submanrinosrest + Doiscanosrest + Trescanosrest + Quatrocanosrest + Portaavioesrest) / 11);
+            PercentagemAlvo = 100 * TirosAlvo / TirosDados;
+            PercentagemAfundado = 100 - (100 * (Submarinosrestantes + Doiscanosrestantes + Trescanosrestantes + Quatrocanosrestantes + Portaavioesrestantes) / 11);
         }
 
         public int CompareTo(object obj)
@@ -362,7 +362,7 @@ namespace BattleshipPRJ.Models
             return Score;
         }
 
-        public void Atualizar(GameState gs,int opcaoY,int opcaoX)
+        public void AtualizarJogada(GameState gs,int opcaoY,int opcaoX)
         {
             if (gs.Result == Resultado.SuccessHit)
             {
@@ -413,11 +413,11 @@ namespace BattleshipPRJ.Models
             {
                 Grelha[opcaoY, opcaoX] = gs.DamagedShipSize; //or gs.DamagedShipSize
 
-                Afundou(gs.DamagedShipSize);
+                AtualizarArmadaInimiga(gs.DamagedShipSize);
 
                 if (gs.DamagedShipSize == 1)
                 {
-                    if (Submanrinosrest == 0)
+                    if (Submarinosrestantes == 0)
                     {
                         ResultadoJogada = "Afundaste o último submarino!";
                     }
@@ -426,7 +426,7 @@ namespace BattleshipPRJ.Models
                 }
                 else if (gs.DamagedShipSize == 5)
                 {
-                    if (Portaavioesrest == 0)
+                    if (Portaavioesrestantes == 0)
                     {
                         ResultadoJogada = "Afundaste o último porta-aviões!";
                     }
@@ -434,7 +434,7 @@ namespace BattleshipPRJ.Models
                 }
                 else
                 {
-                    if (Doiscanosrest == 0 || Trescanosrest == 0 || Quatrocanosrest == 0)
+                    if (Doiscanosrestantes == 0 || Trescanosrestantes == 0 || Quatrocanosrestantes == 0)
                     {
                         ResultadoJogada = "Afundaste o último barco de" + gs.DamagedShipSize + " canos!";
                     }
@@ -459,7 +459,9 @@ namespace BattleshipPRJ.Models
             }
             else if (gs.Result == Resultado.SuccessVictory)
             {
-                Afundou(5);
+                
+                AtualizarArmadaInimiga(gs.DamagedShipSize);
+                
                 Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
                 ResultadoJogada = ReceberResult(gs.Result);
                 Disparou(gs.DamagedShipSize, true, true);
@@ -513,7 +515,7 @@ namespace BattleshipPRJ.Models
         {
             if (Barco == 1)
             {
-                Submanrinosrest--;
+                Submarinosrestantes--;
                 Barcoaofundo = true;
 
             }
@@ -524,7 +526,7 @@ namespace BattleshipPRJ.Models
                     if (Grelha[opcaoY + 1, opcaoX] == 2)
                     {
 
-                        Doiscanosrest--;
+                        Doiscanosrestantes--;
                         Barcoaofundo = true;
                     }
                 }
@@ -533,7 +535,7 @@ namespace BattleshipPRJ.Models
                     if (Grelha[opcaoY - 1, opcaoX] == 2)
                     {
 
-                        Doiscanosrest--;
+                        Doiscanosrestantes--;
                         Barcoaofundo = true;
 
                     }
@@ -542,7 +544,7 @@ namespace BattleshipPRJ.Models
                 {
                     if (Grelha[opcaoY, opcaoX + 1] == 2)
                     {
-                        Doiscanosrest--;
+                        Doiscanosrestantes--;
                         Barcoaofundo = true;
                     }
                 }
@@ -550,7 +552,7 @@ namespace BattleshipPRJ.Models
                 {
                     if (Grelha[opcaoY, opcaoX - 1] == 2)
                     {
-                        Doiscanosrest--;
+                        Doiscanosrestantes--;
                         Barcoaofundo = true;
                     }
                 }
@@ -561,7 +563,7 @@ namespace BattleshipPRJ.Models
                 {
                     if (Grelha[opcaoY + 1, opcaoX] == 3 && Grelha[opcaoY + 2, opcaoX] == 3)
                     {
-                        Trescanosrest--;
+                        Trescanosrestantes--;
                         Barcoaofundo = true;
                     }
                 }
@@ -569,7 +571,7 @@ namespace BattleshipPRJ.Models
                 {
                     if (Grelha[opcaoY + 1, opcaoX] == 3 && Grelha[opcaoY - 1, opcaoX] == 3)
                     {
-                        Trescanosrest--;
+                        Trescanosrestantes--;
                         Barcoaofundo = true;
                     }
                 }
@@ -577,7 +579,7 @@ namespace BattleshipPRJ.Models
                 {
                     if (Grelha[opcaoY - 2, opcaoX] == 3 && Grelha[opcaoY - 1, opcaoX] == 3)
                     {
-                        Trescanosrest--;
+                        Trescanosrestantes--;
                         Barcoaofundo = true;
                     }
                 }
@@ -586,7 +588,7 @@ namespace BattleshipPRJ.Models
                 {
                     if (Grelha[opcaoY, opcaoX + 1] == 3 && Grelha[opcaoY, opcaoX + 2] == 3)
                     {
-                        Trescanosrest--;
+                        Trescanosrestantes--;
                         Barcoaofundo = true;
                     }
                 }
@@ -594,7 +596,7 @@ namespace BattleshipPRJ.Models
                 {
                     if (Grelha[opcaoY, opcaoX - 2] == 3 && Grelha[opcaoY, opcaoX - 1] == 3)
                     {
-                        Trescanosrest--;
+                        Trescanosrestantes--;
                         Barcoaofundo = true;
                     }
                 }
@@ -602,7 +604,7 @@ namespace BattleshipPRJ.Models
                 {
                     if (Grelha[opcaoY, opcaoX - 1] == 3 && Grelha[opcaoY, opcaoX + 1] == 3)
                     {
-                        Trescanosrest--;
+                        Trescanosrestantes--;
                         Barcoaofundo = true;
                     }
                 }
@@ -612,7 +614,7 @@ namespace BattleshipPRJ.Models
                 Local4Canos++;
                 if (Local4Canos == 4)
                 {
-                    Quatrocanosrest--;
+                    Quatrocanosrestantes--;
                     Barcoaofundo = true;
                 }
                 else

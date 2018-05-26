@@ -24,7 +24,7 @@ namespace BattleshipPRJ.Controllers
             if (ModelState.IsValid)
             {
                 Repository.CriarJogo(jogo);
-                jogo.AltMissao();
+                jogo.AlterarMissao();
 
                 string missao;
 
@@ -83,7 +83,7 @@ namespace BattleshipPRJ.Controllers
                 string json_r = await response.Content.ReadAsStringAsync();
                 GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
 
-                jogue.Atualizar(gs, opcaoY, opcaoX);
+                jogue.AtualizarJogada(gs, opcaoY, opcaoX);
 
 
             }
@@ -167,18 +167,18 @@ namespace BattleshipPRJ.Controllers
             return View(Jogos);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Masterboard(int gameID)
-        {
-            HttpClient client = MyHttpClient.Client;
-            string path = "/api/Masterboard/" + Repository.TeamKey + "/" + gameID;
+        //[HttpPost]
+        //public async Task<IActionResult> Masterboard(int gameID)
+        //{
+        //    HttpClient client = MyHttpClient.Client;
+        //    string path = "/api/Masterboard/" + Repository.TeamKey + "/" + gameID;
 
-            HttpResponseMessage response = client.GetAsync(path).Result;
-            string json = await response.Content.ReadAsStringAsync();
-            int[,] board = JsonConvert.DeserializeObject<int[,]>(json);
+        //    HttpResponseMessage response = client.GetAsync(path).Result;
+        //    string json = await response.Content.ReadAsStringAsync();
+        //    int[,] board = JsonConvert.DeserializeObject<int[,]>(json);
 
-            return View(board);
-        }
+        //    return View(board);
+        //}
 
 
         //public IActionResult ModoAutonomo()

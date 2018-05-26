@@ -32,7 +32,7 @@ namespace BattleshipPRJ.Controllers
                 EspacoOcupado.CriarEspacoOcupado();
 
                 Repository.CriarJogo(jogo);
-                jogo.AltMissao();
+                jogo.AlterarMissao();
                 return View("LocalGame", jogo);
             }
             else
