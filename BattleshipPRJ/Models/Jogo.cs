@@ -74,6 +74,10 @@ namespace BattleshipPRJ.Models
 
         public int Local4Canos { get; set; }
 
+        public int[,] GrelhaModoAuto { get; set; }
+
+        public Coordenadas Coords { get; set; }
+
 
 
         private int[,] grelha;

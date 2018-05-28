@@ -181,106 +181,105 @@ namespace BattleshipPRJ.Controllers
         //}
 
 
-        //public IActionResult ModoAutonomo()
-        //{
-        //    List<Jogo> J = Repository.Jogos;
-        //    Jogo j = J[J.Count - 1];
-        //    return View(j);
-        //}
+        public IActionResult ModoAutonomo()
+        {
+            List<Jogo> J = Repository.Jogos;
+            Jogo j = J[J.Count - 1];
+            return View(j);
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> ModoAutonomo(int id, string Tipo)
-        //{
-        //    Jogo jogue = Repository.ObterJogo(id);
+        [HttpPost]
+        public async Task<IActionResult> ModoAutonomo(int id, string Tipo)
+        {
+            Jogo jogue = Repository.ObterJogo(id);
 
-        //    int NrDisparos = 0;
+            int NrDisparos = 0;
 
-        //    if (Tipo == "auto0")
-        //    {
-        //        NrDisparos = jogue.Misseis;
-        //    }
-        //    else if (Tipo == "auto3")
-        //    {
-        //        NrDisparos = 3;
-        //    }
-        //    else if (Tipo == "auto10")
-        //    {
-        //        NrDisparos = 10;
-        //    }
+            if (Tipo == "auto0")
+            {
+                NrDisparos = jogue.Misseis;
+            }
+            else if (Tipo == "auto3")
+            {
+                NrDisparos = 3;
+            }
+            else if (Tipo == "auto10")
+            {
+                NrDisparos = 10;
+            }
 
-        //    while (NrDisparos != 0)
-        //    {
-        //        ModoAutonomo1 m = new ModoAutonomo1();
-        //        Coordenadas Coords = new Coordenadas();
-        //        Coords = m.ReceberCoords(jogue.Grelha);
+            while (NrDisparos != 0)
+            {
+                ModoAutonomo1 m = new ModoAutonomo1();
+                jogue.Coords = m.ReceberCoords(jogue.Grelha);
 
-        //        HttpClient client = MyHttpClient.Client;
-        //        string path = "api/Play";
-        //        PlayRequest pr = new PlayRequest(id, Coords.X, Coords.Y, 0);
-        //        string json = JsonConvert.SerializeObject(pr);
+                HttpClient client = MyHttpClient.Client;
+                string path = "api/Play";
+                PlayRequest pr = new PlayRequest(id, jogue.Coords.X, jogue.Coords.Y, 0);
+                string json = JsonConvert.SerializeObject(pr);
 
-        //        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
-        //        request.Content = new StringContent(json, System.Text.Encoding.UTF8,
-        //        "application/json");
-        //        HttpResponseMessage response = await client.SendAsync(request);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
+                request.Content = new StringContent(json, System.Text.Encoding.UTF8,
+                "application/json");
+                HttpResponseMessage response = await client.SendAsync(request);
 
-        //        if (!response.IsSuccessStatusCode) { return Redirect("/"); }
-        //        string json_r = await response.Content.ReadAsStringAsync();
-        //        GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
+                if (!response.IsSuccessStatusCode) { return Redirect("/"); }
+                string json_r = await response.Content.ReadAsStringAsync();
+                GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
 
 
-        //        if (gs.Result == Resultado.SuccessHit)
-        //        {
+                if (gs.Result == Resultado.SuccessHit)
+                {
 
-        //            jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
-        //            jogue.Disparou(gs.DamagedShipSize, false, false);
+                    jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
+                    jogue.Disparou(gs.DamagedShipSize, false, false);
 
-        //        }
-        //        else if (gs.Result == Resultado.SuccessMiss)
-        //        {
-        //            jogue.Grelha[opcaoY, opcaoX] = 0;
-        //            jogue.Disparou(0, false, false);
-        //        }
-        //        else if (gs.Result == Resultado.SuccessSink)
-        //        {
-        //            jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize; //or gs.DamagedShipSize
+                }
+                else if (gs.Result == Resultado.SuccessMiss)
+                {
+                    jogue.Grelha[opcaoY, opcaoX] = 0;
+                    jogue.Disparou(0, false, false);
+                }
+                else if (gs.Result == Resultado.SuccessSink)
+                {
+                    jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
 
-        //            jogue.Afundou(gs.DamagedShipSize);
+                    jogue.Afundou(gs.DamagedShipSize);
 
-        //            jogue.Disparou(gs.DamagedShipSize, false, true);
-        //        }
-        //        else if (gs.Result == Resultado.SuccessRepeat)
-        //        {
-        //            jogue.DisparouNasMesmasCoords();
-        //        }
-        //        else if (gs.Result == Resultado.SuccessVictory)
-        //        {
-        //            jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
-        //            jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
-        //            jogue.Disparou(gs.DamagedShipSize, true, true);
-        //            jogue.FimdoJogo = "Ganhaste!";
+                    jogue.Disparou(gs.DamagedShipSize, false, true);
+                }
+                else if (gs.Result == Resultado.SuccessRepeat)
+                {
+                    jogue.DisparouNasMesmasCoords();
+                }
+                else if (gs.Result == Resultado.SuccessVictory)
+                {
+                    jogue.Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                    jogue.Disparou(gs.DamagedShipSize, true, true);
+                    jogue.FimdoJogo = "Ganhaste!";
 
-        //            return View(jogue);
-        //        }
-        //        else if (gs.Result == Resultado.InvalidShot)
-        //        {
-        //            jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
-        //        }
-        //        else if (gs.Result == Resultado.GameHasEnded)
-        //        {
-        //            jogue.FimdoJogo = "Perdeste!";
+                    return View(jogue);
+                }
+                else if (gs.Result == Resultado.InvalidShot)
+                {
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                }
+                else if (gs.Result == Resultado.GameHasEnded)
+                {
+                    jogue.FimdoJogo = "Perdeste!";
 
-        //            return View(jogue);
-        //        }
-        //        else if (gs.Result == Resultado.NoResult)
-        //        {
-        //            jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
-        //        }
+                    return View(jogue);
+                }
+                else if (gs.Result == Resultado.NoResult)
+                {
+                    jogue.ResultadoJogada = jogue.ReceberResult(gs.Result);
+                }
 
-        //        NrDisparos--;
+                NrDisparos--;
 
-        //    }
-        //    return View("Game", jogue);
-        //}
+            }
+            return View("Game", jogue);
+        }
     }
 }
