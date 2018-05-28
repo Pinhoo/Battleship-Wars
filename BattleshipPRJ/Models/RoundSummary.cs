@@ -26,7 +26,14 @@ namespace BattleshipPRJ.Models
 
         public int ScoreFimRonda { get; set; }
 
+        public RoundSummary()
+        {
 
+            NRonda = 1;
+            ScoreInicio = 0;
+            
+            
+        }
 
 
 

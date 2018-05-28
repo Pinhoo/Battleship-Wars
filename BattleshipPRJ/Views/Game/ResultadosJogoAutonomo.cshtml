@@ -1,18 +1,42 @@
-﻿@model BattleshipPRJ.Models.Jogo
+﻿@model List<RoundSummary>
+@*ou Jogo*@
 
 @{
-    ViewData["Title"] = "Novo Jogo Autónomo -";
+    ViewData["Title"] = "Resultados Jogo Autónomo -";
 }
 <div id="contain" class="page-header">
     <h1>Resultados Jogo Autónomo</h1>
 
 </div>
 
-<h1>@Model.ID</h1>
+<table>
+    <tr>
+        <th>Nºronda</th>
+        <th>Score Início</th>
+        <th>Score Fim</th>
 
 
+    </tr>
 
-    <table id="gameBoard">
+    @foreach (RoundSummary rs in Model)
+    {
+
+    <tr>
+
+        <td>@rs.NRonda</td>
+        <td>@rs.ScoreInicio</td>
+        <td>@rs.ScoreFimRonda</td>
+
+
+    </tr>
+
+
+    }
+
+
+</table>
+
+@*<table id="gameBoard">
         <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
         <!--primeira linha: letras (coordenadas)-->
         <tr>
@@ -57,7 +81,7 @@
                 }
             </tr>
         }
-    </table>
+    </table>*@
 
 
 

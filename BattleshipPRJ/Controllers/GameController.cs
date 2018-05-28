@@ -30,6 +30,7 @@ namespace BattleshipPRJ.Controllers
             {
                 Repository.CriarJogo(jogo);
                 jogo.AlterarMissao();
+                List<RoundSummary> ListaRondas = new List<RoundSummary>();
 
                 string missao;
 
@@ -79,6 +80,24 @@ namespace BattleshipPRJ.Controllers
                     if (!response1.IsSuccessStatusCode) { return Redirect("/"); }
                     string json_r1 = await response1.Content.ReadAsStringAsync();
                     GameState gs1 = JsonConvert.DeserializeObject<GameState>(json_r1);
+                    
+
+                    RoundSummary rs = new RoundSummary();
+
+                    rs.NRonda++;
+
+                    rs.ScoreInicio = 0;
+
+                    if(gs.Result == Resultado.SuccessHit)
+                    {
+                        jogo.Disparou(gs1.DamagedShipSize, false, false);
+                    }
+
+                    //calcular os scores
+
+                    rs.ScoreFimRonda = (int)jogo.Score; // porque é que o score tá double?
+
+                    ListaRondas.Add(rs);
 
 
                     jogo.Grelha[X, Y] = gs1.DamagedShipSize;
@@ -94,7 +113,7 @@ namespace BattleshipPRJ.Controllers
                 }
                 
 
-                return View("ResultadosJogoAutonomo", jogo);
+                return View("ResultadosJogoAutonomo", ListaRondas); //ou mandar o jogo para mostrar a grelha
             }
             else
             {
