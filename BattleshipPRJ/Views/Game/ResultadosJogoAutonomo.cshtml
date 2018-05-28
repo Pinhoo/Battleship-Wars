@@ -1,0 +1,64 @@
+﻿@model BattleshipPRJ.Models.Jogo
+
+@{
+    ViewData["Title"] = "Novo Jogo Autónomo -";
+}
+<div id="contain" class="page-header">
+    <h1>Resultados Jogo Autónomo</h1>
+
+</div>
+
+<h1>@Model.ID</h1>
+
+
+
+    <table id="gameBoard">
+        <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
+        <!--primeira linha: letras (coordenadas)-->
+        <tr>
+            <!-- célula vazia invisível no canto sup.esq. da tabela-->
+            <td class="tile-inv"></td>
+            @for (int coluna = 0; coluna < 10; coluna++)
+            {
+                <td class="tile-inv tile-letras">
+                    <!--converter número da coluna para letra com o código ASCII ('A'=65) -->
+                    @Convert.ToChar(coluna + 65)
+                </td>
+            }
+        </tr>
+        @for (int linha = 0; linha < 10; linha++) // para cada linha no array modelo, que varia entre 0 e 9
+        {
+            <tr>
+                <td class="tile-inv tile-numeros">
+                    <!--primeira coluna: números (coordenadas)-->
+                    @(linha + 1)
+                </td>
+                @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
+                {
+                    switch (Model.Grelha[linha, coluna])
+                    {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                            <td id="@(linha)@(coluna)" class="tile hit"></td>
+                            break;
+                        case 7:
+                            <td id="@(linha)@(coluna)" class="fill"></td>
+                            break;
+                        case 0:
+                            <td id="@(linha)@(coluna)" class="tile misses"></td>
+                            break;
+                        default:
+                            <td id="@(linha)@(coluna)" class="tile"></td>
+                            break;
+                    }
+                }
+            </tr>
+        }
+    </table>
+
+
+
+

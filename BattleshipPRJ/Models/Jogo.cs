@@ -78,6 +78,7 @@ namespace BattleshipPRJ.Models
 
         public Coordenadas Coords { get; set; }
 
+        public int NumeroDisparosAutonomo { get; set; }
 
 
         private int[,] grelha;
@@ -281,8 +282,13 @@ namespace BattleshipPRJ.Models
 
         public void CalcularPercentagens()
         {
-            PercentagemAlvo = 100 * TirosAlvo / TirosDados;
-            PercentagemAfundado = 100 - (100 * (Submarinosrestantes + Doiscanosrestantes + Trescanosrestantes + Quatrocanosrestantes + Portaavioesrestantes) / 11);
+            PercentagemAlvo = 100 * TirosAlvo / (double)TirosDados;
+
+            PercentagemAlvo = Math.Round(PercentagemAlvo, 2);
+
+            PercentagemAfundado = 100 - (100 * (Submarinosrestantes + Doiscanosrestantes + Trescanosrestantes + Quatrocanosrestantes + Portaavioesrestantes) / 11.0);
+
+            PercentagemAfundado = Math.Round(PercentagemAfundado, 2);
         }
 
         public int CompareTo(object obj)
@@ -513,6 +519,22 @@ namespace BattleshipPRJ.Models
                 Grelha[opcaoY, opcaoX] = -1;
             }
 
+        }
+
+        public void CalcularNumeroDisparos(string numrondas)
+        { 
+        if (numrondas == "auto0")
+            {
+                NumeroDisparosAutonomo = Misseis;
+            }
+            else if (numrondas == "auto3")
+            {
+                NumeroDisparosAutonomo = 3;
+            }
+            else if (numrondas == "auto10")
+            {
+                NumeroDisparosAutonomo = 10;
+            }
         }
 
         public void LocalAoFundo(int Barco, int opcaoY, int opcaoX)

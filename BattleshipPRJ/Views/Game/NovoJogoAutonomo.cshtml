@@ -1,0 +1,58 @@
+﻿@model BattleshipPRJ.Models.Jogo
+
+@{
+    ViewData["Title"] = "Novo Jogo Autónomo -";
+}
+<div id="contain" class="page-header">
+    <h1>Novo Jogo Autónomo</h1>
+
+</div>
+
+
+<form class="form-inline" asp-action="NovoJogoAutonomo" method="post">
+
+    <div asp-validation-summary="All"></div>
+
+    <div class="form-group">
+
+        <label asp-for="Nome">Nº rondas a jogar:</label>
+        <select class="form-control" asp-for="Nome">
+
+            <option value="auto3" selected>3 tiros</option>
+            <option value="auto10">10 tiros</option>
+            <option value="auto0">Kamikaze</option>
+
+        </select>
+    </div>
+
+    <input type="hidden" asp-for="Missao" value="Destruição Total" />
+
+
+
+    <button class="btn btn-default" type="submit" align="middle">Iniciar Jogo &raquo</button>
+
+
+
+</form>
+
+<div id="contain">
+
+    <p>
+        Neste modo, o jogo é jogado sem a intervenção de qualquer jogador humano.
+        No seu lugar, existirá um jogador artificial que tomará as decisões de
+        jogo autonomamente, jogando, no entanto, sob as mesmas regras do que um jogador humano.
+
+        Nota: A missão é sempre "Destruição Total".
+    </p>
+
+    <p>
+        Deve selecionar o número de
+        rondas a jogar. As opções possíveis são: 3 tiros, 10 tiros, e Kamikaze.
+        Caso seja escolhida a opção Kamikaze, o JA irá jogar ininterruptamente até vencer ou ficar sem
+        mísseis. Nos outros casos, o JA desiste do jogo após lançar o número de mísseis escolhido.
+    </p>
+
+
+    <img class="imgcenter" src="~/images/ai.jpg" alt="Modo Autónomo" title="Modo Autónomo">
+</div>
+
