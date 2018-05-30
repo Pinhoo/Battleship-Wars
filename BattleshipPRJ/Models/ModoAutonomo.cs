@@ -249,7 +249,7 @@ namespace BattleshipPRJ.Models
                 }
                 else if (OQueAcertei == 4)
                 {
-
+                    proximoTiro = Acertou4Canos(GrelhaMarcar, TiroDisparado);
                 }
                 else if (OQueAcertei == 5)
                 {
@@ -295,7 +295,7 @@ namespace BattleshipPRJ.Models
             Coordenadas C = new Coordenadas();
             string Borda = VerificarBordas(TD);
 
-            C = TerceiroTiro34Canos(Borda, Grelha, TD);
+            C = TerceiroTiro3Canos(Borda, Grelha, TD);
 
             if (C == null)
             {
@@ -312,7 +312,39 @@ namespace BattleshipPRJ.Models
                     C.X = C.X + Add.X;
                     C.Y = C.Y + Add.Y;
 
-                    if (Grelha[C.X, C.Y] != -1)
+                    if (Grelha[C.X, C.Y] == -1)
+                    {
+                        i++;
+                    }
+                }
+            }
+
+            return C;
+        }
+
+        public Coordenadas Acertou4Canos(int[,] Grelha, Coordenadas TD)
+        {
+            Coordenadas C = new Coordenadas();
+            string Borda = VerificarBordas(TD);
+
+            C = TerceiroTiro4Canos(Borda, Grelha, TD);
+
+            if (C == null)
+            {
+                int i = 0;
+
+                while (i == 0)
+                {
+                    C = TD;
+
+                    string borda = VerificarBordas(C);
+
+                    Coordenadas Add = EscolherNSEO(borda);
+
+                    C.X = C.X + Add.X;
+                    C.Y = C.Y + Add.Y;
+
+                    if (Grelha[C.X, C.Y] == -1)
                     {
                         i++;
                     }
@@ -527,7 +559,7 @@ namespace BattleshipPRJ.Models
             return C;
         }
 
-        public Coordenadas TerceiroTiro34Canos(string Borda, int[,] Grelha, Coordenadas TD)
+        public Coordenadas TerceiroTiro3Canos(string Borda, int[,] Grelha, Coordenadas TD)
         {
             bool Acertou = false;
 
@@ -540,13 +572,13 @@ namespace BattleshipPRJ.Models
                 if (Grelha[TD.X + 1, TD.Y] == 3)
                 {
                     C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y + 1] == 3)
                 {
                     C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
             }
@@ -555,13 +587,13 @@ namespace BattleshipPRJ.Models
                 if (Grelha[TD.X + 1, TD.Y] == 3)
                 {
                     C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y - 1] == 3)
                 {
                     C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
             }
@@ -570,13 +602,13 @@ namespace BattleshipPRJ.Models
                 if (Grelha[TD.X - 1, TD.Y] == 3)
                 {
                     C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y + 1] == 3)
                 {
                     C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
             }
@@ -585,13 +617,13 @@ namespace BattleshipPRJ.Models
                 if (Grelha[TD.X - 1, TD.Y] == 3)
                 {
                     C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y - 1] == 3)
                 {
                     C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
             }
@@ -600,19 +632,19 @@ namespace BattleshipPRJ.Models
                 if (Grelha[TD.X + 1, TD.Y] == 3)
                 {
                     C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y + 1] == 3)
                 {
                     C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y - 1] == 3)
                 {
                     C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
             }
@@ -621,19 +653,19 @@ namespace BattleshipPRJ.Models
                 if (Grelha[TD.X - 1, TD.Y] == 3)
                 {
                     C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y + 1] == 3)
                 {
                     C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y - 1] == 3)
                 {
                     C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
             }
@@ -642,19 +674,19 @@ namespace BattleshipPRJ.Models
                 if (Grelha[TD.X + 1, TD.Y] == 3)
                 {
                     C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X - 1, TD.Y] == 3)
                 {
                     C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y + 1] == 3)
                 {
                     C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
             }
@@ -663,19 +695,19 @@ namespace BattleshipPRJ.Models
                 if (Grelha[TD.X + 1, TD.Y] == 3)
                 {
                     C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X - 1, TD.Y] == 3)
                 {
                     C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y - 1] == 3)
                 {
                     C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
             }
@@ -684,25 +716,213 @@ namespace BattleshipPRJ.Models
                 if (Grelha[TD.X + 1, TD.Y] == 3)
                 {
                     C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X - 1, TD.Y] == 3)
                 {
                     C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y + 1] == 3)
                 {
                     C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
                 if (Grelha[TD.X, TD.Y - 1] == 3)
                 {
                     C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD);
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+            }
+            if (Acertou == true)
+            {
+                return R;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public Coordenadas TerceiroTiro4Canos(string Borda, int[,] Grelha, Coordenadas TD)
+        {
+            bool Acertou = false;
+
+            Coordenadas C = new Coordenadas();
+
+            Coordenadas R = new Coordenadas();
+
+            if (Borda == "Nao aceito -1")
+            {
+                if (Grelha[TD.X + 1, TD.Y] == 4)
+                {
+                    C.X = C.X + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y + 1] == 4)
+                {
+                    C.Y = C.Y + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Nao aceito X - 1 ou Y + 1")
+            {
+                if (Grelha[TD.X + 1, TD.Y] == 4)
+                {
+                    C.X = C.X + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    C.Y = C.Y - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Nao aceito X + 1 ou Y - 1")
+            {
+                if (Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    C.X = C.X - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y + 1] == 4)
+                {
+                    C.Y = C.Y + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Nao aceito + 1")
+            {
+                if (Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    C.X = C.X - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    C.Y = C.Y - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Nao aceito X - 1")
+            {
+                if (Grelha[TD.X + 1, TD.Y] == 4)
+                {
+                    C.X = C.X + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y + 1] == 4)
+                {
+                    C.Y = C.Y + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    C.Y = C.Y - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Nao aceito X + 1")
+            {
+                if (Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    C.X = C.X - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y + 1] == 4)
+                {
+                    C.Y = C.Y + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    C.Y = C.Y - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Nao aceito Y - 1")
+            {
+                if (Grelha[TD.X + 1, TD.Y] == 4)
+                {
+                    C.X = C.X + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    C.X = C.X - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y + 1] == 4)
+                {
+                    C.Y = C.Y + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Nao aceito Y + 1")
+            {
+                if (Grelha[TD.X + 1, TD.Y] == 4)
+                {
+                    C.X = C.X + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    C.X = C.X - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    C.Y = C.Y - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Aceito tudo")
+            {
+                if (Grelha[TD.X + 1, TD.Y] == 4)
+                {
+                    C.X = C.X + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    C.X = C.X - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y + 1] == 4)
+                {
+                    C.Y = C.Y + 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
+                    Acertou = true;
+                }
+                if (Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    C.Y = C.Y - 1;
+                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
                     Acertou = true;
                 }
             }
@@ -716,7 +936,7 @@ namespace BattleshipPRJ.Models
             }
         }
 
-        public Coordenadas TerceiroTiro(int X, int Y, Coordenadas Tiro)
+        public Coordenadas TerceiroTiro(int X, int Y, Coordenadas Tiro, int[,] Grelha)
         {
             Random rnr = new Random();
             int i = 0;
@@ -767,7 +987,7 @@ namespace BattleshipPRJ.Models
                         Tiro.Y = Tiro.Y + 1;
                     }
                 }
-                if (Tiro.Y < 0 || Tiro.Y > 9 || Tiro.X < 0 || Tiro.X > 9)
+                if (Tiro.Y < 0 || Tiro.Y > 9 || Tiro.X < 0 || Tiro.X > 9 || Grelha[Tiro.X,Tiro.Y] == 7)
                 {
                     if (Aleatorio == 0)
                     {
