@@ -1,4 +1,4 @@
-﻿@model List<RoundSummary>
+﻿@model  List<RoundSummary>
 @*ou Jogo*@
 
 @{
@@ -7,12 +7,19 @@
 <div id="contain" class="page-header">
     <h1>Resultados Jogo Autónomo</h1>
 
+    <h2>Resultados por Ronda</h2>
+
 </div>
 
 <table>
     <tr>
         <th>Nºronda</th>
         <th>Score Início</th>
+        <th>Coordenadas do Alvo</th>
+        <th>Resultado do Tiro</th>
+        <th>Tipo de Barco</th>
+        <th>Tiros no Alvo</th>
+        <th>NºBarcos Afundados</th>
         <th>Score Fim</th>
 
 
@@ -25,6 +32,11 @@
 
         <td>@rs.NRonda</td>
         <td>@rs.ScoreInicio</td>
+        <td>@rs.CoordAlvoEscolhido</td>
+        <td>@rs.ResultTiro</td>
+        <td>@rs.BarcoAtingido</td>
+        <td>@rs.TotalTiroAlvo</td>
+        <td>@rs.TotalBarcosAfundados</td>
         <td>@rs.ScoreFimRonda</td>
 
 
@@ -83,6 +95,43 @@
         }
     </table>*@
 
+
+<h2> Resultados Globais</h2>
+
+@*<table>
+    <tr>
+        <th>Nº de Rondas</th>
+        <th>Score Final</th>
+        <th>Resultado</th>
+        <th>Mísseis Lançados</th>
+        <th>% Tiros no alvo</th>
+        <th>% Barcos afundados</th>
+
+    </tr>
+
+    @{RoundSummary nrond = new RoundSummary();
+        }
+
+
+    @foreach (RoundSummary r in Model)
+    {
+        <tr>
+
+            <td>   </td>
+            <td>
+
+
+                @{nrond.NumTotRondas();
+                    }
+
+            </td>
+            <td>     </td>
+
+
+        </tr>
+    }
+
+    </table>*@
 
 
 

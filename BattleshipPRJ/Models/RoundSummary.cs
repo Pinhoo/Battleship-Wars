@@ -34,12 +34,29 @@ namespace BattleshipPRJ.Models
             
             
         }
+        //public int NumTotRondas()
+        //{
+
+        //    int totalrondas = 1;
+
+        //    while (NRonda > 1)
+        //    {
+
+        //        totalrondas = totalrondas + 1;
+        //        break;
+
+        //    }
+
+        //    return totalrondas;
 
 
 
 
+        }
+
+       
     }
 
 
-}
+
 

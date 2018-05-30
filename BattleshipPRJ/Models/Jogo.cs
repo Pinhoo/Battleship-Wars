@@ -80,6 +80,9 @@ namespace BattleshipPRJ.Models
 
         public int NumeroDisparosAutonomo { get; set; }
 
+        
+
+
 
         private int[,] grelha;
 
