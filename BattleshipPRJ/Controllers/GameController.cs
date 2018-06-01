@@ -41,7 +41,7 @@ namespace BattleshipPRJ.Controllers
 
                 HttpClient client = MyHttpClient.Client;
                 string path = "api/NewGame";
-                NewGameRequest ngreq = new NewGameRequest(jogo.Nome, missao);
+                NewGameRequest ngreq = new NewGameRequest(jogo.Nome, missao);//ngreq new game request
                 string json = JsonConvert.SerializeObject(ngreq);
 
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, path);
@@ -53,23 +53,30 @@ namespace BattleshipPRJ.Controllers
                 string json_r = await response.Content.ReadAsStringAsync();
                 GameState gs = JsonConvert.DeserializeObject<GameState>(json_r);
 
-
                 jogo.CalcularNumeroDisparos(jogo.Nome);
 
                 while(jogo.NumeroDisparosAutonomo!=0)
                 {
-
                     HttpClient client1 = MyHttpClient.Client;
                     string path1 = "api/Play";
 
                     jogo.ID = gs.GameID;
 
-                    Random rnr = new Random();
+                    Coordenadas Coordenada;
 
-                    int X = rnr.Next(0, 10);
-                    int Y = rnr.Next(0, 10);
+                    ModoAutonomo ModoAuto = new ModoAutonomo();
 
-                    PlayRequest pr = new PlayRequest(jogo.ID, X, Y, 0);
+                    if (jogo.Acertou == false)
+                    {
+                        Coordenada = ModoAuto.ProximoTiro(jogo.Grelha,0,false, jogo.CoordsUltimoTiro);
+                    }
+                    else
+                    {
+
+                        Coordenada = ModoAuto.ProximoTiro(jogo.GrelhaModoAuto,jogo.UltimoBarcoAcertado,jogo.Afundou, jogo.CoordsUltimoTiro);
+                    }
+
+                    PlayRequest pr = new PlayRequest(jogo.ID, Coordenada.X, Coordenada.Y, 0);
                     string json1 = JsonConvert.SerializeObject(pr);
 
                     HttpRequestMessage request1 = new HttpRequestMessage(HttpMethod.Post, path1);
@@ -100,8 +107,29 @@ namespace BattleshipPRJ.Controllers
                     ListaRondas.Add(rs);
 
 
-                    jogo.Grelha[X, Y] = gs1.DamagedShipSize;
-                    
+                    jogo.Grelha[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
+
+                    jogo.GrelhaModoAuto[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
+
+                    if (gs.Result == Resultado.SuccessSink)
+                    {
+                        jogo.GrelhaModoAuto = ModoAuto.AfundouMarcar(jogo.GrelhaModoAuto, gs1.DamagedShipSize);
+                        jogo.Acertou = false;
+                    }
+
+                    if(gs1.DamagedShipSize != 0)
+                    {
+                    jogo.CoordsUltimoTiro.X = Coordenada.X;
+                    jogo.CoordsUltimoTiro.Y = Coordenada.Y;
+
+                    jogo.UltimoBarcoAcertado = gs1.DamagedShipSize;
+                        if (gs.Result != Resultado.SuccessSink)
+                        {
+                            jogo.Acertou = true;
+                        }    
+                    }
+
+
                     jogo.NumeroDisparosAutonomo--;
 
                     if(gs1.Result==Resultado.SuccessVictory)

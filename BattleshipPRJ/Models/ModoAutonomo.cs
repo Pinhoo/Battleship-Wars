@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace BattleshipPRJ.Models
 {
-    public class ModoAutonomo1
+    public class ModoAutonomo
     {
-        public Coordenadas DevolverCoordsAleatorio(int[,] GrelhaMarcar)//"simples"
+        public Coordenadas DevolverCoordsAleatorio(int[,] GrelhaMarcar)//metodo que devolve coordenadas aleatorias
         {
             Coordenadas c = new Models.Coordenadas();
             c.X = 0;
@@ -228,11 +228,12 @@ namespace BattleshipPRJ.Models
 
             }
             return GrelhaMarcada;
-        }
+        }//marca todos os pontos á volta da coordenada
 
         public Coordenadas ProximoTiro(int[,] GrelhaMarcar, int OQueAcertei, bool Afundou, Coordenadas TiroDisparado)
         {
             Coordenadas proximoTiro = new Coordenadas();
+
             if (Afundou == false)
             {
                 if (OQueAcertei == 1)
@@ -265,7 +266,7 @@ namespace BattleshipPRJ.Models
                 proximoTiro = DevolverCoordsAleatorio(GrelhaMarcar);
             }
             return proximoTiro;
-        }
+        }//decide qual a coordenada em que se dispara o proximo missil
 
         public Coordenadas Acertou2Canos(int[,] Grelha, Coordenadas TD)
         {
@@ -288,7 +289,7 @@ namespace BattleshipPRJ.Models
                 }
             }
             return C;
-        }
+        }//o que faz se o ultimo tiro acertou num barco de 2 canos
 
         public Coordenadas Acertou3Canos(int[,] Grelha, Coordenadas TD)
         {
@@ -320,14 +321,20 @@ namespace BattleshipPRJ.Models
             }
 
             return C;
-        }
+        }//o que faz se o ultimo tiro acertou num barco de 3 canos
 
-        public Coordenadas Acertou4Canos(int[,] Grelha, Coordenadas TD)
+        public Coordenadas Acertou4Canos(int[,] Grelha, Coordenadas TD)//o que faz se o ultimo tiro acertou num barco de 4 canos
         {
             Coordenadas C = new Coordenadas();
+
             string Borda = VerificarBordas(TD);
 
-            C = TerceiroTiro4Canos(Borda, Grelha, TD);
+            //C = QuartoTiro4Canos(Borda, Grelha, TD);
+
+            if (C == null)
+            {
+                C = TerceiroTiro4Canos(Borda, Grelha, TD);
+            }
 
             if (C == null)
             {
@@ -392,9 +399,9 @@ namespace BattleshipPRJ.Models
             {
                 return "Aceito tudo";
             }
-        }
+        }//método para não deixar disparar para além das bordas da grelha
 
-        public Coordenadas EscolherNSEO(string Borda)//norte sul este oeste
+        public Coordenadas EscolherNSEO(string Borda)//aleatoriamente escolhe uma direção(norte sul este oeste) depende do que se acertou e se há possibilidade ou se já não está marcardo
         {
             Coordenadas C = new Coordenadas();
             Random rnr = new Random();
@@ -746,14 +753,15 @@ namespace BattleshipPRJ.Models
             {
                 return null;
             }
-        }
+        }//o que faz se o ultimo tiro acertou num barco de 3 canos sabendo que já acertou 2 quadrados nesse barco
+
         public Coordenadas TerceiroTiro4Canos(string Borda, int[,] Grelha, Coordenadas TD)
         {
             bool Acertou = false;
 
-            Coordenadas C = new Coordenadas();
+            Coordenadas C = new Coordenadas();//coords
 
-            Coordenadas R = new Coordenadas();
+            Coordenadas R = new Coordenadas();//resultado final
 
             if (Borda == "Nao aceito -1")
             {
@@ -934,7 +942,12 @@ namespace BattleshipPRJ.Models
             {
                 return null;
             }
-        }
+        }//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 2 quadrados nesse barco
+
+        //public Coordenadas QuartoTiro4Canos(string Borda, int[,] Grelha, Coordenadas TD)//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 3 quadrados nesse barco
+        //{
+
+        //}
 
         public Coordenadas TerceiroTiro(int X, int Y, Coordenadas Tiro, int[,] Grelha)
         {
@@ -1004,15 +1017,13 @@ namespace BattleshipPRJ.Models
                 }
             }
             return Tiro;
-        }
+        }//método para 3º tiro dos barcos de 3 e 4 canos(criei um metodo apenas para não haver repetição do codigo do mesmo)
 
         public int[,] AfundouMarcar(int[,] GrelhaMarcar, int Barco)
         {
-            int X = 0;
-            while (X < 10)
+            for (int X = 0; X < 10; X++)
             {
-                int Y = 0;
-                while (Y < 10)
+                for (int Y = 0; Y < 10; Y++)
                 {
                     if (GrelhaMarcar[X, Y] == Barco)
                     {
@@ -1021,11 +1032,9 @@ namespace BattleshipPRJ.Models
                         C.Y = Y;
                         Marcar(C, GrelhaMarcar);
                     }
-                    Y++;
                 }
-                X++;
             }
             return GrelhaMarcar;
-        }
+        }//marca todos os pontos á volta do tipo de barco selecionado(para não disparar em coordenadas em que seja impossivel estar um barco)
     }
 }

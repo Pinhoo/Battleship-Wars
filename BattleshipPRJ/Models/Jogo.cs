@@ -74,9 +74,19 @@ namespace BattleshipPRJ.Models
 
         public int Local4Canos { get; set; }
 
+        //modo auto
+
         public int[,] GrelhaModoAuto { get; set; }
 
-        public Coordenadas Coords { get; set; }
+        public Coordenadas CoordsUltimoTiro { get; set; }
+
+        public int UltimoBarcoAcertado { get; set; }
+
+        public bool Afundou { get; set; }
+
+        public bool Acertou { get; set; }
+
+        //modo auto
 
         public int NumeroDisparosAutonomo { get; set; }
 
@@ -202,6 +212,11 @@ namespace BattleshipPRJ.Models
                 { -1,-1,-1,-1,-1,-1,-1,-1,-1, -1}
             };
 
+            GrelhaModoAuto = grelha;
+
+
+
+            CoordsUltimoTiro = new Coordenadas();
         }
 
         public void Disparou(int Tiro, bool ganho, bool BarcoAoFundo)
