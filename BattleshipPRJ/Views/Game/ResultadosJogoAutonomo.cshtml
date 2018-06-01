@@ -1,5 +1,4 @@
-﻿@model  List<RoundSummary>
-@*ou Jogo*@
+﻿@model Jogo
 
 @{
     ViewData["Title"] = "Resultados Jogo Autónomo -";
@@ -7,9 +6,9 @@
 <div id="contain" class="page-header">
     <h1>Resultados Jogo Autónomo</h1>
 
-    <h2>Resultados por Ronda</h2>
-
 </div>
+
+<h2>Resultados por Ronda</h2>
 
 <table>
     <tr>
@@ -25,22 +24,26 @@
 
     </tr>
 
-    @foreach (RoundSummary rs in Model)
+    @foreach (RoundSummary rs in Model.Rss)
     {
+        
+        
+        <tr>
 
-    <tr>
-
-        <td>@rs.NRonda</td>
-        <td>@rs.ScoreInicio</td>
-        <td>@rs.CoordAlvoEscolhido</td>
-        <td>@rs.ResultTiro</td>
-        <td>@rs.BarcoAtingido</td>
-        <td>@rs.TotalTiroAlvo</td>
-        <td>@rs.TotalBarcosAfundados</td>
-        <td>@rs.ScoreFimRonda</td>
+            <td>@rs.NRonda</td>
+            <td>@rs.ScoreInicio</td>
+            <td>@rs.CoordAlvoEscolhido</td>
+            <td>@rs.ResultTiro</td>
+            <td>@rs.BarcoAtingido</td>
+            <td>@rs.TotalTiroAlvo</td>
+            <td>@rs.TotalBarcosAfundados</td>
+            <td>@rs.ScoreFimRonda</td>
 
 
-    </tr>
+
+        </tr>
+
+
 
 
     }
@@ -48,7 +51,12 @@
 
 </table>
 
-@*<table id="gameBoard">
+
+@*@foreach (RoundSummary rs1 in Model)
+{*@
+    
+
+    <table id="gameBoard">
         <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
         <!--primeira linha: letras (coordenadas)-->
         <tr>
@@ -72,7 +80,7 @@
                 @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
                 {
                     switch (Model.Grelha[linha, coluna])
-                    {
+                {
                         case 1:
                         case 2:
                         case 3:
@@ -93,7 +101,12 @@
                 }
             </tr>
         }
-    </table>*@
+    </table>
+    
+    
+@*}*@
+
+
 
 
 <h2> Resultados Globais</h2>

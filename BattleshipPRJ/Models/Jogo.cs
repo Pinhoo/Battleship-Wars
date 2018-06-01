@@ -90,8 +90,22 @@ namespace BattleshipPRJ.Models
 
         public int NumeroDisparosAutonomo { get; set; }
 
-        
+        private List<RoundSummary> rss = new List<RoundSummary>();
 
+        public List<RoundSummary> Rss
+        {
+
+            get
+            {
+                return rss;
+
+            }
+        }
+
+        public void AddRoundSummary(RoundSummary rs)
+        {
+            Rss.Add(rs);
+        }
 
 
         private int[,] grelha;

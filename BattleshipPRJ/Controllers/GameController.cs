@@ -87,13 +87,18 @@ namespace BattleshipPRJ.Controllers
                     if (!response1.IsSuccessStatusCode) { return Redirect("/"); }
                     string json_r1 = await response1.Content.ReadAsStringAsync();
                     GameState gs1 = JsonConvert.DeserializeObject<GameState>(json_r1);
-                    
+
+
 
                     RoundSummary rs = new RoundSummary();
-
-                    rs.NRonda++;
+                    
+                    
+                    
+                    rs.NRonda = gs1.RoundNumber;
 
                     rs.ScoreInicio = 0;
+
+                    rs.ScoreFimRonda = (int)jogo.Score;
 
                     if(gs.Result == Resultado.SuccessHit)
                     {
@@ -104,8 +109,7 @@ namespace BattleshipPRJ.Controllers
 
                     rs.ScoreFimRonda = (int)jogo.Score; // porque é que o score tá double?
 
-                    ListaRondas.Add(rs);
-
+                    
 
                     jogo.Grelha[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
 
@@ -129,19 +133,39 @@ namespace BattleshipPRJ.Controllers
                         }    
                     }
 
+                    
+
+                    HttpClient client2 = MyHttpClient.Client;
+                    string path2 = "api/Play";
+                    PlayRequest pr2 = new PlayRequest(jogo.ID, Coordenada.X, Coordenada.Y, PlayerAction.Quit);
+                    string json2 = JsonConvert.SerializeObject(pr2);
+
+                    HttpRequestMessage request2 = new HttpRequestMessage(HttpMethod.Post, path2);
+                    request2.Content = new StringContent(json2, System.Text.Encoding.UTF8,
+                    "application/json");
+                    HttpResponseMessage response2 = await client.SendAsync(request2);
+
+                    if (!response2.IsSuccessStatusCode) { return Redirect("/"); }
+                    string json_r2 = await response2.Content.ReadAsStringAsync();
+                    GameState gs2 = JsonConvert.DeserializeObject<GameState>(json_r2);
+
+                    
+
+                    jogo.AddRoundSummary(rs);
 
                     jogo.NumeroDisparosAutonomo--;
 
-                    if(gs1.Result==Resultado.SuccessVictory)
+                    if (gs1.Result == Resultado.SuccessVictory)
                     {
                         jogo.NumeroDisparosAutonomo = 0;
                     }
 
-
                 }
+
                 
 
-                return View("ResultadosJogoAutonomo", ListaRondas); //ou mandar o jogo para mostrar a grelha
+
+                return View("ResultadosJogoAutonomo", jogo); //ou mandar o jogo para mostrar a grelha
             }
             else
             {
