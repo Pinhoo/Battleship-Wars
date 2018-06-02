@@ -254,7 +254,7 @@ namespace BattleshipPRJ.Models
                 }
                 else if (OQueAcertei == 5)
                 {
-
+                    proximoTiro = DevolverCoordsAleatorio(GrelhaMarcar);
                 }
                 else
                 {
@@ -329,7 +329,7 @@ namespace BattleshipPRJ.Models
 
             string Borda = VerificarBordas(TD);
 
-            //C = QuartoTiro4Canos(Borda, Grelha, TD);
+            C = QuartoTiro4Canos(Grelha, TD);
 
             if (C == null)
             {
@@ -391,10 +391,118 @@ namespace BattleshipPRJ.Models
             {
                 return "Nao aceito Y - 1";
             }
-            else if (c.Y == 0)
+            else if (c.Y == 9)
             {
                 return "Nao aceito Y + 1";
             }
+            else
+            {
+                return "Aceito tudo";
+            }
+        }//método para não deixar disparar para além das bordas da grelha
+
+        public string VerificarBordasRadius2(Coordenadas c)
+        {
+            if (c.X == 0 && c.Y == 0)
+            {
+                return "Nao aceito -1";
+            }
+            else if (c.X == 9 && c.Y == 0)
+            {
+                return "Nao aceito X + 1 ou Y - 1";
+            }
+            else if (c.X == 0 && c.Y == 9)
+            {
+                return "Nao aceito X - 1 ou Y + 1";
+            }
+            else if (c.X == 9 && c.Y == 9)
+            {
+                return "Nao aceito + 1";
+            }
+            //2 radius
+            else if (c.X == 0 && c.Y == 1)
+            {
+                return "Nao aceito X - 1 ou Y - 2";
+            }
+            else if (c.X == 0 && c.Y == 8)
+            {
+                return "Nao aceito X - 1 ou Y + 2";
+            }
+            else if (c.X == 9 && c.Y == 1)
+            {
+                return "Nao aceito X + 1 ou Y - 2";
+            }
+            else if (c.X == 9 && c.Y == 8)
+            {
+                return "Nao aceito X + 1 ou Y + 2";
+            }
+            else if (c.X == 1 && c.Y == 0)
+            {
+                return "Nao aceito X - 2 ou Y - 1";
+            }
+            else if (c.X == 8 && c.Y == 0)
+            {
+                return "Nao aceito X + 2 ou Y - 1";
+            }
+            else if (c.X == 1 && c.Y == 9)
+            {
+                return "Nao aceito X - 2 ou Y + 1";
+            }
+            else if (c.X == 8 && c.Y == 9)
+            {
+                return "Nao aceito X + 2 ou Y + 1";
+            }
+            else if (c.X == 8 && c.Y == 8)
+            {
+                return "Nao aceito + 2";
+            }
+            else if (c.X == 1 && c.Y == 1)
+            {
+                return "Nao aceito - 2";
+            }
+            else if (c.X == 1 && c.Y == 8)
+            {
+                return "Nao aceito X - 2 ou Y + 2";
+            }
+            else if (c.X == 8 && c.Y == 1)
+            {
+                return "Nao aceito X + 2 ou Y - 2";
+            }
+            //2 radius
+            else if (c.X == 0)
+            {
+                return "Nao aceito X - 1";
+            }
+            else if (c.X == 9)
+            {
+                return "Nao aceito X + 1";
+            }
+            else if (c.Y == 0)
+            {
+                return "Nao aceito Y - 1";
+            }
+            else if (c.Y == 9)
+            {
+                return "Nao aceito Y + 1";
+            }
+            //2 radius
+            else if (c.X == 1)
+            {
+                return "Nao aceito X - 2";
+            }
+            else if (c.X == 8)
+            {
+                return "Nao aceito X + 2";
+            }
+            else if (c.Y == 1)
+            {
+                return "Nao aceito Y - 2";
+            }
+            else if (c.Y == 8)
+            {
+                return "Nao aceito Y + 2";
+            }
+            //2 radius
             else
             {
                 return "Aceito tudo";
@@ -944,10 +1052,3074 @@ namespace BattleshipPRJ.Models
             }
         }//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 2 quadrados nesse barco
 
-        //public Coordenadas QuartoTiro4Canos(string Borda, int[,] Grelha, Coordenadas TD)//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 3 quadrados nesse barco
-        //{
+        public Coordenadas QuartoTiro4Canos(int[,] Grelha, Coordenadas TD)//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 3 quadrados nesse barco
+        {
+            bool Acertou = false;
 
-        //}
+            string Borda = VerificarBordasRadius2(TD);
+
+            Coordenadas C = TD;
+
+            Random rnr = new Random();
+
+            if (Borda == "Nao aceito -1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)//explicação disto no ultimo if(borda == aceito tudo)
+                {
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                    Acertou = true;
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Nao aceito X + 1 ou Y - 1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+                        
+                    }
+                    Acertou = true;
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                    Acertou = true;
+                }
+            }
+            else if (Borda == "Nao aceito X - 1 ou Y + 1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito + 1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            //2 radius inicio
+            else if (Borda == "Nao aceito X - 1 ou Y - 2")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X - 1 ou Y + 2")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X + 1 ou Y - 2")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X + 1 ou Y + 2")
+            { 
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X - 2 ou Y - 1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X + 2 ou Y - 1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X - 2 ou Y + 1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X + 2 ou Y + 1")
+            {
+                Acertou = true;
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito + 2")
+            {
+                Acertou = true;
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito - 2")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X - 2 ou Y + 2")
+            {
+                Acertou = true;
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X + 2 ou Y - 2")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+            }
+            //2 radius fim
+            else if (Borda == "Nao aceito X - 1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X + 1")
+            {
+                Acertou = true;
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito Y - 1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito Y + 1")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            //2 radius inicio
+            else if (Borda == "Nao aceito X - 2")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito X + 2")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito Y - 2")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (Borda == "Nao aceito Y + 2")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            //2 radius fim
+            else if (Borda == "Aceito tudo")
+            {
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 0)
+                    {
+                        C.X = TD.X + 3;
+                    }
+                    else if (TD.X == 7)
+                    {
+                        C.X = TD.X - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 1)
+                    {
+                        C.X = TD.X + 2;
+                    }
+                    else if (TD.X == 8)
+                    {
+                        C.X = TD.X - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                {
+                    Acertou = true;
+                    if (TD.X == 2)
+                    {
+                        C.X = TD.X + 1;
+                    }
+                    else if (TD.X == 9)
+                    {
+                        C.X = TD.X - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.X = TD.X + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.X = TD.X - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.X = TD.X + 1;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 0)
+                    {
+                        C.Y = TD.Y + 3;
+                    }
+                    else if (TD.Y == 7)
+                    {
+                        C.Y = TD.Y - 1;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 1;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 3;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 1)
+                    {
+                        C.Y = TD.Y + 2;
+                    }
+                    else if (TD.Y == 8)
+                    {
+                        C.Y = TD.Y - 2;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 2;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 2;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 2;
+                            }
+                        }
+
+                    }
+                }
+                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                {
+                    Acertou = true;
+                    if (TD.Y == 2)
+                    {
+                        C.Y = TD.Y + 1;
+                    }
+                    else if (TD.Y == 9)
+                    {
+                        C.Y = TD.Y - 3;
+                    }
+                    else
+                    {
+                        int aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0)
+                        {
+                            C.Y = TD.Y + 1;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y - 3;
+                            }
+                        }
+                        else
+                        {
+                            C.Y = TD.Y - 3;
+                            if (Grelha[C.X, C.Y] != -1)
+                            {
+                                C.Y = TD.Y + 1;
+                            }
+                        }
+
+                    }
+                }
+            }
+            if (Acertou == true)
+            {
+                return C;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public Coordenadas TerceiroTiro(int X, int Y, Coordenadas Tiro, int[,] Grelha)
         {
@@ -1000,7 +4172,7 @@ namespace BattleshipPRJ.Models
                         Tiro.Y = Tiro.Y + 1;
                     }
                 }
-                if (Tiro.Y < 0 || Tiro.Y > 9 || Tiro.X < 0 || Tiro.X > 9 || Grelha[Tiro.X,Tiro.Y] == 7)
+                if (Tiro.Y < 0 || Tiro.Y > 9 || Tiro.X < 0 || Tiro.X > 9 || Grelha[Tiro.X, Tiro.Y] == 7)
                 {
                     if (Aleatorio == 0)
                     {
