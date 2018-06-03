@@ -13,28 +13,18 @@ namespace BattleshipPRJ.Models
 
         public int ScoreInicio { get; set; }
 
-        public int CoordAlvoEscolhido { get; set; }
+        public string CoordAlvoEscolhido { get; set; }
 
-        public int ResultTiro { get; set; }
+        public string ResultTiro { get; set; }  
 
-        public int BarcoAtingido { get; set; }
+        public string BarcoAtingido { get; set; }  
 
         public int TotalTiroAlvo { get; set; }
 
         public int TotalBarcosAfundados { get; set; }
 
         public int ScoreFimRonda { get; set; }
-
-        private int[,] grelha;
         
-        public int[,] Grelha
-        {
-            get
-            {
-                return grelha;
-            }
-
-        }
 
         public RoundSummary()
         {
@@ -42,49 +32,126 @@ namespace BattleshipPRJ.Models
             NRonda = 1;
             ScoreInicio = 0;
 
-            grelha = new int[10, 10]
+            
+
+        }
+        
+        public void AtualizarRonda(Resultado res, int x, int y, int shipsize)
+        {
+
+            switch (res)
             {
-                //valores reservados:
-                //-1=desconhecido (jogador não atirou aqui)
-                //0=água; 1,2,3,4,5=barco de n canos
-                //outros valores: não usados (pode definir o que quiser caso necessite)
+                case Resultado.NoResult:
+                    break;
+                case Resultado.SuccessHit:
+                    ResultTiro = "Alvo";
+                    TotalTiroAlvo++;
+                    break;
+                case Resultado.SuccessMiss:
+                    ResultTiro = "Água";
+                    break;
+                case Resultado.SuccessSink:
+                    ResultTiro = "Afundado";
+                    TotalTiroAlvo++;
+                    TotalBarcosAfundados++;
+                    break;
+                case Resultado.SuccessRepeat:
+                    ResultTiro = "Repetido";
+                    break;
+                case Resultado.SuccessVictory:
+                    ResultTiro = "Afundado";
+                    TotalTiroAlvo++;
+                    break;
+                case Resultado.InvalidShot:
+                    break;
+                case Resultado.GameHasEnded:
+                    break;
+                default:
+                    break;
+            }
+
+            string coordx = x.ToString();
+            string coordy = (y + 1).ToString();
+
+            switch (coordx)
+            {
+                case "0":
+                    coordx = "A";
+                    break;
+                case "1":
+                    coordx = "B";
+                    break;
+                case "2":
+                    coordx = "C";
+                    break;
+                case "3":
+                    coordx = "D";
+                    break;
+                case "4":
+                    coordx = "E";
+                    break;
+                case "5":
+                    coordx = "F";
+                    break;
+                case "6":
+                    coordx = "G";
+                    break;
+                case "7":
+                    coordx = "H";
+                    break;
+                case "8":
+                    coordx = "I";
+                    break;
+                case "9":
+                    coordx = "J";
+                    break;
+                default:
+                    break;
+            }
+
+            CoordAlvoEscolhido = coordx + ", " + coordy;
 
 
-                //nesta grelha de teste mostramos alguns quadrados marcados com água e outros com barcos
-                //esta disposição não apareceria no jogo pois não há barcos de 4 canos com este formato
-                { -1,-1,-1,-1,-1,-1,-1,-1,-1, -1},
-                {-1, -1,-1,-1,-1,-1,-1,-1, -1,-1},
-                {-1,-1, -1, -1, -1, -1, -1, -1,-1,-1},
-                {-1,-1, -1,-1,-1,-1,-1, -1,-1,-1},
-                {-1,-1, -1,-1, -1, -1,-1, -1,-1,-1},
-                {-1,-1, -1,-1, -1, -1,-1, -1,-1,-1},
-                {-1,-1, -1,-1,-1,-1,-1, -1,-1,-1},
-                {-1,-1, -1, -1, -1, -1, -1, -1,-1,-1},
-                {-1, -1,-1,-1,-1,-1,-1,-1, -1,-1},
-                { -1,-1,-1,-1,-1,-1,-1,-1,-1, -1}
-            };
+
+            switch (shipsize)
+            {
+                case 0:
+                    BarcoAtingido = "-";
+                    break;
+                case 1:
+                    BarcoAtingido = "Submarino";
+                    break;
+                case 2:
+                    BarcoAtingido = "2 canos";
+                    break;
+                case 3:
+                    BarcoAtingido = "3 canos";
+                    break;
+                case 4:
+                    BarcoAtingido = "4 canos";
+                    break;
+                case 5:
+                    BarcoAtingido = "Porta-aviões";
+                    break;
+                default:
+                    break;
+            }
 
 
         }
-        //public int NumTotRondas()
-        //{
 
-        //    int totalrondas = 1;
+        public void AtualizarRonda(Resultado res, int x, int y, int shipsize, RoundSummary ronda)
+        {
 
-        //    while (NRonda > 1)
-        //    {
+            ScoreInicio = ronda.ScoreFimRonda;
 
-        //        totalrondas = totalrondas + 1;
-        //        break;
-
-        //    }
-
-        //    return totalrondas;
-
-
-
-
+            TotalTiroAlvo = ronda.TotalTiroAlvo;
+            TotalBarcosAfundados = ronda.TotalBarcosAfundados;
+            AtualizarRonda(res, x, y, shipsize);
+            
         }
+
+    }
 
        
     }

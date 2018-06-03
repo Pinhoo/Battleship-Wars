@@ -30,8 +30,7 @@ namespace BattleshipPRJ.Controllers
             {
                 Repository.CriarJogo(jogo);
                 jogo.AlterarMissao();
-                List<RoundSummary> ListaRondas = new List<RoundSummary>();
-
+                
                 string missao;
 
                 if (jogo.Missao == "Destruição Total")
@@ -55,7 +54,9 @@ namespace BattleshipPRJ.Controllers
 
                 jogo.CalcularNumeroDisparos(jogo.Nome);
 
-                while(jogo.NumeroDisparosAutonomo!=0)
+                int i = 1; //para ronda anterior
+
+                while (jogo.NumeroDisparosAutonomo!=0)
                 {
                     HttpClient client1 = MyHttpClient.Client;
                     string path1 = "api/Play";
@@ -91,26 +92,20 @@ namespace BattleshipPRJ.Controllers
 
 
                     RoundSummary rs = new RoundSummary();
-                    
-                    
-                    
-                    rs.NRonda = gs1.RoundNumber;
 
-                    rs.ScoreInicio = 0;
-
-                    rs.ScoreFimRonda = (int)jogo.Score;
-
-                    if(gs.Result == Resultado.SuccessHit)
+                    if (jogo.Rss.Count != 0)
                     {
-                        jogo.Disparou(gs1.DamagedShipSize, false, false);
+                        RoundSummary rondaanterior = jogo.Rss[i - 1];
+                        i++;
+                        rs.AtualizarRonda(gs1.Result, Coordenada.Y, Coordenada.X, gs1.DamagedShipSize, rondaanterior);
+                    }
+                    else
+                    {
+                        rs.AtualizarRonda(gs1.Result, Coordenada.Y, Coordenada.X, gs1.DamagedShipSize);
                     }
 
-                    //calcular os scores
-
-                    rs.ScoreFimRonda = (int)jogo.Score; // porque é que o score tá double?
-
+                    rs.NRonda = gs1.RoundNumber;
                     
-
                     jogo.Grelha[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
 
                     jogo.GrelhaModoAuto[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
@@ -133,22 +128,17 @@ namespace BattleshipPRJ.Controllers
                         }    
                     }
 
+                    jogo.AtualizarJogada(gs1, Coordenada.X, Coordenada.Y);
+
+                    rs.ScoreFimRonda = (int)jogo.Score;
                     
 
-                    HttpClient client2 = MyHttpClient.Client;
-                    string path2 = "api/Play";
-                    PlayRequest pr2 = new PlayRequest(jogo.ID, Coordenada.X, Coordenada.Y, PlayerAction.Quit);
-                    string json2 = JsonConvert.SerializeObject(pr2);
+                    
+                    
 
-                    HttpRequestMessage request2 = new HttpRequestMessage(HttpMethod.Post, path2);
-                    request2.Content = new StringContent(json2, System.Text.Encoding.UTF8,
-                    "application/json");
-                    HttpResponseMessage response2 = await client.SendAsync(request2);
-
-                    if (!response2.IsSuccessStatusCode) { return Redirect("/"); }
-                    string json_r2 = await response2.Content.ReadAsStringAsync();
-                    GameState gs2 = JsonConvert.DeserializeObject<GameState>(json_r2);
-
+                    
+                    
+                    
                     
 
                     jogo.AddRoundSummary(rs);
@@ -162,10 +152,24 @@ namespace BattleshipPRJ.Controllers
 
                 }
 
-                
+                HttpClient client2 = MyHttpClient.Client;
+                string path2 = "api/Play";
+                PlayRequest pr2 = new PlayRequest(jogo.ID, 1, 1, PlayerAction.Quit);
+                string json2 = JsonConvert.SerializeObject(pr2);
+
+                HttpRequestMessage request2 = new HttpRequestMessage(HttpMethod.Post, path2);
+                request2.Content = new StringContent(json2, System.Text.Encoding.UTF8,
+                "application/json");
+                HttpResponseMessage response2 = await client.SendAsync(request2);
+
+                if (!response2.IsSuccessStatusCode) { return Redirect("/"); }
+                string json_r2 = await response2.Content.ReadAsStringAsync();
+                GameState gs2 = JsonConvert.DeserializeObject<GameState>(json_r2);
 
 
-                return View("ResultadosJogoAutonomo", jogo); //ou mandar o jogo para mostrar a grelha
+
+
+                return View("ResultadosJogoAutonomo", jogo); 
             }
             else
             {
