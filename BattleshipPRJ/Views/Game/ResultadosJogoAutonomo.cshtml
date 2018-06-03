@@ -83,18 +83,18 @@
             </tr>
 
 
-            <tr>
-                <td>@Model.Rss.Count()</td>
-                <td>@Model.Rss[Model.Rss.Count()-1].ScoreFimRonda</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <tr>
+                    <td>@Model.Rss.Count()</td>
+                    <td>@Model.Rss[Model.Rss.Count() - 1].ScoreFimRonda</td>
+                    <td>@Model.FimdoJogo</td>
+                    <td>@Model.TirosAgua</td>
+                    <td>@Model.Rss[Model.Rss.Count() - 1].TotalTiroAlvo</td>
+                    <td>@Model.TirosRepetido</td>
+                    <td>@Model.PercentagemAlvo</td>
+                    <td>@Model.PercentagemAfundado</td>
 
-            </tr>
-            
+                </tr>
+
 
         </table>
         
@@ -104,8 +104,7 @@
 </div>
 
 
-@*@foreach (RoundSummary rs1 in Model)
-    {*@
+<a asp-controller="Game" asp-action="NovoJogoAutonomo" class="btn btn-default">Novo Jogo Autónomo</a>
 
 
 <table id="gameBoard">

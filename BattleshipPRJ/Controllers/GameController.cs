@@ -112,7 +112,13 @@ namespace BattleshipPRJ.Controllers
 
                     jogo.GrelhaModoAuto[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
 
-                    if (gs.Result == Resultado.SuccessSink)
+                    jogo.FimdoJogo = "Derrota";
+
+                    if (gs1.Result == Resultado.SuccessVictory)
+                    {
+                        jogo.FimdoJogo = "Vitória";
+                    }
+                    else if (gs1.Result == Resultado.SuccessSink)
                     {
                         jogo.GrelhaModoAuto = ModoAuto.AfundouMarcar(jogo.GrelhaModoAuto, gs1.DamagedShipSize);
                         jogo.Afundou = true;
@@ -139,6 +145,7 @@ namespace BattleshipPRJ.Controllers
 
                     rs.ScoreFimRonda = (int)jogo.Score;
 
+                    jogo.CalcularPercentagens();
 
                     jogo.AddRoundSummary(rs);
 
