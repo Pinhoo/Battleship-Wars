@@ -255,6 +255,7 @@ namespace BattleshipPRJ.Models
                 else if (OQueAcertei == 5)
                 {
                     proximoTiro = DevolverCoordsAleatorio(GrelhaMarcar);
+                    //proximoTiro = PortaAvioes(GrelhaMarcar, TiroDisparado);
                 }
                 else
                 {
@@ -1064,25 +1065,25 @@ namespace BattleshipPRJ.Models
 
             if (Borda == "Nao aceito -1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)//explicação disto no ultimo if(borda == aceito tudo)
+                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)//verifica se tem os 3 pontos do barco senao retorna null
                 {
-                    if (TD.X == 0)
+                    if (TD.X == 0) //se for ao pé de uma das bordas apenas pode selecionar o outro lado
                     {
                         C.X = TD.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (TD.X == 7)// por isso meto este codigo
                     {
                         C.X = TD.X - 1;
                     }
                     else
                     {
-                        int aleatorio = rnr.Next(0, 2);
+                        int aleatorio = rnr.Next(0, 2);// senao seleciona aleatoriamento neste caso esquerda ou direita
                         if (aleatorio == 0)
                         {
                             C.X = TD.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            if (Grelha[C.X, C.Y] != -1)// mas verifica se a cordenada que selecionou nao está marcada ou se já se disparou lá
                             {
-                                C.X = TD.X - 1;
+                                C.X = TD.X - 1;//faz isto
                             }
                         }
                         else
@@ -1162,7 +1163,7 @@ namespace BattleshipPRJ.Models
                                 C.X = TD.X + 1;
                             }
                         }
-                        
+
                     }
                     Acertou = true;
                 }
@@ -1646,7 +1647,7 @@ namespace BattleshipPRJ.Models
                 }
             }
             else if (Borda == "Nao aceito X + 1 ou Y + 2")
-            { 
+            {
                 if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
                 {
                     Acertou = true;
@@ -4119,6 +4120,367 @@ namespace BattleshipPRJ.Models
             {
                 return null;
             }
+        }
+
+        public Coordenadas PortaAvioes(int[,] Grelha, Coordenadas TD)//1º verifica se já disparou a todas as coords nseo se já disparou em todas passa para um dos vizinhos que seja porta avioes senao dispara onde nao disparou
+        {
+            Random rnr = new Random();
+            Coordenadas Tiro = TD;
+            int i = 0;
+            while (i == 0)
+            {
+                string Borda = VerificarBordas(Tiro);
+
+                if (Borda == "Nao aceito -1")
+                {
+                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X++;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    {
+                        Tiro.Y++;
+                        i++;
+                    }
+                    else
+                    {
+                        int aleatorio;
+                        int j = 0;
+                        while (j == 0)
+                        {
+                            aleatorio = rnr.Next(0, 2);
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X++;
+                                j++;
+                            }
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            {
+                                Tiro.Y++;
+                                j++;
+                            }
+                        }
+                    }
+                }
+                else if (Borda == "Nao aceito X - 1 ou Y + 1")
+                {
+                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X++;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    {
+                        Tiro.Y--;
+                        i++;
+                    }
+                    else
+                    {
+                        int aleatorio;
+                        int j = 0;
+                        while (j == 0)
+                        {
+                            aleatorio = rnr.Next(0, 2);
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X++;
+                                j++;
+                            }
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            {
+                                Tiro.Y--;
+                                j++;
+                            }
+                        }
+                    }
+                }
+                else if (Borda == "Nao aceito X + 1 ou Y - 1")
+                {
+                    if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X--;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    {
+                        Tiro.Y++;
+                        i++;
+                    }
+                    else
+                    {
+                        int aleatorio;
+                        int j = 0;
+                        while (j == 0)
+                        {
+                            aleatorio = rnr.Next(0, 2);
+                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X--;
+                                j++;
+                            }
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            {
+                                Tiro.Y++;
+                                j++;
+                            }
+                        }
+                    }
+                }
+                else if (Borda == "Nao aceito + 1")
+                {
+                    if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X--;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    {
+                        Tiro.Y--;
+                        i++;
+                    }
+                    else
+                    {
+                        int aleatorio;
+                        int j = 0;
+                        while (j == 0)
+                        {
+                            aleatorio = rnr.Next(0, 4);
+                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X--;
+                                j++;
+                            }
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            {
+                                Tiro.Y--;
+                                j++;
+                            }
+                        }
+                    }
+                }
+                else if (Borda == "Nao aceito X - 1")
+                {
+                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X++;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    {
+                        Tiro.Y++;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    {
+                        Tiro.Y--;
+                        i++;
+                    }
+                    else
+                    {
+                        int aleatorio;
+                        int j = 0;
+                        while (j == 0)
+                        {
+                            aleatorio = rnr.Next(0, 3);
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X++;
+                                j++;
+                            }
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            {
+                                Tiro.Y++;
+                                j++;
+                            }
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            {
+                                Tiro.Y--;
+                                j++;
+                            }
+                        }
+                    }
+                }
+                else if (Borda == "Nao aceito X + 1")
+                {
+                    if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X--;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    {
+                        Tiro.Y++;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    {
+                        Tiro.Y--;
+                        i++;
+                    }
+                    else
+                    {
+                        int aleatorio;
+                        int j = 0;
+                        while (j == 0)
+                        {
+                            aleatorio = rnr.Next(0, 3);
+                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X--;
+                                j++;
+                            }
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            {
+                                Tiro.Y++;
+                                j++;
+                            }
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            {
+                                Tiro.Y--;
+                                j++;
+                            }
+                        }
+                    }
+                }
+                else if (Borda == "Nao aceito Y - 1")
+                {
+                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X++;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X--;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    {
+                        Tiro.Y++;
+                        i++;
+                    }
+                    else
+                    {
+                        int aleatorio;
+                        int j = 0;
+                        while (j == 0)
+                        {
+                            aleatorio = rnr.Next(0, 3);
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X++;
+                                j++;
+                            }
+                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X--;
+                                j++;
+                            }
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            {
+                                Tiro.Y++;
+                                j++;
+                            }
+                        }
+                    }
+                }
+                else if (Borda == "Nao aceito Y + 1")
+                {
+                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X++;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X--;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    {
+                        Tiro.Y--;
+                        i++;
+                    }
+                    else
+                    {
+                        int aleatorio;
+                        int j = 0;
+                        while (j == 0)
+                        {
+                            aleatorio = rnr.Next(0, 3);
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X++;
+                                j++;
+                            }
+                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X--;
+                                j++;
+                            }
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            {
+                                Tiro.Y--;
+                                j++;
+                            }
+                        }
+                    }
+                }
+                else if (Borda == "Aceito tudo")
+                {
+                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X++;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    {
+                        Tiro.X--;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    {
+                        Tiro.Y++;
+                        i++;
+                    }
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    {
+                        Tiro.Y--;
+                        i++;
+                    }
+                    else
+                    {
+                        int aleatorio;
+                        int j = 0;
+                        while (j == 0)
+                        {
+                            aleatorio = rnr.Next(0, 4);
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X++;
+                                j++;
+                            }
+                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            {
+                                Tiro.X--;
+                                j++;
+                            }
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            {
+                                Tiro.Y++;
+                                j++;
+                            }
+                            else if (aleatorio == 3 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            {
+                                Tiro.Y--;
+                                j++;
+                            }
+                        }
+                    }
+                }
+            }
+            return Tiro;
         }
 
         public Coordenadas TerceiroTiro(int X, int Y, Coordenadas Tiro, int[,] Grelha)
