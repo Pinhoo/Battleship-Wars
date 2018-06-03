@@ -8,143 +8,159 @@
 
 </div>
 
-<h2>Resultados por Ronda</h2>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs nav" role="tablist">
+    <li role="presentation" class="active"><a href="#A" aria-controls="A" role="tab" data-toggle="tab" aria-expanded="true"><span class="glyphicon glyphicon-option-horizontal"></span> Resultados por ronda</a></li>
+    <li role="presentation" class=""><a href="#B" aria-controls="B" role="tab" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-option-horizontal"></span> Resultados globais</a></li>
 
-<table>
-    <tr>
-        <th>Nºronda</th>
-        <th>Score Início</th>
-        <th>Coordenadas do Alvo</th>
-        <th>Resultado do Tiro</th>
-        <th>Tipo de Barco</th>
-        <th>Tiros no Alvo</th>
-        <th>NºBarcos Afundados</th>
-        <th>Score Fim</th>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="A">
+
+        <table class="text-center">
+            <tr>
+                <th>Nºronda</th>
+                <th>Score no início da ronda</th>
+                <th>Coordenadas do Alvo</th>
+                <th>Resultado do Tiro</th>
+                <th>Tipo de Barco</th>
+                <th>Total de Tiros no Alvo</th>
+                <th>Total de Barcos Afundados</th>
+                <th>Score no fim da ronda</th>
 
 
-    </tr>
+            </tr>
 
-    @foreach (RoundSummary rs in Model.Rss)
-    {
+            @foreach (RoundSummary rs in Model.Rss)
+            {
+
+
+                <tr>
+
+                    <td>@rs.NRonda</td>
+                    <td>@rs.ScoreInicio</td>
+                    <td>@rs.CoordAlvoEscolhido</td>
+                    <td>@rs.ResultTiro</td>
+                    <td>@rs.BarcoAtingido</td>
+                    <td>@rs.TotalTiroAlvo</td>
+                    <td>@rs.TotalBarcosAfundados</td>
+                    <td>@rs.ScoreFimRonda</td>
+
+
+
+                </tr>
+
+
+
+
+            }
+
+
+        </table>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="B">
+
+        <table class="table text-center">
+
+            <tr>
+                <th class="text-center" rowspan="2">Nº de rondas jogadas</th>
+                <th class="text-center" rowspan="2">Score Final do JA</th>
+                <th class="text-center" rowspan="2">Resultado final</th>
+                <th class="text-center" colspan="3">Nº de Mísseis lançados</th>
+                <th class="text-center" rowspan="2">% de tiros no alvo</th>
+                <th class="text-center" rowspan="2">% de barcos afundados</th>
+            </tr>
+
+            <tr>
+                <th>na água</th>
+                <th>no alvo</th>
+                <th>repetido</th>
+
+
+            </tr>
+
+
+            <tr>
+                <td>@Model.Rss.Count()</td>
+                <td>@Model.Rss[Model.Rss.Count()-1].ScoreFimRonda</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+            </tr>
+            
+
+        </table>
         
-        
-        <tr>
 
-            <td>@rs.NRonda</td>
-            <td>@rs.ScoreInicio</td>
-            <td>@rs.CoordAlvoEscolhido</td>
-            <td>@rs.ResultTiro</td>
-            <td>@rs.BarcoAtingido</td>
-            <td>@rs.TotalTiroAlvo</td>
-            <td>@rs.TotalBarcosAfundados</td>
-            <td>@rs.ScoreFimRonda</td>
+    </div>
 
-
-
-        </tr>
-
-
-
-
-    }
-
-
-</table>
+</div>
 
 
 @*@foreach (RoundSummary rs1 in Model)
-{*@
-    
+    {*@
 
-    <table id="gameBoard">
-        <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
-        <!--primeira linha: letras (coordenadas)-->
+
+<table id="gameBoard">
+    <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
+    <!--primeira linha: letras (coordenadas)-->
+    <tr>
+        <!-- célula vazia invisível no canto sup.esq. da tabela-->
+        <td class="tile-inv"></td>
+        @for (int coluna = 0; coluna < 10; coluna++)
+        {
+            <td class="tile-inv tile-letras">
+                <!--converter número da coluna para letra com o código ASCII ('A'=65) -->
+                @Convert.ToChar(coluna + 65)
+            </td>
+        }
+    </tr>
+    @for (int linha = 0; linha < 10; linha++) // para cada linha no array modelo, que varia entre 0 e 9
+    {
         <tr>
-            <!-- célula vazia invisível no canto sup.esq. da tabela-->
-            <td class="tile-inv"></td>
-            @for (int coluna = 0; coluna < 10; coluna++)
+            <td class="tile-inv tile-numeros">
+                <!--primeira coluna: números (coordenadas)-->
+                @(linha + 1)
+            </td>
+            @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
             {
-                <td class="tile-inv tile-letras">
-                    <!--converter número da coluna para letra com o código ASCII ('A'=65) -->
-                    @Convert.ToChar(coluna + 65)
-                </td>
+                switch (Model.Grelha[linha, coluna])
+                {
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                        <td id="@(linha)@(coluna)" class="tile hit"></td>
+                        break;
+                    case 7:
+                        <td id="@(linha)@(coluna)" class="fill"></td>
+                        break;
+                    case 0:
+                        <td id="@(linha)@(coluna)" class="tile misses"></td>
+                        break;
+                    default:
+                        <td id="@(linha)@(coluna)" class="tile"></td>
+                        break;
+                }
             }
         </tr>
-        @for (int linha = 0; linha < 10; linha++) // para cada linha no array modelo, que varia entre 0 e 9
-        {
-            <tr>
-                <td class="tile-inv tile-numeros">
-                    <!--primeira coluna: números (coordenadas)-->
-                    @(linha + 1)
-                </td>
-                @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
-                {
-                    switch (Model.Grelha[linha, coluna])
-                {
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 5:
-                            <td id="@(linha)@(coluna)" class="tile hit"></td>
-                            break;
-                        case 7:
-                            <td id="@(linha)@(coluna)" class="fill"></td>
-                            break;
-                        case 0:
-                            <td id="@(linha)@(coluna)" class="tile misses"></td>
-                            break;
-                        default:
-                            <td id="@(linha)@(coluna)" class="tile"></td>
-                            break;
-                    }
-                }
-            </tr>
-        }
-    </table>
-    
-    
+    }
+</table>
+
+
 @*}*@
 
 
 
 
-<h2> Resultados Globais</h2>
-
-@*<table>
-    <tr>
-        <th>Nº de Rondas</th>
-        <th>Score Final</th>
-        <th>Resultado</th>
-        <th>Mísseis Lançados</th>
-        <th>% Tiros no alvo</th>
-        <th>% Barcos afundados</th>
-
-    </tr>
-
-    @{RoundSummary nrond = new RoundSummary();
-        }
-
-
-    @foreach (RoundSummary r in Model)
-    {
-        <tr>
-
-            <td>   </td>
-            <td>
-
-
-                @{nrond.NumTotRondas();
-                    }
-
-            </td>
-            <td>     </td>
-
-
-        </tr>
-    }
-
-    </table>*@
 
 
 
