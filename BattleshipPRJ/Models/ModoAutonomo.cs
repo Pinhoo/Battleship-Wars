@@ -22,7 +22,6 @@ namespace BattleshipPRJ.Models
                 c.Y = rnr.Next(0, 10);
                 if (GrelhaMarcar[c.X, c.Y] == -1)
                 {
-
                     i++;
                 }
                 else
@@ -254,8 +253,7 @@ namespace BattleshipPRJ.Models
                 }
                 else if (OQueAcertei == 5)
                 {
-                    proximoTiro = DevolverCoordsAleatorio(GrelhaMarcar);
-                    //proximoTiro = PortaAvioes(GrelhaMarcar, TiroDisparado);
+                    proximoTiro = PortaAvioes(GrelhaMarcar, TiroDisparado);
                 }
                 else
                 {
@@ -326,7 +324,7 @@ namespace BattleshipPRJ.Models
 
         public Coordenadas Acertou4Canos(int[,] Grelha, Coordenadas TD)//o que faz se o ultimo tiro acertou num barco de 4 canos
         {
-            Coordenadas C = new Coordenadas();
+            Coordenadas C = null;
 
             string Borda = VerificarBordas(TD);
 
@@ -4133,12 +4131,12 @@ namespace BattleshipPRJ.Models
 
                 if (Borda == "Nao aceito -1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
                     {
                         Tiro.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
                     {
                         Tiro.Y++;
                         i++;
@@ -4150,12 +4148,12 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 2);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
                             {
                                 Tiro.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
                             {
                                 Tiro.Y++;
                                 j++;
@@ -4165,12 +4163,12 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito X - 1 ou Y + 1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
                     {
                         Tiro.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
                     {
                         Tiro.Y--;
                         i++;
@@ -4182,12 +4180,12 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 2);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
                             {
                                 Tiro.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
                             {
                                 Tiro.Y--;
                                 j++;
@@ -4197,12 +4195,12 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito X + 1 ou Y - 1")
                 {
-                    if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
                     {
                         Tiro.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
                     {
                         Tiro.Y++;
                         i++;
@@ -4214,12 +4212,12 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 2);
-                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
                             {
                                 Tiro.X--;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
                             {
                                 Tiro.Y++;
                                 j++;
@@ -4229,12 +4227,12 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito + 1")
                 {
-                    if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
                     {
                         Tiro.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
                     {
                         Tiro.Y--;
                         i++;
@@ -4246,12 +4244,12 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 4);
-                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
                             {
                                 Tiro.X--;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
                             {
                                 Tiro.Y--;
                                 j++;
@@ -4261,17 +4259,17 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito X - 1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
                     {
                         Tiro.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
                     {
                         Tiro.Y++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
                     {
                         Tiro.Y--;
                         i++;
@@ -4283,17 +4281,17 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
                             {
                                 Tiro.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
                             {
                                 Tiro.Y++;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
                             {
                                 Tiro.Y--;
                                 j++;
@@ -4303,17 +4301,17 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito X + 1")
                 {
-                    if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
                     {
                         Tiro.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
                     {
                         Tiro.Y++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
                     {
                         Tiro.Y--;
                         i++;
@@ -4325,17 +4323,17 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
                             {
                                 Tiro.X--;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
                             {
                                 Tiro.Y++;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
                             {
                                 Tiro.Y--;
                                 j++;
@@ -4345,17 +4343,17 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito Y - 1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
                     {
                         Tiro.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    else if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
                     {
                         Tiro.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
                     {
                         Tiro.Y++;
                         i++;
@@ -4367,17 +4365,17 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
                             {
                                 Tiro.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
                             {
                                 Tiro.X--;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
                             {
                                 Tiro.Y++;
                                 j++;
@@ -4387,17 +4385,17 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito Y + 1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
                     {
                         Tiro.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    else if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
                     {
                         Tiro.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
                     {
                         Tiro.Y--;
                         i++;
@@ -4409,17 +4407,17 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
                             {
                                 Tiro.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
                             {
                                 Tiro.X--;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
                             {
                                 Tiro.Y--;
                                 j++;
@@ -4429,22 +4427,22 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Aceito tudo")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] != -1)
+                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
                     {
                         Tiro.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X - 1, Tiro.Y] != -1)
+                    else if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
                     {
                         Tiro.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
                     {
                         Tiro.Y++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] != -1)
+                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
                     {
                         Tiro.Y--;
                         i++;
@@ -4456,22 +4454,22 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 4);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] != 5)
+                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
                             {
                                 Tiro.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] != 5)
+                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
                             {
                                 Tiro.X--;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y + 1] != 5)
+                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
                             {
                                 Tiro.Y++;
                                 j++;
                             }
-                            else if (aleatorio == 3 && Grelha[Tiro.X, Tiro.Y - 1] != 5)
+                            else if (aleatorio == 3 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
                             {
                                 Tiro.Y--;
                                 j++;
@@ -4494,17 +4492,6 @@ namespace BattleshipPRJ.Models
                 {
                     if (Aleatorio == 0)
                     {
-                        Tiro.X = Tiro.X + 2;
-                    }
-                    else if (Aleatorio == 1)
-                    {
-                        Tiro.X = Tiro.X - 1;
-                    }
-                }
-                else if (X == 1)
-                {
-                    if (Aleatorio == 0)
-                    {
                         Tiro.X = Tiro.X - 2;
                     }
                     else if (Aleatorio == 1)
@@ -4512,18 +4499,18 @@ namespace BattleshipPRJ.Models
                         Tiro.X = Tiro.X + 1;
                     }
                 }
-                else if (Y == -1)
+                else if (X == 1)
                 {
                     if (Aleatorio == 0)
                     {
-                        Tiro.Y = Tiro.Y + 2;
+                        Tiro.X = Tiro.X + 2;
                     }
                     else if (Aleatorio == 1)
                     {
-                        Tiro.Y = Tiro.Y - 1;
+                        Tiro.X = Tiro.X - 1;
                     }
                 }
-                else
+                else if (Y == -1)
                 {
                     if (Aleatorio == 0)
                     {
@@ -4532,6 +4519,17 @@ namespace BattleshipPRJ.Models
                     else if (Aleatorio == 1)
                     {
                         Tiro.Y = Tiro.Y + 1;
+                    }
+                }
+                else
+                {
+                    if (Aleatorio == 0)
+                    {
+                        Tiro.Y = Tiro.Y + 2;
+                    }
+                    else if (Aleatorio == 1)
+                    {
+                        Tiro.Y = Tiro.Y - 1;
                     }
                 }
                 if (Tiro.Y < 0 || Tiro.Y > 9 || Tiro.X < 0 || Tiro.X > 9 || Grelha[Tiro.X, Tiro.Y] == 7)

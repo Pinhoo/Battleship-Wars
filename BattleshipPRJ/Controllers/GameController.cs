@@ -30,7 +30,7 @@ namespace BattleshipPRJ.Controllers
             {
                 Repository.CriarJogo(jogo);
                 jogo.AlterarMissao();
-                
+
                 string missao;
 
                 if (jogo.Missao == "Destruição Total")
@@ -56,7 +56,7 @@ namespace BattleshipPRJ.Controllers
 
                 int i = 1; //para ronda anterior
 
-                while (jogo.NumeroDisparosAutonomo!=0)
+                while (jogo.NumeroDisparosAutonomo != 0)
                 {
                     HttpClient client1 = MyHttpClient.Client;
                     string path1 = "api/Play";
@@ -69,13 +69,13 @@ namespace BattleshipPRJ.Controllers
 
                     if (jogo.Acertou == false)
                     {
-                        Coordenada = ModoAuto.ProximoTiro(jogo.Grelha,0,false, jogo.CoordsUltimoTiro);
+                        Coordenada = ModoAuto.ProximoTiro(jogo.Grelha, 0, false, jogo.CoordsUltimoTiro);
                     }
                     else
                     {
-
-                        Coordenada = ModoAuto.ProximoTiro(jogo.GrelhaModoAuto,jogo.UltimoBarcoAcertado,jogo.Afundou, jogo.CoordsUltimoTiro);
+                        Coordenada = ModoAuto.ProximoTiro(jogo.GrelhaModoAuto, jogo.UltimoBarcoAcertado, jogo.Afundou, jogo.CoordsUltimoTiro);
                     }
+
 
                     PlayRequest pr = new PlayRequest(jogo.ID, Coordenada.X, Coordenada.Y, 0);
                     string json1 = JsonConvert.SerializeObject(pr);
@@ -105,7 +105,9 @@ namespace BattleshipPRJ.Controllers
                     }
 
                     rs.NRonda = gs1.RoundNumber;
-                    
+
+                    //modo auto metodos de ajuda
+
                     jogo.Grelha[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
 
                     jogo.GrelhaModoAuto[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
@@ -113,33 +115,30 @@ namespace BattleshipPRJ.Controllers
                     if (gs.Result == Resultado.SuccessSink)
                     {
                         jogo.GrelhaModoAuto = ModoAuto.AfundouMarcar(jogo.GrelhaModoAuto, gs1.DamagedShipSize);
+                        jogo.Afundou = true;
+                    }
+                    else
+                    {
+                        jogo.Afundou = false;
+                    }
+                    if (gs1.DamagedShipSize != 0)
+                    {
+                        jogo.CoordsUltimoTiro.X = Coordenada.X;
+                        jogo.CoordsUltimoTiro.Y = Coordenada.Y;
+                        jogo.Acertou = true;
+                        jogo.UltimoBarcoAcertado = gs1.DamagedShipSize;
+                    }
+                    else
+                    {
                         jogo.Acertou = false;
                     }
 
-                    if(gs1.DamagedShipSize != 0)
-                    {
-                    jogo.CoordsUltimoTiro.X = Coordenada.X;
-                    jogo.CoordsUltimoTiro.Y = Coordenada.Y;
-
-                    jogo.UltimoBarcoAcertado = gs1.DamagedShipSize;
-                        if (gs.Result != Resultado.SuccessSink)
-                        {
-                            jogo.Acertou = true;
-                        }    
-                    }
+                    //modo auto fim
 
                     jogo.AtualizarJogada(gs1, Coordenada.X, Coordenada.Y);
 
                     rs.ScoreFimRonda = (int)jogo.Score;
-                    
 
-                    
-                    
-
-                    
-                    
-                    
-                    
 
                     jogo.AddRoundSummary(rs);
 
@@ -151,6 +150,7 @@ namespace BattleshipPRJ.Controllers
                     }
 
                 }
+
 
                 HttpClient client2 = MyHttpClient.Client;
                 string path2 = "api/Play";
@@ -167,9 +167,7 @@ namespace BattleshipPRJ.Controllers
                 GameState gs2 = JsonConvert.DeserializeObject<GameState>(json_r2);
 
 
-
-
-                return View("ResultadosJogoAutonomo", jogo); 
+                return View("ResultadosJogoAutonomo", jogo);
             }
             else
             {
