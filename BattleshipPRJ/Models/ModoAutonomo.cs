@@ -229,7 +229,7 @@ namespace BattleshipPRJ.Models
             return GrelhaMarcada;
         }//marca todos os pontos á volta da coordenada
 
-        public Coordenadas ProximoTiro(int[,] GrelhaMarcar, int OQueAcertei, bool Afundou, Coordenadas TiroDisparado)
+        public Coordenadas CoordenadasProximoTiro(int[,] GrelhaMarcar, int OQueAcertei, bool Afundou, Coordenadas TiroDisparado)
         {
             Coordenadas proximoTiro = new Coordenadas();
 
@@ -4551,7 +4551,7 @@ namespace BattleshipPRJ.Models
             return Tiro;
         }//método para 3º tiro dos barcos de 3 e 4 canos(criei um metodo apenas para não haver repetição do codigo do mesmo)
 
-        public int[,] AfundouMarcar(int[,] GrelhaMarcar, int Barco)
+        public int[,] MarcarAdjacentes(int[,] GrelhaMarcar, int Barco)
         {
             for (int X = 0; X < 10; X++)
             {

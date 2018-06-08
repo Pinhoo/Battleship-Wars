@@ -69,11 +69,11 @@ namespace BattleshipPRJ.Controllers
 
                     if (jogo.Acertou == false)
                     {
-                        Coordenada = ModoAuto.ProximoTiro(jogo.Grelha, 0, false, jogo.CoordsUltimoTiro);
+                        Coordenada = ModoAuto.CoordenadasProximoTiro(jogo.Grelha, 0, false, jogo.CoordsUltimoTiro);
                     }
                     else
                     {
-                        Coordenada = ModoAuto.ProximoTiro(jogo.GrelhaModoAuto, jogo.UltimoBarcoAcertado, jogo.Afundou, jogo.CoordsUltimoTiro);
+                        Coordenada = ModoAuto.CoordenadasProximoTiro(jogo.GrelhaModoAuto, jogo.UltimoBarcoAcertado, jogo.Afundou, jogo.CoordsUltimoTiro);
                     }
 
 
@@ -120,7 +120,7 @@ namespace BattleshipPRJ.Controllers
                     }
                     else if (gs1.Result == Resultado.SuccessSink)
                     {
-                        jogo.GrelhaModoAuto = ModoAuto.AfundouMarcar(jogo.GrelhaModoAuto, gs1.DamagedShipSize);
+                        jogo.GrelhaModoAuto = ModoAuto.MarcarAdjacentes(jogo.GrelhaModoAuto, gs1.DamagedShipSize);
                         jogo.Afundou = true;
                     }
                     else
