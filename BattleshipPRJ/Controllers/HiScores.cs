@@ -14,9 +14,12 @@ namespace BattleshipPRJ.Controllers
     {
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]ApiHiScores api)
+        public List<HiScoresModel> Post([FromBody]ApiHiScores apiHiScores)
         {
-            //Criei um model ApiHiScores, n sei se é assim
+                        
+            List<HiScoresModel> listaHiScores = Repository.Listahiscores(apiHiScores);
+            
+            return listaHiScores;
 
         }
 

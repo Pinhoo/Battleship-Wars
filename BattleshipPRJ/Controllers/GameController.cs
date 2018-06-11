@@ -250,6 +250,14 @@ namespace BattleshipPRJ.Controllers
 
                 jogue.AtualizarJogada(gs, opcaoY, opcaoX);
 
+                if(gs.Result == Resultado.SuccessVictory || jogue.Misseis == 0)
+                {
+                    HiScoresModel hiscore = new HiScoresModel(jogue.Nome, (int)jogue.Score, jogue.PercentagemAlvo, jogue.PercentagemAfundado, jogue.TirosAgua, jogue.TirosAlvo, jogue.TirosRepetido, jogue.FimdoJogo, jogue.Missao);
+
+                    Repository.AddHighScore(hiscore);
+
+                }
+                
 
             }
             else if (submitButton == "Marcar")
@@ -276,6 +284,10 @@ namespace BattleshipPRJ.Controllers
 
                     jogue.FimdoJogo = "Derrota";
                     jogue.Gameover = true;
+
+                    HiScoresModel hiscore = new HiScoresModel(jogue.Nome, (int)jogue.Score, jogue.PercentagemAlvo, jogue.PercentagemAfundado, jogue.TirosAgua, jogue.TirosAlvo, jogue.TirosRepetido, jogue.FimdoJogo, jogue.Missao);
+
+                    Repository.AddHighScore(hiscore);
                 }
 
             }

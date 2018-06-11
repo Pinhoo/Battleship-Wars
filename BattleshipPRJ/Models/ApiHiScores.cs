@@ -11,5 +11,6 @@ namespace BattleshipPRJ.Models
         public string NomeJogador { get; set; }
         public bool IgnorarNome { get; set; }
 
+       
     }
 }

@@ -9,7 +9,21 @@ namespace BattleshipPRJ.Models
     {
         private static List<Jogo> jogos = new List<Jogo>();
 
+        private static List<TeamMember> teamMembers = new List<TeamMember>();
+
+        private static List<HiScoresModel> Hiscores = new List<HiScoresModel>();
+
         private static string teamkey;
+
+        public static List<TeamMember> TeamMembers
+        {
+
+            get
+            {
+                return teamMembers;
+
+            }
+        }
 
         public static string TeamKey
         {
@@ -55,6 +69,94 @@ namespace BattleshipPRJ.Models
 
 
 
+        public static List<HiScoresModel> HiScores
+        {
+
+            get
+            {
+                BattleshipDbContext context = new BattleshipDbContext();
+                List<HiScoresModel> hiscores = context.HiScoresDb.ToList();
+                return hiscores;
+
+            }
+
+
+        }
+
+
+        public static void AddHighScore(HiScoresModel hs)
+        {
+
+            BattleshipDbContext context = new BattleshipDbContext();
+            context.HiScoresDb.Add(hs);
+            context.SaveChanges();
+
+
+        }
+
+
+        public static List<TeamMember> CriarTeamMembers()
+        {
+
+            TeamMember pinho = new TeamMember("Ti Delian", "André Pinho", "160323023");
+
+            TeamMember myke = new TeamMember("Ti Delian", "Myke Palma", "160323028");
+
+            TeamMember beja = new TeamMember("Ti Delian", "Ricardo Carvalho", "160323001");
+
+            teamMembers.Add(pinho);
+            teamMembers.Add(myke);
+            teamMembers.Add(beja);
+
+            return teamMembers;
+        }
+
+        public static List<HiScoresModel> Listahiscores(ApiHiScores apiHiScores)
+        {
+            List<HiScoresModel> hiScores = new List<HiScoresModel>();
+
+
+            //FIX DESTA CENA
+
+            foreach (HiScoresModel hi in HiScores)
+            {
+
+                if (apiHiScores.IgnorarNome == true)
+                {
+                    for (int i = 0; i < apiHiScores.NumMelhoresResultados; i++)
+                    {
+
+                        hiScores.Add(hi);
+
+
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < apiHiScores.NumMelhoresResultados; i++)
+                    {
+
+                        if (hi.NomeJogador == apiHiScores.NomeJogador)
+                        {
+                            hiScores.Add(hi);
+
+                        }
+
+                    }
+
+
+                }
+
+
+
+            }
+
+            return hiScores;
+
+        }
+
+
+
     }
-    
+
 }

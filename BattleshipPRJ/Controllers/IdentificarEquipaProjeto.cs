@@ -12,14 +12,16 @@ namespace BattleshipPRJ.Controllers
     [Route("api/[controller]")]
     public class IdentificarEquipaProjeto : Controller
     {
-        // GET: api/<controller>
-        //[HttpGet]
-        //public List<TeamMember> Get()
-        //{
-        //    return ;
-        //}
+        //GET: api/<controller>
+        [HttpGet]
+        public List<TeamMember> Get()
+        {
+            List<TeamMember> teamMembers = Repository.CriarTeamMembers();
+            
+            return teamMembers;
+        }
 
-        //Criei um model TeamMember, n sei se é assim
+        
 
 
     }

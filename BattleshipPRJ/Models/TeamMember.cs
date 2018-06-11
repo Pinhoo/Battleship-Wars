@@ -12,5 +12,14 @@ namespace BattleshipPRJ.Models
         public string NomeMembro { get; set; }
         public string NumeroAluno { get; set; }
 
+        public TeamMember(string nomeequipa, string nomemembro, string numero)
+        {
+            NomeEquipa = nomeequipa;
+            NomeMembro = nomemembro;
+            NumeroAluno = numero;
+
+        }
+            
+
     }
 }
