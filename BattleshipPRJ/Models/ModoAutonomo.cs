@@ -4492,7 +4492,10 @@ namespace BattleshipPRJ.Models
                 {
                     if (Aleatorio == 0)
                     {
-                        Tiro.X = Tiro.X - 2;
+                        if(Tiro.X > 1)
+                            Tiro.X = Tiro.X - 2;
+                        else
+                            Tiro.X = Tiro.X + 1;
                     }
                     else if (Aleatorio == 1)
                     {
@@ -4503,7 +4506,10 @@ namespace BattleshipPRJ.Models
                 {
                     if (Aleatorio == 0)
                     {
-                        Tiro.X = Tiro.X + 2;
+                        if (Tiro.X < 8)
+                            Tiro.X = Tiro.X + 2;
+                        else
+                            Tiro.X = Tiro.X - 1;
                     }
                     else if (Aleatorio == 1)
                     {
@@ -4514,7 +4520,10 @@ namespace BattleshipPRJ.Models
                 {
                     if (Aleatorio == 0)
                     {
-                        Tiro.Y = Tiro.Y - 2;
+                        if(Tiro.Y > 1)
+                            Tiro.Y = Tiro.Y - 2;
+                        else
+                            Tiro.Y = Tiro.Y + 1;
                     }
                     else if (Aleatorio == 1)
                     {
@@ -4525,7 +4534,10 @@ namespace BattleshipPRJ.Models
                 {
                     if (Aleatorio == 0)
                     {
-                        Tiro.Y = Tiro.Y + 2;
+                        if(Tiro.Y < 8)
+                            Tiro.Y = Tiro.Y + 2;
+                        else
+                            Tiro.Y = Tiro.Y - 1;
                     }
                     else if (Aleatorio == 1)
                     {
