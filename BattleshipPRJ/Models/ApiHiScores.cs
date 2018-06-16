@@ -10,7 +10,5 @@ namespace BattleshipPRJ.Models
         public int NumMelhoresResultados { get; set; }
         public string NomeJogador { get; set; }
         public bool IgnorarNome { get; set; }
-
-       
     }
 }

@@ -16,13 +16,9 @@ namespace BattleshipPRJ.Controllers
         [HttpGet]
         public List<TeamMember> Get()
         {
-            List<TeamMember> teamMembers = Repository.ReceberTeamMembers();
-            
+
+            List<TeamMember> teamMembers = Repository.TeamMembers;
             return teamMembers;
         }
-
-        
-
-
     }
 }
