@@ -15,6 +15,12 @@ namespace BattleshipPRJ.Models
 
         private static string teamkey;
 
+        public static TeamMember pinho = new TeamMember("Ti Delian", "André Pinho", "160323023");
+
+        public static TeamMember myke = new TeamMember("Ti Delian", "Myke Palma", "160323028");
+
+        public static TeamMember beja = new TeamMember("Ti Delian", "Ricardo Carvalho", "160323001");
+
         public static List<TeamMember> TeamMembers
         {
 
@@ -43,7 +49,7 @@ namespace BattleshipPRJ.Models
         public static void CriarJogo(Jogo j)
         {
             Jogos.Add(j);
-            j.Inicializar();
+            
             teamkey = "90dff7381b604603b5145be5f610da0d";
         }
 
@@ -93,17 +99,11 @@ namespace BattleshipPRJ.Models
 
 
         }
+        
 
 
-        public static List<TeamMember> CriarTeamMembers()
+        public static List<TeamMember> ReceberTeamMembers()
         {
-
-            TeamMember pinho = new TeamMember("Ti Delian", "André Pinho", "160323023");
-
-            TeamMember myke = new TeamMember("Ti Delian", "Myke Palma", "160323028");
-
-            TeamMember beja = new TeamMember("Ti Delian", "Ricardo Carvalho", "160323001");
-
             teamMembers.Add(pinho);
             teamMembers.Add(myke);
             teamMembers.Add(beja);

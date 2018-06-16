@@ -192,6 +192,8 @@ namespace BattleshipPRJ.Models
             ModoLocal = false;
 
             heidi++;
+            Score = 0;
+            Bonus = -0.25;
 
             ID = heidi;
 
@@ -233,13 +235,13 @@ namespace BattleshipPRJ.Models
             CoordsUltimoTiro = new Coordenadas();
         }
 
-        public void Disparou(int Tiro, bool ganho, bool BarcoAoFundo)
+        public void Disparou(int BarcoAtingidoSize, bool ganho, bool BarcoAoFundo)
         {
             TirosDados++;
             Misseis = Misseis - 1;
-            UltimoTiroDisparado = Tiro;
+            UltimoTiroDisparado = BarcoAtingidoSize;
             NumeroDeJogadas = NumeroDeJogadas + 1;
-            if (Tiro == 1 || Tiro == 2 || Tiro == 3 || Tiro == 4 || Tiro == 5)
+            if (BarcoAtingidoSize == 1 || BarcoAtingidoSize == 2 || BarcoAtingidoSize == 3 || BarcoAtingidoSize == 4 || BarcoAtingidoSize == 5)
             {
                 TirosAlvo++;
                 if (ganho == false)
@@ -253,7 +255,7 @@ namespace BattleshipPRJ.Models
                     AdicionarJogada(true, BarcoAoFundo, false, true, Misseis);
                     if (Missao == "Antiaérea")
                     {
-                        if (Tiro == 5)
+                        if (BarcoAtingidoSize == 5)
                         {
                             Quadradosabater = Quadradosabater - 1;
                         }
@@ -269,7 +271,7 @@ namespace BattleshipPRJ.Models
                 TirosAgua++;
                 AdicionarJogada(false, false, false, false, 0);
             }
-            Score = Receber();
+            
             Barcoaofundo = BarcoAoFundo;
             CalcularPercentagens();
         }
@@ -280,7 +282,7 @@ namespace BattleshipPRJ.Models
             Misseis = Misseis - 1;
             NumeroDeJogadas = NumeroDeJogadas + 1;
             AdicionarJogada(false, false, true, false, 0);
-            Score = Receber();
+            
             Barcoaofundo = false;
             CalcularPercentagens();
         }
@@ -356,13 +358,8 @@ namespace BattleshipPRJ.Models
                 return false;
             }
         }
-
-        public void Inicializar()
-        {
-            Bonus = -0.25;
-            Score = 0;
-        }
-
+    
+       
         public void AdicionarJogada(bool d_BarcoAtingido, bool d_BarcoAfundado, bool d_Penalizacao, bool d_Ganho, int d_Missseis)
         {
 
@@ -399,10 +396,7 @@ namespace BattleshipPRJ.Models
         }
 
 
-        public double Receber()
-        {
-            return Score;
-        }
+        
 
         public void AtualizarJogada(GameState gs,int opcaoY,int opcaoX)
         {
