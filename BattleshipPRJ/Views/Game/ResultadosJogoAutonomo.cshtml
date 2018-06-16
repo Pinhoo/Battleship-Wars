@@ -83,21 +83,21 @@
             </tr>
 
 
-                <tr>
-                    <td>@Model.Rss.Count()</td>
-                    <td>@Model.Rss[Model.Rss.Count() - 1].ScoreFimRonda</td>
-                    <td>@Model.FimdoJogo</td>
-                    <td>@Model.TirosAgua</td>
-                    <td>@Model.Rss[Model.Rss.Count() - 1].TotalTiroAlvo</td>
-                    <td>@Model.TirosRepetido</td>
-                    <td>@Model.PercentagemAlvo</td>
-                    <td>@Model.PercentagemAfundado</td>
+            <tr>
+                <td>@Model.Rss.Count()</td>
+                <td>@Model.Rss[Model.Rss.Count() - 1].ScoreFimRonda</td>
+                <td>@Model.FimdoJogo</td>
+                <td>@Model.TirosAgua</td>
+                <td>@Model.Rss[Model.Rss.Count() - 1].TotalTiroAlvo</td>
+                <td>@Model.TirosRepetido</td>
+                <td>@Model.PercentagemAlvo</td>
+                <td>@Model.PercentagemAfundado</td>
 
-                </tr>
+            </tr>
 
 
         </table>
-        
+
 
     </div>
 
@@ -133,11 +133,19 @@
                 switch (Model.Grelha[linha, coluna])
                 {
                     case 1:
+                        <td id="@(linha)@(coluna)" class="tile hit">1</td>
+                        break;
                     case 2:
+                        <td id="@(linha)@(coluna)" class="tile hit">2</td>
+                        break;
                     case 3:
+                        <td id="@(linha)@(coluna)" class="tile hit">3</td>
+                        break;
                     case 4:
+                        <td id="@(linha)@(coluna)" class="tile hit">4</td>
+                        break;
                     case 5:
-                        <td id="@(linha)@(coluna)" class="tile hit"></td>
+                        <td id="@(linha)@(coluna)" class="tile hit">5</td>
                         break;
                     case 7:
                         <td id="@(linha)@(coluna)" class="fill"></td>

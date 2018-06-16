@@ -40,14 +40,14 @@
                 </p>
                 <p>
                     <strong>% de tiros no alvo:</strong> @Model.PercentagemAlvo
-                </p> 
+                </p>
 
                 <p>
                     <strong>% de barcos afundados:</strong> @Model.PercentagemAfundado
                 </p>
 
 
-                </div>
+            </div>
 
         }
         else
@@ -117,104 +117,112 @@
 
 
 
-            <div id="contain">
-                <p>
-                    <strong>Nome:</strong> @Model.Nome
-                </p>
+        <div id="contain">
+            <p>
+                <strong>Nome:</strong> @Model.Nome
+            </p>
 
-                <p>
-                    <strong>Missão:</strong> @Model.Missao
-                </p>
+            <p>
+                <strong>Missão:</strong> @Model.Missao
+            </p>
 
-                <p>
-                    <strong>Modo:</strong> Online
+            <p>
+                <strong>Modo:</strong> Online
 
-                </p>
-                <p>
-                    <strong>Score:</strong> @Model.Score
-                </p>
+            </p>
+            <p>
+                <strong>Score:</strong> @Model.Score
+            </p>
 
-                <p>
-                    <strong>Mísseis restantes:</strong> @Model.Misseis <img src="~/images/gifmissil.gif" alt="Missil" height="60" width="80" />
-
-
-                </p>
-
-                <img class="barcosrestantessub" src="~/images/1.png" />  @Model.Submarinosrestantes
-                <img class="barcosrestantes" src="~/images/portaavioes.png" /> @Model.Portaavioesrestantes
-                <img class="barcosrestantes" src="~/images/2.png" /> @Model.Doiscanosrestantes
-                <img class="b4rcosrestantes" src="~/images/4.png" /> @Model.Quatrocanosrestantes
-                <img class="barcosrestantes" src="~/images/3.png" /> @Model.Trescanosrestantes
-
-            </div>
-
-            </div>
+            <p>
+                <strong>Mísseis restantes:</strong> @Model.Misseis <img src="~/images/gifmissil.gif" alt="Missil" height="60" width="80" />
 
 
+            </p>
 
-            <div class="col-md-8">
-
-                <table id="gameBoard">
-                    <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
-                    <!--primeira linha: letras (coordenadas)-->
-                    <tr>
-                        <!-- célula vazia invisível no canto sup.esq. da tabela-->
-                        <td class="tile-inv"></td>
-                        @for (int coluna = 0; coluna < 10; coluna++)
-                        {
-                            <td class="tile-inv tile-letras">
-                                <!--converter número da coluna para letra com o código ASCII ('A'=65) -->
-                                @Convert.ToChar(coluna + 65)
-                            </td>
-                        }
-                    </tr>
-                    @for (int linha = 0; linha < 10; linha++) // para cada linha no array modelo, que varia entre 0 e 9
-                    {
-                        <tr>
-                            <td class="tile-inv tile-numeros">
-                                <!--primeira coluna: números (coordenadas)-->
-                                @(linha + 1)
-                            </td>
-                            @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
-                            {
-                                switch (Model.Grelha[linha, coluna])
-                                {
-                                    case 1:
-                                    case 2:
-                                    case 3:
-                                    case 4:
-                                    case 5:
-                                        <td id="@(linha)@(coluna)" class="tile hit"></td>
-                                        break;
-                                    case 7:
-                                        <td id="@(linha)@(coluna)" class="fill"></td>
-                                        break;
-                                    case 0:
-                                        <td id="@(linha)@(coluna)" class="tile misses"></td>
-                                        break;
-                                    default:
-                                        <td id="@(linha)@(coluna)" class="tile"></td>
-                                        break;
-                                }
-                            }
-                        </tr>
-                    }
-                </table>
-
-
-
-            </div>
+            <img class="barcosrestantessub" src="~/images/1.png" />  @Model.Submarinosrestantes
+            <img class="barcosrestantes" src="~/images/portaavioes.png" /> @Model.Portaavioesrestantes
+            <img class="barcosrestantes" src="~/images/2.png" /> @Model.Doiscanosrestantes
+            <img class="b4rcosrestantes" src="~/images/4.png" /> @Model.Quatrocanosrestantes
+            <img class="barcosrestantes" src="~/images/3.png" /> @Model.Trescanosrestantes
 
         </div>
+
+    </div>
+
+
+
+    <div class="col-md-8">
+
+        <table id="gameBoard">
+            <!-- tabela tem 1 linha e 1 coluna extra para as coordenadas-->
+            <!--primeira linha: letras (coordenadas)-->
+            <tr>
+                <!-- célula vazia invisível no canto sup.esq. da tabela-->
+                <td class="tile-inv"></td>
+                @for (int coluna = 0; coluna < 10; coluna++)
+                {
+                    <td class="tile-inv tile-letras">
+                        <!--converter número da coluna para letra com o código ASCII ('A'=65) -->
+                        @Convert.ToChar(coluna + 65)
+                    </td>
+                }
+            </tr>
+            @for (int linha = 0; linha < 10; linha++) // para cada linha no array modelo, que varia entre 0 e 9
+            {
+            <tr>
+                <td class="tile-inv tile-numeros">
+                    <!--primeira coluna: números (coordenadas)-->
+                    @(linha + 1)
+                </td>
+                @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
+                {
+                    switch (Model.Grelha[linha, coluna])
+                    {
+                        case 1:
+                            <td id="@(linha)@(coluna)" class="tile hit">1</td>
+                            break;
+                        case 2:
+                            <td id="@(linha)@(coluna)" class="tile hit">2</td>
+                            break;
+                        case 3:
+                            <td id="@(linha)@(coluna)" class="tile hit">3</td>
+                            break;
+                        case 4:
+                            <td id="@(linha)@(coluna)" class="tile hit">4</td>
+                            break;
+                        case 5:
+                            <td id="@(linha)@(coluna)" class="tile hit">5</td>
+                            break;
+                        case 7:
+                            <td id="@(linha)@(coluna)" class="fill"></td>
+                            break;
+                        case 0:
+                            <td id="@(linha)@(coluna)" class="tile misses"></td>
+                            break;
+                        default:
+                            <td id="@(linha)@(coluna)" class="tile"></td>
+                            break;
+                    }
+                }
+            </tr>
+            }
+        </table>
+
+
+
+    </div>
+
+</div>
 
 
 
 
 @*<div class="row">
-    @using (Html.BeginForm("Masterboard", "Game"))
-    {
-        <input type="hidden" name="gameID" value="@Model.ID" />
-        <input type="submit" formtarget="_blank" class="btn btn-warning btn-lg" value="Masterboard" />
+        @using (Html.BeginForm("Masterboard", "Game"))
+        {
+            <input type="hidden" name="gameID" value="@Model.ID" />
+            <input type="submit" formtarget="_blank" class="btn btn-warning btn-lg" value="Masterboard" />
 
-    }
-</div>*@
+        }
+    </div>*@
