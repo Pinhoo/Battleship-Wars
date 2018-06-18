@@ -335,7 +335,7 @@ namespace BattleshipPRJ.Models
                 C = TerceiroTiro4Canos(Borda, Grelha, TD);
             }
 
-            if (C == null)
+            if (C == null)//2º tiro
             {
                 int i = 0;
 
@@ -4544,7 +4544,7 @@ namespace BattleshipPRJ.Models
                         Tiro.Y = Tiro.Y - 1;
                     }
                 }
-                if (Tiro.Y < 0 || Tiro.Y > 9 || Tiro.X < 0 || Tiro.X > 9 || Grelha[Tiro.X, Tiro.Y] == 7)
+                if (Tiro.Y < 0 || Tiro.Y > 9 || Tiro.X < 0 || Tiro.X > 9 || Grelha[Tiro.X, Tiro.Y] != -1)
                 {
                     if (Aleatorio == 0)
                     {

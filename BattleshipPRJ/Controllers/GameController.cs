@@ -56,6 +56,10 @@ namespace BattleshipPRJ.Controllers
 
                 int i = 1; //para ronda anterior
 
+                Coordenadas Coordenada;
+
+                ModoAutonomo ModoAuto = new ModoAutonomo();
+
                 while (jogo.NumeroDisparosAutonomo != 0)
                 {
                     HttpClient client1 = MyHttpClient.Client;
@@ -63,20 +67,8 @@ namespace BattleshipPRJ.Controllers
 
                     jogo.ID = gs.GameID;
 
-                    Coordenadas Coordenada;
-
-                    ModoAutonomo ModoAuto = new ModoAutonomo();
-
-                    if (jogo.Acertou == false)
-                    {
-                        Coordenada = ModoAuto.CoordenadasProximoTiro(jogo.Grelha, 0, false, jogo.CoordsUltimoTiro);
-                    }
-                    else
-                    {
-                        Coordenada = ModoAuto.CoordenadasProximoTiro(jogo.GrelhaModoAuto, jogo.UltimoBarcoAcertado, jogo.Afundou, jogo.CoordsUltimoTiro);
-                    }
-
-
+                    Coordenada = ModoAuto.CoordenadasProximoTiro(jogo.GrelhaModoAuto, jogo.UltimoBarcoAcertado, jogo.Afundou, jogo.CoordsUltimoTiro);
+                    
                     PlayRequest pr = new PlayRequest(jogo.ID, Coordenada.X, Coordenada.Y, 0);
                     string json1 = JsonConvert.SerializeObject(pr);
 
@@ -88,8 +80,7 @@ namespace BattleshipPRJ.Controllers
                     if (!response1.IsSuccessStatusCode) { return Redirect("/"); }
                     string json_r1 = await response1.Content.ReadAsStringAsync();
                     GameState gs1 = JsonConvert.DeserializeObject<GameState>(json_r1);
-
-
+                    
 
                     RoundSummary rs = new RoundSummary();
 
@@ -97,23 +88,20 @@ namespace BattleshipPRJ.Controllers
                     {
                         RoundSummary rondaanterior = jogo.Rss[i - 1];
                         i++;
-                        rs.AtualizarRonda(gs1.Result, Coordenada.Y, Coordenada.X, gs1.DamagedShipSize, rondaanterior);
+                        rs.AtualizarRonda(gs1.Result, Coordenada.Y, Coordenada.X, gs1.DamagedShipSize, gs1.RoundNumber, rondaanterior);
                     }
                     else
                     {
-                        rs.AtualizarRonda(gs1.Result, Coordenada.Y, Coordenada.X, gs1.DamagedShipSize);
+                        rs.AtualizarRonda(gs1.Result, Coordenada.Y, Coordenada.X, gs1.DamagedShipSize, gs1.RoundNumber);
                     }
 
-                    rs.NRonda = gs1.RoundNumber;
 
                     //modo auto metodos de ajuda
 
                     jogo.Grelha[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
 
                     jogo.GrelhaModoAuto[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
-
-                    jogo.FimdoJogo = "Derrota";
-
+                    
                     if (gs1.Result == Resultado.SuccessVictory)
                     {
                         jogo.FimdoJogo = "Vitória";
@@ -127,23 +115,19 @@ namespace BattleshipPRJ.Controllers
                     {
                         jogo.Afundou = false;
                     }
-                    if (gs1.DamagedShipSize != 0)
+
+
+
+                    if (gs1.DamagedShipSize != 0)//no caso de ser hit
                     {
-                        jogo.CoordsUltimoTiro.X = Coordenada.X;
-                        jogo.CoordsUltimoTiro.Y = Coordenada.Y;
-                        jogo.Acertou = true;
-                        jogo.UltimoBarcoAcertado = gs1.DamagedShipSize;
-                    }
-                    else
-                    {
-                        jogo.Acertou = false;
+                        jogo.CoordenadasUltimoTiroAcertado(Coordenada, gs1.DamagedShipSize);
                     }
 
                     //modo auto fim
 
                     jogo.AtualizarJogada(gs1, Coordenada.X, Coordenada.Y);
 
-                    rs.ScoreFimRonda = (int)jogo.Score;
+                    rs.ScoreFimRonda = jogo.Score;
 
                     jogo.CalcularPercentagens();
 
@@ -250,14 +234,14 @@ namespace BattleshipPRJ.Controllers
 
                 jogue.AtualizarJogada(gs, opcaoY, opcaoX);
 
-                if(gs.Result == Resultado.SuccessVictory || jogue.Misseis == 0)
+                if (gs.Result == Resultado.SuccessVictory || jogue.Misseis == 0)
                 {
                     HiScoresModel hiscore = new HiScoresModel(jogue.Nome, (int)jogue.Score, jogue.PercentagemAlvo, jogue.PercentagemAfundado, jogue.TirosAgua, jogue.TirosAlvo, jogue.TirosRepetido, jogue.FimdoJogo, jogue.Missao);
 
                     Repository.AddHighScore(hiscore);
 
                 }
-                
+
 
             }
             else if (submitButton == "Marcar")
@@ -343,6 +327,6 @@ namespace BattleshipPRJ.Controllers
             { Jogos.Add(Dt); }
             return View(Jogos);
         }
-        
+
     }
 }

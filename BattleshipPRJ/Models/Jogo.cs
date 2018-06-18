@@ -22,7 +22,7 @@ namespace BattleshipPRJ.Models
 
         public int Misseis { get; set; }
 
-        public double Score { get; set; }
+        public int Score { get; set; }
 
         public int Portaavioesrestantes { get; set; }
 
@@ -62,7 +62,7 @@ namespace BattleshipPRJ.Models
 
         public bool Desistir { get; set; }
 
-        public double Bonus { get; set; }
+        public int Bonus { get; set; }
 
         public int Coordx { get; set; }
 
@@ -83,8 +83,6 @@ namespace BattleshipPRJ.Models
         public int UltimoBarcoAcertado { get; set; }
 
         public bool Afundou { get; set; }
-
-        public bool Acertou { get; set; }
 
         //modo auto
 
@@ -193,7 +191,8 @@ namespace BattleshipPRJ.Models
 
             heidi++;
             Score = 0;
-            Bonus = -0.25;
+            Bonus = -25;
+            FimdoJogo = "Derrota";
 
             ID = heidi;
 
@@ -230,7 +229,8 @@ namespace BattleshipPRJ.Models
 
             GrelhaModoAuto = grelha;
 
-
+            UltimoBarcoAcertado = 0;
+            Afundou = false;
 
             CoordsUltimoTiro = new Coordenadas();
         }
@@ -366,19 +366,19 @@ namespace BattleshipPRJ.Models
             if (d_BarcoAtingido == true)
             {
 
-                if (Bonus < 1)
+                if (Bonus < 100)
                 {
-                    Bonus = Bonus + 0.25;
+                    Bonus = Bonus + 25;
                 }
             }
             else
             {
-                Bonus = -0.25;
+                Bonus = -25;
             }
 
             if (d_BarcoAtingido == true)
             {
-                Score = Score + (100 * (1 + Bonus));
+                Score = Score + 100 + Bonus;
             }
             if (d_BarcoAfundado == true)
             {
@@ -561,6 +561,13 @@ namespace BattleshipPRJ.Models
             {
                 NumeroDisparosAutonomo = 10;
             }
+        }
+
+        public void CoordenadasUltimoTiroAcertado(Coordenadas Coordenada, int DamagedShipSize)
+        {
+            CoordsUltimoTiro.X = Coordenada.X;
+            CoordsUltimoTiro.Y = Coordenada.Y;
+            UltimoBarcoAcertado = DamagedShipSize;
         }
 
         public void LocalAoFundo(int Barco, int opcaoY, int opcaoX)

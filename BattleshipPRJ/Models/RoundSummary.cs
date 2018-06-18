@@ -36,9 +36,11 @@ namespace BattleshipPRJ.Models
 
         }
         
-        public void AtualizarRonda(Resultado res, int x, int y, int shipsize)
+        public void AtualizarRonda(Resultado res, int x, int y, int shipsize, int nronda)
         {
 
+            NRonda = nronda;
+            
             switch (res)
             {
                 case Resultado.NoResult:
@@ -140,15 +142,15 @@ namespace BattleshipPRJ.Models
 
         }
 
-        public void AtualizarRonda(Resultado res, int x, int y, int shipsize, RoundSummary ronda)
+        public void AtualizarRonda(Resultado res, int x, int y, int shipsize, int nronda, RoundSummary ronda)
         {
-
             ScoreInicio = ronda.ScoreFimRonda;
 
             TotalTiroAlvo = ronda.TotalTiroAlvo;
             TotalBarcosAfundados = ronda.TotalBarcosAfundados;
-            AtualizarRonda(res, x, y, shipsize);
+            AtualizarRonda(res, x, y, shipsize, nronda);
             
+
         }
 
     }
