@@ -241,7 +241,7 @@ namespace BattleshipPRJ.Models
             Misseis = Misseis - 1;
             UltimoTiroDisparado = BarcoAtingidoSize;
             NumeroDeJogadas = NumeroDeJogadas + 1;
-            if (BarcoAtingidoSize == 1 || BarcoAtingidoSize == 2 || BarcoAtingidoSize == 3 || BarcoAtingidoSize == 4 || BarcoAtingidoSize == 5)
+            if (BarcoAtingidoSize != 0)
             {
                 TirosAlvo++;
                 if (ganho == false)

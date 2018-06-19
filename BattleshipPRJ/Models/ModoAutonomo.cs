@@ -7,30 +7,29 @@ namespace BattleshipPRJ.Models
 {
     public class ModoAutonomo
     {
+        //private Enum Bordas
+
+        private Random rnr = new Random();
+
         public Coordenadas DevolverCoordsAleatorio(int[,] GrelhaMarcar)//metodo que devolve coordenadas aleatorias
         {
-            Coordenadas c = new Models.Coordenadas();
-            c.X = 0;
-            c.Y = 0;
-            int i = 0;
+            Coordenadas NovasCoordenadas = new Models.Coordenadas();
+            NovasCoordenadas.X = 0;
+            NovasCoordenadas.Y = 0;
 
             Random rnr = new Random();
 
-            while (i == 0)
+            while (true)
             {
-                c.X = rnr.Next(0, 10);
-                c.Y = rnr.Next(0, 10);
-                if (GrelhaMarcar[c.X, c.Y] == -1)
+                NovasCoordenadas.X = rnr.Next(0, 10);
+                NovasCoordenadas.Y = rnr.Next(0, 10);
+                if (GrelhaMarcar[NovasCoordenadas.X, NovasCoordenadas.Y] == -1)
                 {
-                    i++;
-                }
-                else
-                {
-                    i = 0;
+                    break;
                 }
             }
 
-            return c;
+            return NovasCoordenadas;
         }
 
         public int[,] Marcar(Coordenadas C, int[,] GrelhaMarcada)
@@ -229,7 +228,7 @@ namespace BattleshipPRJ.Models
             return GrelhaMarcada;
         }//marca todos os pontos á volta da coordenada
 
-        public Coordenadas CoordenadasProximoTiro(int[,] GrelhaMarcar, int OQueAcertei, bool Afundou, Coordenadas TiroDisparado)
+        public Coordenadas CoordenadasProximoTiro(int[,] GrelhaMarcar, int OQueAcertei, bool Afundou, Coordenadas TiroAFocar)
         {
             Coordenadas proximoTiro = new Coordenadas();
 
@@ -241,19 +240,19 @@ namespace BattleshipPRJ.Models
                 }
                 else if (OQueAcertei == 2)
                 {
-                    proximoTiro = Acertou2Canos(GrelhaMarcar, TiroDisparado);
+                    proximoTiro = DisparoParaSegundoHit(TiroAFocar, GrelhaMarcar);
                 }
                 else if (OQueAcertei == 3)
                 {
-                    proximoTiro = Acertou3Canos(GrelhaMarcar, TiroDisparado);
+                    proximoTiro = Acertou3Canos(GrelhaMarcar, TiroAFocar);
                 }
                 else if (OQueAcertei == 4)
                 {
-                    proximoTiro = Acertou4Canos(GrelhaMarcar, TiroDisparado);
+                    proximoTiro = Acertou4Canos(GrelhaMarcar, TiroAFocar);
                 }
                 else if (OQueAcertei == 5)
                 {
-                    proximoTiro = PortaAvioes(GrelhaMarcar, TiroDisparado);
+                    proximoTiro = PortaAvioes(GrelhaMarcar, TiroAFocar);
                 }
                 else
                 {
@@ -267,97 +266,40 @@ namespace BattleshipPRJ.Models
             return proximoTiro;
         }//decide qual a coordenada em que se dispara o proximo missil
 
-        public Coordenadas Acertou2Canos(int[,] Grelha, Coordenadas TD)
+        public Coordenadas Acertou3Canos(int[,] Grelha, Coordenadas CoordAFocar)
         {
-            int i = 0;
-            Coordenadas C = new Coordenadas();
-            while (i == 0)
+            Coordenadas NovaCoordenada = new Coordenadas();
+            string Borda = VerificarBordas(CoordAFocar);
+
+            NovaCoordenada = TerceiroTiroXCanos(Borda, Grelha, CoordAFocar, 3);
+
+            if (NovaCoordenada == null)
             {
-                C = TD;
-
-                string Borda = VerificarBordas(C);
-
-                Coordenadas Add = EscolherNSEO(Borda);
-
-                C.X = C.X + Add.X;
-                C.Y = C.Y + Add.Y;
-
-                if (Grelha[C.X, C.Y] == -1)
-                {
-                    i++;
-                }
-            }
-            return C;
-        }//o que faz se o ultimo tiro acertou num barco de 2 canos
-
-        public Coordenadas Acertou3Canos(int[,] Grelha, Coordenadas TD)
-        {
-            Coordenadas C = new Coordenadas();
-            string Borda = VerificarBordas(TD);
-
-            C = TerceiroTiro3Canos(Borda, Grelha, TD);
-
-            if (C == null)
-            {
-                int i = 0;
-
-                while (i == 0)
-                {
-                    C = TD;
-
-                    string borda = VerificarBordas(C);
-
-                    Coordenadas Add = EscolherNSEO(borda);
-
-                    C.X = C.X + Add.X;
-                    C.Y = C.Y + Add.Y;
-
-                    if (Grelha[C.X, C.Y] == -1)
-                    {
-                        i++;
-                    }
-                }
+                NovaCoordenada = DisparoParaSegundoHit(CoordAFocar, Grelha);
             }
 
-            return C;
+            return NovaCoordenada;
         }//o que faz se o ultimo tiro acertou num barco de 3 canos
 
-        public Coordenadas Acertou4Canos(int[,] Grelha, Coordenadas TD)//o que faz se o ultimo tiro acertou num barco de 4 canos
+        public Coordenadas Acertou4Canos(int[,] Grelha, Coordenadas CoordAFocar)//o que faz se o ultimo tiro acertou num barco de 4 canos
         {
-            Coordenadas C = null;
+            Coordenadas NovaCoordenada = null;
 
-            string Borda = VerificarBordas(TD);
+            string Borda = VerificarBordas(CoordAFocar);
 
-            C = QuartoTiro4Canos(Grelha, TD);
+            NovaCoordenada = QuartoTiro4Canos(Grelha, CoordAFocar);
 
-            if (C == null)
+            if (NovaCoordenada == null)
             {
-                C = TerceiroTiro4Canos(Borda, Grelha, TD);
+                NovaCoordenada = TerceiroTiroXCanos(Borda, Grelha, CoordAFocar, 4);
             }
 
-            if (C == null)//2º tiro
+            if (NovaCoordenada == null)//2º tiro
             {
-                int i = 0;
-
-                while (i == 0)
-                {
-                    C = TD;
-
-                    string borda = VerificarBordas(C);
-
-                    Coordenadas Add = EscolherNSEO(borda);
-
-                    C.X = C.X + Add.X;
-                    C.Y = C.Y + Add.Y;
-
-                    if (Grelha[C.X, C.Y] == -1)
-                    {
-                        i++;
-                    }
-                }
+                NovaCoordenada = DisparoParaSegundoHit(CoordAFocar, Grelha);
             }
 
-            return C;
+            return NovaCoordenada;
         }
 
         public string VerificarBordas(Coordenadas c)
@@ -508,10 +450,9 @@ namespace BattleshipPRJ.Models
             }
         }//método para não deixar disparar para além das bordas da grelha
 
-        public Coordenadas EscolherNSEO(string Borda)//aleatoriamente escolhe uma direção(norte sul este oeste) depende do que se acertou e se há possibilidade ou se já não está marcardo
+        public Coordenadas EscolherDirecao(string Borda)//aleatoriamente escolhe uma direção(norte sul este oeste) depende do que se acertou e se há possibilidade ou se já não está marcardo
         {
             Coordenadas C = new Coordenadas();
-            Random rnr = new Random();
 
             if (Borda == "Nao aceito -1")
             {
@@ -673,456 +614,266 @@ namespace BattleshipPRJ.Models
             return C;
         }
 
-        public Coordenadas TerceiroTiro3Canos(string Borda, int[,] Grelha, Coordenadas TD)
+        public Coordenadas TerceiroTiroXCanos(string Borda, int[,] Grelha, Coordenadas CoordAFocar,int NrDeCanos)
         {
-            bool Acertou = false;
+            bool CoordValida = false;
 
-            Coordenadas C = new Coordenadas();
+            Coordenadas Coord = new Coordenadas();
 
-            Coordenadas R = new Coordenadas();
+            Coordenadas CoordFinal = new Coordenadas();
 
             if (Borda == "Nao aceito -1")
             {
-                if (Grelha[TD.X + 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y + 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == NrDeCanos)
                 {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
             }
             else if (Borda == "Nao aceito X - 1 ou Y + 1")
             {
-                if (Grelha[TD.X + 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y - 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == NrDeCanos)
                 {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
             }
             else if (Borda == "Nao aceito X + 1 ou Y - 1")
             {
-                if (Grelha[TD.X - 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y + 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == NrDeCanos)
                 {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
             }
             else if (Borda == "Nao aceito + 1")
             {
-                if (Grelha[TD.X - 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y - 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == NrDeCanos)
                 {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
             }
             else if (Borda == "Nao aceito X - 1")
             {
-                if (Grelha[TD.X + 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y + 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == NrDeCanos)
                 {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y - 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == NrDeCanos)
                 {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
             }
             else if (Borda == "Nao aceito X + 1")
             {
-                if (Grelha[TD.X - 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y + 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == NrDeCanos)
                 {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y - 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == NrDeCanos)
                 {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
             }
             else if (Borda == "Nao aceito Y - 1")
             {
-                if (Grelha[TD.X + 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X - 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y + 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == NrDeCanos)
                 {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
             }
             else if (Borda == "Nao aceito Y + 1")
             {
-                if (Grelha[TD.X + 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X - 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y - 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == NrDeCanos)
                 {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
             }
             else if (Borda == "Aceito tudo")
             {
-                if (Grelha[TD.X + 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X - 1, TD.Y] == 3)
+                if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
                 {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.X = Coord.X - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y + 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == NrDeCanos)
                 {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
-                if (Grelha[TD.X, TD.Y - 1] == 3)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == NrDeCanos)
                 {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
+                    Coord.Y = Coord.Y - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
                 }
             }
-            if (Acertou == true)
+            if (CoordValida == true)
             {
-                return R;
+                return CoordFinal;
             }
             else
             {
                 return null;
             }
         }//o que faz se o ultimo tiro acertou num barco de 3 canos sabendo que já acertou 2 quadrados nesse barco
-
-        public Coordenadas TerceiroTiro4Canos(string Borda, int[,] Grelha, Coordenadas TD)
+        
+        public Coordenadas QuartoTiro4Canos(int[,] Grelha, Coordenadas CoordAFocar)//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 3 quadrados nesse barco
         {
             bool Acertou = false;
 
-            Coordenadas C = new Coordenadas();//coords
+            string Borda = VerificarBordasRadius2(CoordAFocar);
 
-            Coordenadas R = new Coordenadas();//resultado final
-
-            if (Borda == "Nao aceito -1")
-            {
-                if (Grelha[TD.X + 1, TD.Y] == 4)
-                {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y + 1] == 4)
-                {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-            }
-            else if (Borda == "Nao aceito X - 1 ou Y + 1")
-            {
-                if (Grelha[TD.X + 1, TD.Y] == 4)
-                {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y - 1] == 4)
-                {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-            }
-            else if (Borda == "Nao aceito X + 1 ou Y - 1")
-            {
-                if (Grelha[TD.X - 1, TD.Y] == 4)
-                {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y + 1] == 4)
-                {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-            }
-            else if (Borda == "Nao aceito + 1")
-            {
-                if (Grelha[TD.X - 1, TD.Y] == 4)
-                {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y - 1] == 4)
-                {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-            }
-            else if (Borda == "Nao aceito X - 1")
-            {
-                if (Grelha[TD.X + 1, TD.Y] == 4)
-                {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y + 1] == 4)
-                {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y - 1] == 4)
-                {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-            }
-            else if (Borda == "Nao aceito X + 1")
-            {
-                if (Grelha[TD.X - 1, TD.Y] == 4)
-                {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y + 1] == 4)
-                {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y - 1] == 4)
-                {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-            }
-            else if (Borda == "Nao aceito Y - 1")
-            {
-                if (Grelha[TD.X + 1, TD.Y] == 4)
-                {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X - 1, TD.Y] == 4)
-                {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y + 1] == 4)
-                {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-            }
-            else if (Borda == "Nao aceito Y + 1")
-            {
-                if (Grelha[TD.X + 1, TD.Y] == 4)
-                {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X - 1, TD.Y] == 4)
-                {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y - 1] == 4)
-                {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-            }
-            else if (Borda == "Aceito tudo")
-            {
-                if (Grelha[TD.X + 1, TD.Y] == 4)
-                {
-                    C.X = C.X + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X - 1, TD.Y] == 4)
-                {
-                    C.X = C.X - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y + 1] == 4)
-                {
-                    C.Y = C.Y + 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-                if (Grelha[TD.X, TD.Y - 1] == 4)
-                {
-                    C.Y = C.Y - 1;
-                    R = TerceiroTiro(C.X - TD.X, C.Y - TD.Y, TD, Grelha);
-                    Acertou = true;
-                }
-            }
-            if (Acertou == true)
-            {
-                return R;
-            }
-            else
-            {
-                return null;
-            }
-        }//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 2 quadrados nesse barco
-
-        public Coordenadas QuartoTiro4Canos(int[,] Grelha, Coordenadas TD)//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 3 quadrados nesse barco
-        {
-            bool Acertou = false;
-
-            string Borda = VerificarBordasRadius2(TD);
-
-            Coordenadas C = TD;
-
-            Random rnr = new Random();
+            Coordenadas C = new Coordenadas();
+            C.CopiarValores(CoordAFocar);
 
             if (Borda == "Nao aceito -1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)//verifica se tem os 3 pontos do barco senao retorna null
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)//verifica se tem os 3 pontos do barco senao retorna null
                 {
-                    if (TD.X == 0) //se for ao pé de uma das bordas apenas pode selecionar o outro lado
+                    if (CoordAFocar.X == 0) //se for ao pé de uma das bordas apenas pode selecionar o outro lado
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)// por isso meto este codigo
+                    else if (CoordAFocar.X == 7)// por isso meto este codigo
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);// senao seleciona aleatoriamento neste caso esquerda ou direita
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)// mas verifica se a cordenada que selecionou nao está marcada ou se já se disparou lá
                             {
-                                C.X = TD.X - 1;//faz isto
+                                C.X = CoordAFocar.X - 1;//faz isto
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                     Acertou = true;
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -1132,66 +883,66 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X + 1 ou Y - 1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                     Acertou = true;
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -1201,67 +952,67 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X - 1 ou Y + 1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1270,67 +1021,67 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito + 1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1340,100 +1091,100 @@ namespace BattleshipPRJ.Models
             //2 radius inicio
             else if (Borda == "Nao aceito X - 1 ou Y - 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -1442,100 +1193,100 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X - 1 ou Y + 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1544,100 +1295,100 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X + 1 ou Y - 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -1646,100 +1397,100 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X + 1 ou Y + 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1748,100 +1499,100 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X - 2 ou Y - 1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -1850,100 +1601,100 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X + 2 ou Y - 1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -1952,100 +1703,100 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X - 2 ou Y + 1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2055,99 +1806,99 @@ namespace BattleshipPRJ.Models
             else if (Borda == "Nao aceito X + 2 ou Y + 1")
             {
                 Acertou = true;
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2157,132 +1908,132 @@ namespace BattleshipPRJ.Models
             else if (Borda == "Nao aceito + 2")
             {
                 Acertou = true;
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2291,133 +2042,133 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito - 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -2427,132 +2178,132 @@ namespace BattleshipPRJ.Models
             else if (Borda == "Nao aceito X - 2 ou Y + 2")
             {
                 Acertou = true;
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2561,133 +2312,133 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X + 2 ou Y - 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -2697,133 +2448,133 @@ namespace BattleshipPRJ.Models
             //2 radius fim
             else if (Borda == "Nao aceito X - 1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2833,132 +2584,132 @@ namespace BattleshipPRJ.Models
             else if (Borda == "Nao aceito X + 1")
             {
                 Acertou = true;
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2967,133 +2718,133 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito Y - 1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -3102,133 +2853,133 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito Y + 1")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -3238,166 +2989,166 @@ namespace BattleshipPRJ.Models
             //2 radius inicio
             else if (Borda == "Nao aceito X - 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -3406,166 +3157,166 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito X + 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -3574,166 +3325,166 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito Y - 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -3742,166 +3493,166 @@ namespace BattleshipPRJ.Models
             }
             else if (Borda == "Nao aceito Y + 2")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -3911,199 +3662,199 @@ namespace BattleshipPRJ.Models
             //2 radius fim
             else if (Borda == "Aceito tudo")
             {
-                if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X + 2, TD.Y] == 4)
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 0)
+                    if (CoordAFocar.X == 0)
                     {
-                        C.X = TD.X + 3;
+                        C.X = CoordAFocar.X + 3;
                     }
-                    else if (TD.X == 7)
+                    else if (CoordAFocar.X == 7)
                     {
-                        C.X = TD.X - 1;
+                        C.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 3;
+                            C.X = CoordAFocar.X + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 1;
+                                C.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 1;
+                            C.X = CoordAFocar.X - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 3;
+                                C.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X + 1, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 1)
+                    if (CoordAFocar.X == 1)
                     {
-                        C.X = TD.X + 2;
+                        C.X = CoordAFocar.X + 2;
                     }
-                    else if (TD.X == 8)
+                    else if (CoordAFocar.X == 8)
                     {
-                        C.X = TD.X - 2;
+                        C.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 2;
+                            C.X = CoordAFocar.X + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 2;
+                                C.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 2;
+                            C.X = CoordAFocar.X - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 2;
+                                C.X = CoordAFocar.X + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X - 1, TD.Y] == 4 && Grelha[TD.X - 2, TD.Y] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     Acertou = true;
-                    if (TD.X == 2)
+                    if (CoordAFocar.X == 2)
                     {
-                        C.X = TD.X + 1;
+                        C.X = CoordAFocar.X + 1;
                     }
-                    else if (TD.X == 9)
+                    else if (CoordAFocar.X == 9)
                     {
-                        C.X = TD.X - 3;
+                        C.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = TD.X + 1;
+                            C.X = CoordAFocar.X + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X - 3;
+                                C.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = TD.X - 3;
+                            C.X = CoordAFocar.X - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.X = TD.X + 1;
+                                C.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y + 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 0)
+                    if (CoordAFocar.Y == 0)
                     {
-                        C.Y = TD.Y + 3;
+                        C.Y = CoordAFocar.Y + 3;
                     }
-                    else if (TD.Y == 7)
+                    else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = TD.Y - 1;
+                        C.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 3;
+                            C.Y = CoordAFocar.Y + 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 1;
+                                C.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 1;
+                            C.Y = CoordAFocar.Y - 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 3;
+                                C.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y + 1] == 4 && Grelha[TD.X, TD.Y - 1] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 1)
+                    if (CoordAFocar.Y == 1)
                     {
-                        C.Y = TD.Y + 2;
+                        C.Y = CoordAFocar.Y + 2;
                     }
-                    else if (TD.Y == 8)
+                    else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = TD.Y - 2;
+                        C.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 2;
+                            C.Y = CoordAFocar.Y + 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 2;
+                                C.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 2;
+                            C.Y = CoordAFocar.Y - 2;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 2;
+                                C.Y = CoordAFocar.Y + 2;
                             }
                         }
 
                     }
                 }
-                else if (Grelha[TD.X, TD.Y] == 4 && Grelha[TD.X, TD.Y - 1] == 4 && Grelha[TD.X, TD.Y - 2] == 4)
+                else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
                     Acertou = true;
-                    if (TD.Y == 2)
+                    if (CoordAFocar.Y == 2)
                     {
-                        C.Y = TD.Y + 1;
+                        C.Y = CoordAFocar.Y + 1;
                     }
-                    else if (TD.Y == 9)
+                    else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = TD.Y - 3;
+                        C.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = TD.Y + 1;
+                            C.Y = CoordAFocar.Y + 1;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y - 3;
+                                C.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = TD.Y - 3;
+                            C.Y = CoordAFocar.Y - 3;
                             if (Grelha[C.X, C.Y] != -1)
                             {
-                                C.Y = TD.Y + 1;
+                                C.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -4120,25 +3871,25 @@ namespace BattleshipPRJ.Models
             }
         }
 
-        public Coordenadas PortaAvioes(int[,] Grelha, Coordenadas TD)//1º verifica se já disparou a todas as coords nseo se já disparou em todas passa para um dos vizinhos que seja porta avioes senao dispara onde nao disparou
+        public Coordenadas PortaAvioes(int[,] Grelha, Coordenadas CoordAFocar)//1º verifica se já disparou a todas as coords nseo se já disparou em todas passa para um dos vizinhos que seja porta avioes senao dispara onde nao disparou
         {
-            Random rnr = new Random();
-            Coordenadas Tiro = TD;
+            Coordenadas CoordFinal = new Coordenadas();
+            CoordFinal.CopiarValores(CoordAFocar);
             int i = 0;
             while (i == 0)
             {
-                string Borda = VerificarBordas(Tiro);
+                string Borda = VerificarBordas(CoordFinal);
 
                 if (Borda == "Nao aceito -1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
+                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X++;
+                        CoordFinal.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
                     {
-                        Tiro.Y++;
+                        CoordFinal.Y++;
                         i++;
                     }
                     else
@@ -4148,14 +3899,14 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 2);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
+                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X++;
+                                CoordFinal.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
+                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
                             {
-                                Tiro.Y++;
+                                CoordFinal.Y++;
                                 j++;
                             }
                         }
@@ -4163,14 +3914,14 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito X - 1 ou Y + 1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
+                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X++;
+                        CoordFinal.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
                     {
-                        Tiro.Y--;
+                        CoordFinal.Y--;
                         i++;
                     }
                     else
@@ -4180,14 +3931,14 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 2);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
+                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X++;
+                                CoordFinal.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
+                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
                             {
-                                Tiro.Y--;
+                                CoordFinal.Y--;
                                 j++;
                             }
                         }
@@ -4195,14 +3946,14 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito X + 1 ou Y - 1")
                 {
-                    if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
+                    if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X--;
+                        CoordFinal.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
                     {
-                        Tiro.Y++;
+                        CoordFinal.Y++;
                         i++;
                     }
                     else
@@ -4212,14 +3963,14 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 2);
-                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
+                            if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X--;
+                                CoordFinal.X--;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
+                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
                             {
-                                Tiro.Y++;
+                                CoordFinal.Y++;
                                 j++;
                             }
                         }
@@ -4227,14 +3978,14 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito + 1")
                 {
-                    if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
+                    if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X--;
+                        CoordFinal.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
                     {
-                        Tiro.Y--;
+                        CoordFinal.Y--;
                         i++;
                     }
                     else
@@ -4244,14 +3995,14 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 4);
-                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
+                            if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X--;
+                                CoordFinal.X--;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
+                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
                             {
-                                Tiro.Y--;
+                                CoordFinal.Y--;
                                 j++;
                             }
                         }
@@ -4259,19 +4010,19 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito X - 1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
+                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X++;
+                        CoordFinal.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
                     {
-                        Tiro.Y++;
+                        CoordFinal.Y++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
                     {
-                        Tiro.Y--;
+                        CoordFinal.Y--;
                         i++;
                     }
                     else
@@ -4281,19 +4032,19 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
+                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X++;
+                                CoordFinal.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
+                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
                             {
-                                Tiro.Y++;
+                                CoordFinal.Y++;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
+                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
                             {
-                                Tiro.Y--;
+                                CoordFinal.Y--;
                                 j++;
                             }
                         }
@@ -4301,19 +4052,19 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito X + 1")
                 {
-                    if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
+                    if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X--;
+                        CoordFinal.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
                     {
-                        Tiro.Y++;
+                        CoordFinal.Y++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
                     {
-                        Tiro.Y--;
+                        CoordFinal.Y--;
                         i++;
                     }
                     else
@@ -4323,19 +4074,19 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
+                            if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X--;
+                                CoordFinal.X--;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
+                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
                             {
-                                Tiro.Y++;
+                                CoordFinal.Y++;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
+                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
                             {
-                                Tiro.Y--;
+                                CoordFinal.Y--;
                                 j++;
                             }
                         }
@@ -4343,19 +4094,19 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito Y - 1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
+                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X++;
+                        CoordFinal.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
+                    else if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X--;
+                        CoordFinal.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
                     {
-                        Tiro.Y++;
+                        CoordFinal.Y++;
                         i++;
                     }
                     else
@@ -4365,19 +4116,19 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
+                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X++;
+                                CoordFinal.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
+                            else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X--;
+                                CoordFinal.X--;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
+                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
                             {
-                                Tiro.Y++;
+                                CoordFinal.Y++;
                                 j++;
                             }
                         }
@@ -4385,19 +4136,19 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Nao aceito Y + 1")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
+                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X++;
+                        CoordFinal.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
+                    else if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X--;
+                        CoordFinal.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
                     {
-                        Tiro.Y--;
+                        CoordFinal.Y--;
                         i++;
                     }
                     else
@@ -4407,19 +4158,19 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
+                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X++;
+                                CoordFinal.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
+                            else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X--;
+                                CoordFinal.X--;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
+                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
                             {
-                                Tiro.Y--;
+                                CoordFinal.Y--;
                                 j++;
                             }
                         }
@@ -4427,24 +4178,24 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Borda == "Aceito tudo")
                 {
-                    if (Grelha[Tiro.X + 1, Tiro.Y] == -1)
+                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X++;
+                        CoordFinal.X++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X - 1, Tiro.Y] == -1)
+                    else if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                     {
-                        Tiro.X--;
+                        CoordFinal.X--;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y + 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
                     {
-                        Tiro.Y++;
+                        CoordFinal.Y++;
                         i++;
                     }
-                    else if (Grelha[Tiro.X, Tiro.Y - 1] == -1)
+                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
                     {
-                        Tiro.Y--;
+                        CoordFinal.Y--;
                         i++;
                     }
                     else
@@ -4454,97 +4205,95 @@ namespace BattleshipPRJ.Models
                         while (j == 0)
                         {
                             aleatorio = rnr.Next(0, 4);
-                            if (aleatorio == 0 && Grelha[Tiro.X + 1, Tiro.Y] == 5)
+                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X++;
+                                CoordFinal.X++;
                                 j++;
                             }
-                            else if (aleatorio == 1 && Grelha[Tiro.X - 1, Tiro.Y] == 5)
+                            else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
                             {
-                                Tiro.X--;
+                                CoordFinal.X--;
                                 j++;
                             }
-                            else if (aleatorio == 2 && Grelha[Tiro.X, Tiro.Y + 1] == 5)
+                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
                             {
-                                Tiro.Y++;
+                                CoordFinal.Y++;
                                 j++;
                             }
-                            else if (aleatorio == 3 && Grelha[Tiro.X, Tiro.Y - 1] == 5)
+                            else if (aleatorio == 3 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
                             {
-                                Tiro.Y--;
+                                CoordFinal.Y--;
                                 j++;
                             }
                         }
                     }
                 }
             }
-            return Tiro;
+            return CoordFinal;
         }
 
-        public Coordenadas TerceiroTiro(int X, int Y, Coordenadas Tiro, int[,] Grelha)
+        public Coordenadas DirecaoTerceiroTiro(int X, int Y, Coordenadas Coord, int[,] Grelha)
         {
-            Random rnr = new Random();
-            int i = 0;
             int Aleatorio = rnr.Next(0, 2);
-            while (i == 0)
+            while (true)
             {
                 if (X == -1)
                 {
                     if (Aleatorio == 0)
                     {
-                        if(Tiro.X > 1)
-                            Tiro.X = Tiro.X - 2;
+                        if(Coord.X > 1)
+                            Coord.X = Coord.X - 2;
                         else
-                            Tiro.X = Tiro.X + 1;
+                            Coord.X = Coord.X + 1;
                     }
                     else if (Aleatorio == 1)
                     {
-                        Tiro.X = Tiro.X + 1;
+                        Coord.X = Coord.X + 1;
                     }
                 }
                 else if (X == 1)
                 {
                     if (Aleatorio == 0)
                     {
-                        if (Tiro.X < 8)
-                            Tiro.X = Tiro.X + 2;
+                        if (Coord.X < 8)
+                            Coord.X = Coord.X + 2;
                         else
-                            Tiro.X = Tiro.X - 1;
+                            Coord.X = Coord.X - 1;
                     }
                     else if (Aleatorio == 1)
                     {
-                        Tiro.X = Tiro.X - 1;
+                        Coord.X = Coord.X - 1;
                     }
                 }
                 else if (Y == -1)
                 {
                     if (Aleatorio == 0)
                     {
-                        if(Tiro.Y > 1)
-                            Tiro.Y = Tiro.Y - 2;
+                        if(Coord.Y > 1)
+                            Coord.Y = Coord.Y - 2;
                         else
-                            Tiro.Y = Tiro.Y + 1;
+                            Coord.Y = Coord.Y + 1;
                     }
                     else if (Aleatorio == 1)
                     {
-                        Tiro.Y = Tiro.Y + 1;
+                        Coord.Y = Coord.Y + 1;
                     }
                 }
                 else
                 {
                     if (Aleatorio == 0)
                     {
-                        if(Tiro.Y < 8)
-                            Tiro.Y = Tiro.Y + 2;
+                        if(Coord.Y < 8)
+                            Coord.Y = Coord.Y + 2;
                         else
-                            Tiro.Y = Tiro.Y - 1;
+                            Coord.Y = Coord.Y - 1;
                     }
                     else if (Aleatorio == 1)
                     {
-                        Tiro.Y = Tiro.Y - 1;
+                        Coord.Y = Coord.Y - 1;
                     }
                 }
-                if (Tiro.Y < 0 || Tiro.Y > 9 || Tiro.X < 0 || Tiro.X > 9 || Grelha[Tiro.X, Tiro.Y] != -1)
+                if (Coord.Y < 0 || Coord.Y > 9 || Coord.X < 0 || Coord.X > 9 || Grelha[Coord.X, Coord.Y] != -1)
                 {
                     if (Aleatorio == 0)
                     {
@@ -4557,10 +4306,10 @@ namespace BattleshipPRJ.Models
                 }
                 else
                 {
-                    i++;
+                    break;
                 }
             }
-            return Tiro;
+            return Coord;
         }//método para 3º tiro dos barcos de 3 e 4 canos(criei um metodo apenas para não haver repetição do codigo do mesmo)
 
         public int[,] MarcarAdjacentes(int[,] GrelhaMarcar, int Barco)
@@ -4580,5 +4329,26 @@ namespace BattleshipPRJ.Models
             }
             return GrelhaMarcar;
         }//marca todos os pontos á volta do tipo de barco selecionado(para não disparar em coordenadas em que seja impossivel estar um barco)
+
+        public Coordenadas DisparoParaSegundoHit(Coordenadas CoordAFocar, int[,] Grelha)
+        {
+            Coordenadas NovaCoordenada = new Coordenadas();
+            while (true)
+            {
+                string Borda = VerificarBordas(CoordAFocar);
+
+                NovaCoordenada.CopiarValores(CoordAFocar);
+
+                Coordenadas AdicionarValor = EscolherDirecao(Borda);
+
+                NovaCoordenada.X = NovaCoordenada.X + AdicionarValor.X;
+                NovaCoordenada.Y = NovaCoordenada.Y + AdicionarValor.Y;
+
+                if (Grelha[NovaCoordenada.X, NovaCoordenada.Y] == -1)
+                {
+                    return NovaCoordenada;
+                }
+            }
+        }
     }
 }
