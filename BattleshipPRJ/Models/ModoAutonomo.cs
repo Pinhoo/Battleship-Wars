@@ -7,8 +7,6 @@ namespace BattleshipPRJ.Models
 {
     public class ModoAutonomo
     {
-        //private Enum Bordas
-
         private Random rnr = new Random();
 
         public Coordenadas DevolverCoordsAleatorio(int[,] GrelhaMarcar)//metodo que devolve coordenadas aleatorias
@@ -234,30 +232,28 @@ namespace BattleshipPRJ.Models
 
             if (Afundou == false)
             {
-                if (OQueAcertei == 1)
+                switch (OQueAcertei)
                 {
-                    proximoTiro = DevolverCoordsAleatorio(GrelhaMarcar);
+                    case 1:
+                        proximoTiro = DevolverCoordsAleatorio(GrelhaMarcar);
+                        break;
+                    case 2:
+                        proximoTiro = DisparoParaSegundoHit(TiroAFocar, GrelhaMarcar);
+                        break;
+                    case 3:
+                        proximoTiro = Acertou3Canos(GrelhaMarcar, TiroAFocar);
+                        break;
+                    case 4:
+                        proximoTiro = Acertou4Canos(GrelhaMarcar, TiroAFocar);
+                        break;
+                    case 5:
+                        proximoTiro = PortaAvioes(GrelhaMarcar, TiroAFocar);
+                        break;
+                    default:
+                        proximoTiro = DevolverCoordsAleatorio(GrelhaMarcar);
+                        break;
                 }
-                else if (OQueAcertei == 2)
-                {
-                    proximoTiro = DisparoParaSegundoHit(TiroAFocar, GrelhaMarcar);
-                }
-                else if (OQueAcertei == 3)
-                {
-                    proximoTiro = Acertou3Canos(GrelhaMarcar, TiroAFocar);
-                }
-                else if (OQueAcertei == 4)
-                {
-                    proximoTiro = Acertou4Canos(GrelhaMarcar, TiroAFocar);
-                }
-                else if (OQueAcertei == 5)
-                {
-                    proximoTiro = PortaAvioes(GrelhaMarcar, TiroAFocar);
-                }
-                else
-                {
-                    proximoTiro = DevolverCoordsAleatorio(GrelhaMarcar);
-                }
+                
             }
             else
             {
@@ -269,6 +265,7 @@ namespace BattleshipPRJ.Models
         public Coordenadas Acertou3Canos(int[,] Grelha, Coordenadas CoordAFocar)
         {
             Coordenadas NovaCoordenada = new Coordenadas();
+            
             string Borda = VerificarBordas(CoordAFocar);
 
             NovaCoordenada = TerceiroTiroXCanos(Borda, Grelha, CoordAFocar, 3);
@@ -454,7 +451,7 @@ namespace BattleshipPRJ.Models
         {
             Coordenadas C = new Coordenadas();
 
-            if (Borda == "Nao aceito -1")
+            if (Borda == "Nao aceito -1")//if(array[-1,-1] == true)
             {
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
