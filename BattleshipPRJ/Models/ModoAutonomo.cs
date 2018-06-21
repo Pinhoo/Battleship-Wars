@@ -433,7 +433,7 @@ namespace BattleshipPRJ.Models
         {
             Coordenadas C = new Coordenadas();
 
-            if (Borda == "Nao aceito -1")
+            if (NaoAceitoCoords[1, 0, 1, 0] == 1)
             {
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
