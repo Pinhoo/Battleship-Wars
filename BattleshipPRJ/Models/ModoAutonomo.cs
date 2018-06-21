@@ -7,8 +7,6 @@ namespace BattleshipPRJ.Models
 {
     public class ModoAutonomo
     {
-        //private Enum Bordas
-
         private Random rnr = new Random();
 
         public Coordenadas DevolverCoordsAleatorio(int[,] GrelhaMarcar)//metodo que devolve coordenadas aleatorias
@@ -32,196 +30,196 @@ namespace BattleshipPRJ.Models
             return NovasCoordenadas;
         }
 
-        public int[,] Marcar(Coordenadas C, int[,] GrelhaMarcada)
+        public int[,] Marcar(Coordenadas Coordenada, int[,] GrelhaMarcada)
         {
-            string Borda = VerificarBordas(C);
+            int[,,,] NaoAceitoCoords = VerificarBordas(Coordenada,false);
 
-            if (Borda == "Nao aceito -1")
+            if (NaoAceitoCoords[1, 0, 1, 0] == 1)
             {
-                if (GrelhaMarcada[C.X + 1, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y + 1] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] = 7;
                 }
 
             }
-            else if (Borda == "Nao aceito X - 1 ou Y + 1")
+            else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
             {
-                if (GrelhaMarcada[C.X + 1, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] = 7;
                 }
             }
-            else if (Borda == "Nao aceito X + 1 ou Y - 1")
+            else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
             {
-                if (GrelhaMarcada[C.X - 1, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y + 1] = 7;
                 }
-                if (GrelhaMarcada[C.X - 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] = 7;
                 }
             }
-            else if (Borda == "Nao aceito + 1")
+            else if (NaoAceitoCoords[0, 1, 0, 1] == 1)
             {
-                if (GrelhaMarcada[C.X - 1, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X - 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] = 7;
                 }
             }
-            else if (Borda == "Nao aceito X - 1")
+            else if (NaoAceitoCoords[1, 0, 0, 0] == 1)
             {
-                if (GrelhaMarcada[C.X, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y + 1] = 7;
                 }
             }
-            else if (Borda == "Nao aceito X + 1")
+            else if (NaoAceitoCoords[0, 1, 0, 0] == 1)
             {
-                if (GrelhaMarcada[C.X - 1, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X - 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X - 1, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y + 1] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] = 7;
                 }
             }
-            else if (Borda == "Nao aceito Y - 1")
+            else if (NaoAceitoCoords[0, 0, 1, 0] == 1)
             {
-                if (GrelhaMarcada[C.X - 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X - 1, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y + 1] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y + 1] = 7;
                 }
             }
-            else if (Borda == "Nao aceito Y + 1")
+            else if (NaoAceitoCoords[0, 0, 0, 1] == 1)
             {
-                if (GrelhaMarcada[C.X - 1, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X - 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] = 7;
                 }
             }
-            else if (Borda == "Aceito tudo")
+            else if (NaoAceitoCoords[0, 0, 0, 0] == 1)
             {
-                if (GrelhaMarcada[C.X - 1, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y - 1] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y - 1] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y - 1] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y - 1] = 7;
                 }
-                if (GrelhaMarcada[C.X - 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y] = 7;
                 }
-                if (GrelhaMarcada[C.X - 1, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X - 1, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X - 1, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X - 1, Coordenada.Y + 1] = 7;
                 }
-                if (GrelhaMarcada[C.X, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X, Coordenada.Y + 1] = 7;
                 }
-                if (GrelhaMarcada[C.X + 1, C.Y + 1] == -1)
+                if (GrelhaMarcada[Coordenada.X + 1, Coordenada.Y + 1] == -1)
                 {
-                    GrelhaMarcada[C.X + 1, C.Y + 1] = 7;
+                    GrelhaMarcada[Coordenada.X + 1, Coordenada.Y + 1] = 7;
                 }
 
             }
@@ -269,9 +267,8 @@ namespace BattleshipPRJ.Models
         public Coordenadas Acertou3Canos(int[,] Grelha, Coordenadas CoordAFocar)
         {
             Coordenadas NovaCoordenada = new Coordenadas();
-            string Borda = VerificarBordas(CoordAFocar);
 
-            NovaCoordenada = TerceiroTiroXCanos(Borda, Grelha, CoordAFocar, 3);
+            NovaCoordenada = VerificarEDecidirTerceiroTiro(Grelha, CoordAFocar, 3);
 
             if (NovaCoordenada == null)
             {
@@ -285,13 +282,11 @@ namespace BattleshipPRJ.Models
         {
             Coordenadas NovaCoordenada = null;
 
-            string Borda = VerificarBordas(CoordAFocar);
-
             NovaCoordenada = QuartoTiro4Canos(Grelha, CoordAFocar);
 
             if (NovaCoordenada == null)
             {
-                NovaCoordenada = TerceiroTiroXCanos(Borda, Grelha, CoordAFocar, 4);
+                NovaCoordenada = VerificarEDecidirTerceiroTiro(Grelha, CoordAFocar, 4);
             }
 
             if (NovaCoordenada == null)//2º tiro
@@ -302,159 +297,145 @@ namespace BattleshipPRJ.Models
             return NovaCoordenada;
         }
 
-        public string VerificarBordas(Coordenadas c)
+        public int[,,,] VerificarBordas(Coordenadas coordenadas, bool RaioDois)
         {
-            if (c.X == 0 && c.Y == 0)
-            {
-                return "Nao aceito -1";
-            }
-            else if (c.X == 9 && c.Y == 0)
-            {
-                return "Nao aceito X + 1 ou Y - 1";
-            }
-            else if (c.X == 0 && c.Y == 9)
-            {
-                return "Nao aceito X - 1 ou Y + 1";
-            }
-            else if (c.X == 9 && c.Y == 9)
-            {
-                return "Nao aceito + 1";
-            }
-            else if (c.X == 0)
-            {
-                return "Nao aceito X - 1";
-            }
-            else if (c.X == 9)
-            {
-                return "Nao aceito X + 1";
-            }
-            else if (c.Y == 0)
-            {
-                return "Nao aceito Y - 1";
-            }
-            else if (c.Y == 9)
-            {
-                return "Nao aceito Y + 1";
-            }
-            else
-            {
-                return "Aceito tudo";
-            }
-        }//método para não deixar disparar para além das bordas da grelha
+            int[,,,] NaoAceitoCoords = new int[3,3,3,3];
 
-        public string VerificarBordasRadius2(Coordenadas c)
-        {
-            if (c.X == 0 && c.Y == 0)
+            if (coordenadas.X == 0 && coordenadas.Y == 0)
             {
-                return "Nao aceito -1";
+                NaoAceitoCoords[ 1, 0, 1, 0] = 1;
+                return NaoAceitoCoords;
             }
-            else if (c.X == 9 && c.Y == 0)
+            else if (coordenadas.X == 9 && coordenadas.Y == 0)
             {
-                return "Nao aceito X + 1 ou Y - 1";
+                NaoAceitoCoords[1, 0, 0, 1] = 1;
+                return NaoAceitoCoords;
             }
-            else if (c.X == 0 && c.Y == 9)
+            else if (coordenadas.X == 0 && coordenadas.Y == 9)
             {
-                return "Nao aceito X - 1 ou Y + 1";
+                NaoAceitoCoords[0, 1, 1, 0] = 1;
+                return NaoAceitoCoords;
             }
-            else if (c.X == 9 && c.Y == 9)
+            else if (coordenadas.X == 9 && coordenadas.Y == 9)
             {
-                return "Nao aceito + 1";
+                NaoAceitoCoords[0, 1, 0, 1] = 1;
+                return NaoAceitoCoords;
             }
-            //2 radius
-            else if (c.X == 0 && c.Y == 1)
+            else if (RaioDois == true)
             {
-                return "Nao aceito X - 1 ou Y - 2";
+                if (coordenadas.X == 0 && coordenadas.Y == 1)
+                {
+                    NaoAceitoCoords[1, 0, 2, 0] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 0 && coordenadas.Y == 8)
+                {
+                    NaoAceitoCoords[1, 0, 0, 2] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 9 && coordenadas.Y == 1)
+                {
+                    NaoAceitoCoords[0, 1, 2, 0] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 9 && coordenadas.Y == 8)
+                {
+                    NaoAceitoCoords[0, 1, 0, 2] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 1 && coordenadas.Y == 0)
+                {
+                    NaoAceitoCoords[2, 0, 1, 0] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 8 && coordenadas.Y == 0)
+                {
+                    NaoAceitoCoords[0, 2, 1, 0] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 1 && coordenadas.Y == 9)
+                {
+                    NaoAceitoCoords[2, 0, 0, 1] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 8 && coordenadas.Y == 9)
+                {
+                    NaoAceitoCoords[0, 2, 0, 1] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 8 && coordenadas.Y == 8)
+                {
+                    NaoAceitoCoords[0, 2, 0, 2] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 1 && coordenadas.Y == 1)
+                {
+                    NaoAceitoCoords[2, 0, 2, 0] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 1 && coordenadas.Y == 8)
+                {
+                    NaoAceitoCoords[2, 0, 0, 2] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 8 && coordenadas.Y == 1)
+                {
+                    NaoAceitoCoords[0, 2, 2, 0] = 1;
+                    return NaoAceitoCoords;
+                }
             }
-            else if (c.X == 0 && c.Y == 8)
+            else if (coordenadas.X == 0)
             {
-                return "Nao aceito X - 1 ou Y + 2";
+                NaoAceitoCoords[1, 0, 0, 0] = 1;
+                return NaoAceitoCoords;
             }
-            else if (c.X == 9 && c.Y == 1)
+            else if (coordenadas.X == 9)
             {
-                return "Nao aceito X + 1 ou Y - 2";
+                NaoAceitoCoords[0, 1, 0, 0] = 1;
+                return NaoAceitoCoords;
             }
-            else if (c.X == 9 && c.Y == 8)
+            else if (coordenadas.Y == 0)
             {
-                return "Nao aceito X + 1 ou Y + 2";
+                NaoAceitoCoords[0, 0, 1, 0] = 1;
+                return NaoAceitoCoords;
             }
-            else if (c.X == 1 && c.Y == 0)
+            else if (coordenadas.Y == 9)
             {
-                return "Nao aceito X - 2 ou Y - 1";
+                NaoAceitoCoords[0, 0, 0, 1] = 1;
+                return NaoAceitoCoords;
             }
-            else if (c.X == 8 && c.Y == 0)
+            else if (RaioDois == true)
             {
-                return "Nao aceito X + 2 ou Y - 1";
+                if (coordenadas.X == 1)
+                {
+                    NaoAceitoCoords[2, 0, 0, 0] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.X == 8)
+                {
+                    NaoAceitoCoords[0, 2, 0, 0] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.Y == 1)
+                {
+                    NaoAceitoCoords[0, 0, 2, 0] = 1;
+                    return NaoAceitoCoords;
+                }
+                else if (coordenadas.Y == 8)
+                {
+                    NaoAceitoCoords[0, 0, 0, 2] = 1;
+                    return NaoAceitoCoords;
+                }
             }
-            else if (c.X == 1 && c.Y == 9)
-            {
-                return "Nao aceito X - 2 ou Y + 1";
-            }
-            else if (c.X == 8 && c.Y == 9)
-            {
-                return "Nao aceito X + 2 ou Y + 1";
-            }
-            else if (c.X == 8 && c.Y == 8)
-            {
-                return "Nao aceito + 2";
-            }
-            else if (c.X == 1 && c.Y == 1)
-            {
-                return "Nao aceito - 2";
-            }
-            else if (c.X == 1 && c.Y == 8)
-            {
-                return "Nao aceito X - 2 ou Y + 2";
-            }
-            else if (c.X == 8 && c.Y == 1)
-            {
-                return "Nao aceito X + 2 ou Y - 2";
-            }
-            //2 radius
-            else if (c.X == 0)
-            {
-                return "Nao aceito X - 1";
-            }
-            else if (c.X == 9)
-            {
-                return "Nao aceito X + 1";
-            }
-            else if (c.Y == 0)
-            {
-                return "Nao aceito Y - 1";
-            }
-            else if (c.Y == 9)
-            {
-                return "Nao aceito Y + 1";
-            }
-            //2 radius
-            else if (c.X == 1)
-            {
-                return "Nao aceito X - 2";
-            }
-            else if (c.X == 8)
-            {
-                return "Nao aceito X + 2";
-            }
-            else if (c.Y == 1)
-            {
-                return "Nao aceito Y - 2";
-            }
-            else if (c.Y == 8)
-            {
-                return "Nao aceito Y + 2";
-            }
-            //2 radius
-            else
-            {
-                return "Aceito tudo";
-            }
+            NaoAceitoCoords[0, 0, 0, 0] = 1;
+                return NaoAceitoCoords;//aceita tudo
         }//método para não deixar disparar para além das bordas da grelha
-
-        public Coordenadas EscolherDirecao(string Borda)//aleatoriamente escolhe uma direção(norte sul este oeste) depende do que se acertou e se há possibilidade ou se já não está marcardo
+        
+        public Coordenadas EscolherDirecao(int[,,,] NaoAceitoCoords)//aleatoriamente escolhe uma direção(norte sul este oeste) depende do que se acertou e se há possibilidade ou se já não está marcardo
         {
             Coordenadas C = new Coordenadas();
 
-            if (Borda == "Nao aceito -1")
+            if (NaoAceitoCoords[1, 0, 1, 0] == 1)
             {
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
@@ -468,7 +449,7 @@ namespace BattleshipPRJ.Models
                     C.Y = 1;
                 }
             }
-            else if (Borda == "Nao aceito X - 1 ou Y + 1")
+            else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
             {
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
@@ -482,7 +463,7 @@ namespace BattleshipPRJ.Models
                     C.Y = -1;
                 }
             }
-            else if (Borda == "Nao aceito X + 1 ou Y - 1")
+            else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
             {
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
@@ -496,7 +477,7 @@ namespace BattleshipPRJ.Models
                     C.Y = 1;
                 }
             }
-            else if (Borda == "Nao aceito + 1")
+            else if (NaoAceitoCoords[0, 1, 0, 1] == 1)
             {
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
@@ -510,7 +491,7 @@ namespace BattleshipPRJ.Models
                     C.Y = -1;
                 }
             }
-            else if (Borda == "Nao aceito X - 1")
+            else if (NaoAceitoCoords[1, 0, 0, 0] == 1)
             {
                 int Direcao = rnr.Next(0, 3);
                 if (Direcao == 0)
@@ -529,7 +510,7 @@ namespace BattleshipPRJ.Models
                     C.Y = 1;
                 }
             }
-            else if (Borda == "Nao aceito X + 1")
+            else if (NaoAceitoCoords[0, 1, 0, 0] == 1)
             {
                 int Direcao = rnr.Next(0, 3);
                 if (Direcao == 0)
@@ -548,7 +529,7 @@ namespace BattleshipPRJ.Models
                     C.Y = 1;
                 }
             }
-            else if (Borda == "Nao aceito Y - 1")
+            else if (NaoAceitoCoords[0, 0, 1, 0] == 1)
             {
                 int Direcao = rnr.Next(0, 3);
                 if (Direcao == 0)
@@ -567,7 +548,7 @@ namespace BattleshipPRJ.Models
                     C.Y = 1;
                 }
             }
-            else if (Borda == "Nao aceito Y + 1")
+            else if (NaoAceitoCoords[0, 0, 0, 1] == 1)
             {
                 int Direcao = rnr.Next(0, 3);
                 if (Direcao == 0)
@@ -586,7 +567,7 @@ namespace BattleshipPRJ.Models
                     C.Y = -1;
                 }
             }
-            else if (Borda == "Aceito tudo")
+            else if (NaoAceitoCoords[0, 0, 0, 0] == 1)
             {
                 int Direcao = rnr.Next(0, 4);
                 if (Direcao == 0)
@@ -614,15 +595,17 @@ namespace BattleshipPRJ.Models
             return C;
         }
 
-        public Coordenadas TerceiroTiroXCanos(string Borda, int[,] Grelha, Coordenadas CoordAFocar,int NrDeCanos)
+        public Coordenadas VerificarEDecidirTerceiroTiro(int[,] Grelha, Coordenadas CoordAFocar,int NrDeCanos)
         {
             bool CoordValida = false;
+
+            int[,,,] NaoAceitoCoords = VerificarBordas(CoordAFocar, false);
 
             Coordenadas Coord = new Coordenadas();
 
             Coordenadas CoordFinal = new Coordenadas();
 
-            if (Borda == "Nao aceito -1")
+            if (NaoAceitoCoords[1, 0, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
@@ -637,7 +620,7 @@ namespace BattleshipPRJ.Models
                     CoordValida = true;
                 }
             }
-            else if (Borda == "Nao aceito X - 1 ou Y + 1")
+            else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
             {
                 if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
@@ -652,7 +635,7 @@ namespace BattleshipPRJ.Models
                     CoordValida = true;
                 }
             }
-            else if (Borda == "Nao aceito X + 1 ou Y - 1")
+            else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
                 {
@@ -667,7 +650,7 @@ namespace BattleshipPRJ.Models
                     CoordValida = true;
                 }
             }
-            else if (Borda == "Nao aceito + 1")
+            else if (NaoAceitoCoords[0, 1, 0, 1] == 1)
             {
                 if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
                 {
@@ -682,32 +665,11 @@ namespace BattleshipPRJ.Models
                     CoordValida = true;
                 }
             }
-            else if (Borda == "Nao aceito X - 1")
+            else if (NaoAceitoCoords[1, 0, 0, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
                     Coord.X = Coord.X + 1;
-                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
-                    CoordValida = true;
-                }
-                if (Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == NrDeCanos)
-                {
-                    Coord.Y = Coord.Y + 1;
-                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
-                    CoordValida = true;
-                }
-                if (Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == NrDeCanos)
-                {
-                    Coord.Y = Coord.Y - 1;
-                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
-                    CoordValida = true;
-                }
-            }
-            else if (Borda == "Nao aceito X + 1")
-            {
-                if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
-                {
-                    Coord.X = Coord.X - 1;
                     CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
                     CoordValida = true;
                 }
@@ -724,7 +686,28 @@ namespace BattleshipPRJ.Models
                     CoordValida = true;
                 }
             }
-            else if (Borda == "Nao aceito Y - 1")
+            else if (NaoAceitoCoords[0, 1, 0, 0] == 1)
+            {
+                if (Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == NrDeCanos)
+                {
+                    Coord.X = Coord.X - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
+                }
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == NrDeCanos)
+                {
+                    Coord.Y = Coord.Y + 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
+                }
+                if (Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == NrDeCanos)
+                {
+                    Coord.Y = Coord.Y - 1;
+                    CoordFinal = DirecaoTerceiroTiro(Coord.X - CoordAFocar.X, Coord.Y - CoordAFocar.Y, CoordAFocar, Grelha);
+                    CoordValida = true;
+                }
+            }
+            else if (NaoAceitoCoords[0, 0, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
@@ -745,7 +728,7 @@ namespace BattleshipPRJ.Models
                     CoordValida = true;
                 }
             }
-            else if (Borda == "Nao aceito Y + 1")
+            else if (NaoAceitoCoords[0, 0, 0, 1] == 1)
             {
                 if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
@@ -766,7 +749,7 @@ namespace BattleshipPRJ.Models
                     CoordValida = true;
                 }
             }
-            else if (Borda == "Aceito tudo")
+            else if (NaoAceitoCoords[0, 0, 0, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == NrDeCanos)
                 {
@@ -807,12 +790,12 @@ namespace BattleshipPRJ.Models
         {
             bool Acertou = false;
 
-            string Borda = VerificarBordasRadius2(CoordAFocar);
+            int[,,,] NaoAceitoCoords = VerificarBordas(CoordAFocar, true);
 
             Coordenadas C = new Coordenadas();
             C.CopiarValores(CoordAFocar);
 
-            if (Borda == "Nao aceito -1")
+            if (NaoAceitoCoords[1, 0, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)//verifica se tem os 3 pontos do barco senao retorna null
                 {
@@ -881,7 +864,7 @@ namespace BattleshipPRJ.Models
                     Acertou = true;
                 }
             }
-            else if (Borda == "Nao aceito X + 1 ou Y - 1")
+            else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
@@ -950,7 +933,7 @@ namespace BattleshipPRJ.Models
                     Acertou = true;
                 }
             }
-            else if (Borda == "Nao aceito X - 1 ou Y + 1")
+            else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -1019,7 +1002,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito + 1")
+            else if (NaoAceitoCoords[0, 1, 0, 1] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
@@ -1089,7 +1072,7 @@ namespace BattleshipPRJ.Models
                 }
             }
             //2 radius inicio
-            else if (Borda == "Nao aceito X - 1 ou Y - 2")
+            else if (NaoAceitoCoords[1, 0, 2, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -1191,7 +1174,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X - 1 ou Y + 2")
+            else if (NaoAceitoCoords[1, 0, 0, 2] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -1293,7 +1276,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X + 1 ou Y - 2")
+            else if (NaoAceitoCoords[0, 1, 2, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
@@ -1395,7 +1378,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X + 1 ou Y + 2")
+            else if (NaoAceitoCoords[0, 1, 0, 2] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
@@ -1497,7 +1480,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X - 2 ou Y - 1")
+            else if (NaoAceitoCoords[2, 0, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -1599,7 +1582,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X + 2 ou Y - 1")
+            else if (NaoAceitoCoords[0, 2, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
@@ -1701,7 +1684,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X - 2 ou Y + 1")
+            else if (NaoAceitoCoords[2, 0, 0, 1] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -1803,7 +1786,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X + 2 ou Y + 1")
+            else if (NaoAceitoCoords[0, 2, 0, 1] == 1)
             {
                 Acertou = true;
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
@@ -1905,7 +1888,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito + 2")
+            else if (NaoAceitoCoords[0, 2, 0, 2] == 1)
             {
                 Acertou = true;
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
@@ -2040,7 +2023,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito - 2")
+            else if (NaoAceitoCoords[2, 0, 2, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -2175,7 +2158,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X - 2 ou Y + 2")
+            else if (NaoAceitoCoords[2, 0, 0, 2] == 1)
             {
                 Acertou = true;
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
@@ -2310,7 +2293,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X + 2 ou Y - 2")
+            else if (NaoAceitoCoords[0, 2, 2, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
@@ -2446,7 +2429,7 @@ namespace BattleshipPRJ.Models
                 }
             }
             //2 radius fim
-            else if (Borda == "Nao aceito X - 1")
+            else if (NaoAceitoCoords[1, 0, 0, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -2581,7 +2564,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X + 1")
+            else if (NaoAceitoCoords[0, 1, 0, 0] == 1)
             {
                 Acertou = true;
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
@@ -2716,7 +2699,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito Y - 1")
+            else if (NaoAceitoCoords[0, 0, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -2851,7 +2834,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito Y + 1")
+            else if (NaoAceitoCoords[0, 0, 0, 1] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -2987,7 +2970,7 @@ namespace BattleshipPRJ.Models
                 }
             }
             //2 radius inicio
-            else if (Borda == "Nao aceito X - 2")
+            else if (NaoAceitoCoords[2, 0, 0, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -3155,7 +3138,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito X + 2")
+            else if (NaoAceitoCoords[0, 2, 0, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
@@ -3323,7 +3306,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito Y - 2")
+            else if (NaoAceitoCoords[0, 0, 2, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -3491,7 +3474,7 @@ namespace BattleshipPRJ.Models
                     }
                 }
             }
-            else if (Borda == "Nao aceito Y + 2")
+            else if (NaoAceitoCoords[0, 0, 0, 2] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -3660,7 +3643,7 @@ namespace BattleshipPRJ.Models
                 }
             }
             //2 radius fim
-            else if (Borda == "Aceito tudo")
+            else if (NaoAceitoCoords[0, 0, 0, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -3878,9 +3861,10 @@ namespace BattleshipPRJ.Models
             int i = 0;
             while (i == 0)
             {
-                string Borda = VerificarBordas(CoordFinal);
 
-                if (Borda == "Nao aceito -1")
+                int[,,,] NaoAceitoCoords = VerificarBordas(CoordFinal, false);
+
+                if (NaoAceitoCoords[1, 0, 1, 0] == 1)
                 {
                     if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
@@ -3912,7 +3896,7 @@ namespace BattleshipPRJ.Models
                         }
                     }
                 }
-                else if (Borda == "Nao aceito X - 1 ou Y + 1")
+                else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
                 {
                     if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
@@ -3944,7 +3928,7 @@ namespace BattleshipPRJ.Models
                         }
                     }
                 }
-                else if (Borda == "Nao aceito X + 1 ou Y - 1")
+                else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
                 {
                     if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                     {
@@ -3976,7 +3960,7 @@ namespace BattleshipPRJ.Models
                         }
                     }
                 }
-                else if (Borda == "Nao aceito + 1")
+                else if (NaoAceitoCoords[0, 1, 0, 1] == 1)
                 {
                     if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                     {
@@ -4008,7 +3992,7 @@ namespace BattleshipPRJ.Models
                         }
                     }
                 }
-                else if (Borda == "Nao aceito X - 1")
+                else if (NaoAceitoCoords[1, 0, 0, 0] == 1)
                 {
                     if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
@@ -4050,7 +4034,7 @@ namespace BattleshipPRJ.Models
                         }
                     }
                 }
-                else if (Borda == "Nao aceito X + 1")
+                else if (NaoAceitoCoords[0, 1, 0, 0] == 1)
                 {
                     if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                     {
@@ -4092,7 +4076,7 @@ namespace BattleshipPRJ.Models
                         }
                     }
                 }
-                else if (Borda == "Nao aceito Y - 1")
+                else if (NaoAceitoCoords[0, 0, 1, 0] == 1)
                 {
                     if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
@@ -4134,7 +4118,7 @@ namespace BattleshipPRJ.Models
                         }
                     }
                 }
-                else if (Borda == "Nao aceito Y + 1")
+                else if (NaoAceitoCoords[0, 0, 0, 1] == 1)
                 {
                     if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
@@ -4176,7 +4160,7 @@ namespace BattleshipPRJ.Models
                         }
                     }
                 }
-                else if (Borda == "Aceito tudo")
+                else if (NaoAceitoCoords[0, 0, 0, 0] == 1)
                 {
                     if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                     {
@@ -4232,8 +4216,11 @@ namespace BattleshipPRJ.Models
             return CoordFinal;
         }
 
-        public Coordenadas DirecaoTerceiroTiro(int X, int Y, Coordenadas Coord, int[,] Grelha)
+        public Coordenadas DirecaoTerceiroTiro(int X, int Y, Coordenadas Coordenadas, int[,] Grelha)
         {
+            Coordenadas Coord = new Coordenadas();
+            Coord.CopiarValores(Coordenadas);
+
             int Aleatorio = rnr.Next(0, 2);
             while (true)
             {
@@ -4335,11 +4322,11 @@ namespace BattleshipPRJ.Models
             Coordenadas NovaCoordenada = new Coordenadas();
             while (true)
             {
-                string Borda = VerificarBordas(CoordAFocar);
+                int[,,,] NaoAceitoCoords = VerificarBordas(CoordAFocar, false);
 
                 NovaCoordenada.CopiarValores(CoordAFocar);
 
-                Coordenadas AdicionarValor = EscolherDirecao(Borda);
+                Coordenadas AdicionarValor = EscolherDirecao(NaoAceitoCoords);
 
                 NovaCoordenada.X = NovaCoordenada.X + AdicionarValor.X;
                 NovaCoordenada.Y = NovaCoordenada.Y + AdicionarValor.Y;
