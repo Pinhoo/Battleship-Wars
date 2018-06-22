@@ -130,7 +130,7 @@
             </td>
             @for (int coluna = 0; coluna < 10; coluna++) // para cada coluna no array modelo, que varia entre 0 e 9
             {
-                switch (Model.Grelha[linha, coluna])
+                switch (Model.GrelhaModoAuto[linha, coluna])
                 {
                     case 1:
                         <td id="@(linha)@(coluna)" class="tile hit">1</td>

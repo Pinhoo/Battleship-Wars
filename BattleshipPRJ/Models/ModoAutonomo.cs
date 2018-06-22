@@ -297,7 +297,7 @@ namespace BattleshipPRJ.Models
 
         public int[,,,] VerificarBordas(Coordenadas coordenadas, bool RaioDois)
         {
-            int[,,,] NaoAceitoCoords = new int[3,3,3,3];
+            int[,,,] NaoAceitoCoords = new int[3,3,3,3];//NaoAceitoCoords[ X negativo, X positivo, Y negativo, Y positivo]
 
             if (coordenadas.X == 0 && coordenadas.Y == 0)
             {
@@ -306,12 +306,12 @@ namespace BattleshipPRJ.Models
             }
             else if (coordenadas.X == 9 && coordenadas.Y == 0)
             {
-                NaoAceitoCoords[1, 0, 0, 1] = 1;
+                NaoAceitoCoords[0, 1, 1, 0] = 1;
                 return NaoAceitoCoords;
             }
             else if (coordenadas.X == 0 && coordenadas.Y == 9)
             {
-                NaoAceitoCoords[0, 1, 1, 0] = 1;
+                NaoAceitoCoords[1, 0, 0, 1] = 1;
                 return NaoAceitoCoords;
             }
             else if (coordenadas.X == 9 && coordenadas.Y == 9)
@@ -786,12 +786,13 @@ namespace BattleshipPRJ.Models
         
         public Coordenadas QuartoTiro4Canos(int[,] Grelha, Coordenadas CoordAFocar)//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 3 quadrados nesse barco
         {
-            bool Acertou = false;
+            bool PodeDisparar = false;
 
             int[,,,] NaoAceitoCoords = VerificarBordas(CoordAFocar, true);
 
-            Coordenadas C = new Coordenadas();
-            C.CopiarValores(CoordAFocar);
+            Coordenadas Coord = new Coordenadas();
+
+            Coord.CopiarValores(CoordAFocar);
 
             if (NaoAceitoCoords[1, 0, 1, 0] == 1)
             {
@@ -799,67 +800,67 @@ namespace BattleshipPRJ.Models
                 {
                     if (CoordAFocar.X == 0) //se for ao pé de uma das bordas apenas pode selecionar o outro lado
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)// por isso meto este codigo
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);// senao seleciona aleatoriamento neste caso esquerda ou direita
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)// mas verifica se a cordenada que selecionou nao está marcada ou se já se disparou lá
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)// mas verifica se a cordenada que selecionou nao está marcada ou se já se disparou lá
                             {
-                                C.X = CoordAFocar.X - 1;//faz isto
+                                Coord.X = CoordAFocar.X - 1;//faz isto
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
                     }
-                    Acertou = true;
+                    PodeDisparar = true;
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
-                    Acertou = true;
+                    PodeDisparar = true;
                 }
             }
             else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
@@ -868,99 +869,99 @@ namespace BattleshipPRJ.Models
                 {
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
                     }
-                    Acertou = true;
+                    PodeDisparar = true;
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
                     }
-                    Acertou = true;
+                    PodeDisparar = true;
                 }
             }
             else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -968,32 +969,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1004,32 +1005,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -1037,32 +1038,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1074,32 +1075,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -1107,32 +1108,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -1140,32 +1141,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -1176,32 +1177,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -1209,32 +1210,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -1242,32 +1243,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1278,32 +1279,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -1311,32 +1312,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -1344,32 +1345,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -1380,32 +1381,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -1413,32 +1414,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -1446,32 +1447,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1482,32 +1483,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -1515,32 +1516,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -1548,32 +1549,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -1584,32 +1585,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -1617,32 +1618,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -1650,32 +1651,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -1686,32 +1687,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -1719,32 +1720,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -1752,32 +1753,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1786,34 +1787,34 @@ namespace BattleshipPRJ.Models
             }
             else if (NaoAceitoCoords[0, 2, 0, 1] == 1)
             {
-                Acertou = true;
+                PodeDisparar = true;
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -1821,32 +1822,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -1854,32 +1855,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -1888,34 +1889,34 @@ namespace BattleshipPRJ.Models
             }
             else if (NaoAceitoCoords[0, 2, 0, 2] == 1)
             {
-                Acertou = true;
+                PodeDisparar = true;
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -1923,32 +1924,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -1956,32 +1957,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -1989,32 +1990,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2025,32 +2026,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -2058,32 +2059,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -2091,32 +2092,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -2124,32 +2125,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -2158,34 +2159,34 @@ namespace BattleshipPRJ.Models
             }
             else if (NaoAceitoCoords[2, 0, 0, 2] == 1)
             {
-                Acertou = true;
+                PodeDisparar = true;
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -2193,32 +2194,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -2226,32 +2227,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -2259,32 +2260,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2295,32 +2296,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -2328,32 +2329,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -2361,32 +2362,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -2394,32 +2395,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -2431,32 +2432,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -2464,32 +2465,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -2497,32 +2498,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -2530,32 +2531,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2564,34 +2565,34 @@ namespace BattleshipPRJ.Models
             }
             else if (NaoAceitoCoords[0, 1, 0, 0] == 1)
             {
-                Acertou = true;
+                PodeDisparar = true;
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -2599,32 +2600,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -2632,32 +2633,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -2665,32 +2666,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2701,32 +2702,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -2734,32 +2735,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -2767,32 +2768,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -2800,32 +2801,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -2836,32 +2837,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -2869,32 +2870,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -2902,32 +2903,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -2935,32 +2936,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -2972,32 +2973,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -3005,32 +3006,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -3038,32 +3039,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -3071,32 +3072,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -3104,32 +3105,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -3140,32 +3141,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -3173,32 +3174,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -3206,32 +3207,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -3239,32 +3240,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -3272,32 +3273,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -3308,32 +3309,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -3341,32 +3342,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -3374,32 +3375,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -3407,32 +3408,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -3440,32 +3441,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -3476,32 +3477,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -3509,32 +3510,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -3542,32 +3543,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -3575,32 +3576,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -3608,32 +3609,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
@@ -3645,32 +3646,32 @@ namespace BattleshipPRJ.Models
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 0)
                     {
-                        C.X = CoordAFocar.X + 3;
+                        Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)
                     {
-                        C.X = CoordAFocar.X - 1;
+                        Coord.X = CoordAFocar.X - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 1;
+                                Coord.X = CoordAFocar.X - 1;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 3;
+                                Coord.X = CoordAFocar.X + 3;
                             }
                         }
 
@@ -3678,32 +3679,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 1)
                     {
-                        C.X = CoordAFocar.X + 2;
+                        Coord.X = CoordAFocar.X + 2;
                     }
                     else if (CoordAFocar.X == 8)
                     {
-                        C.X = CoordAFocar.X - 2;
+                        Coord.X = CoordAFocar.X - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 2;
+                                Coord.X = CoordAFocar.X - 2;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 2;
+                                Coord.X = CoordAFocar.X + 2;
                             }
                         }
 
@@ -3711,32 +3712,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.X == 2)
                     {
-                        C.X = CoordAFocar.X + 1;
+                        Coord.X = CoordAFocar.X + 1;
                     }
                     else if (CoordAFocar.X == 9)
                     {
-                        C.X = CoordAFocar.X - 3;
+                        Coord.X = CoordAFocar.X - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.X = CoordAFocar.X + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X - 3;
+                                Coord.X = CoordAFocar.X - 3;
                             }
                         }
                         else
                         {
-                            C.X = CoordAFocar.X - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.X = CoordAFocar.X - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.X = CoordAFocar.X + 1;
+                                Coord.X = CoordAFocar.X + 1;
                             }
                         }
 
@@ -3744,32 +3745,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 0)
                     {
-                        C.Y = CoordAFocar.Y + 3;
+                        Coord.Y = CoordAFocar.Y + 3;
                     }
                     else if (CoordAFocar.Y == 7)
                     {
-                        C.Y = CoordAFocar.Y - 1;
+                        Coord.Y = CoordAFocar.Y - 1;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 1;
+                                Coord.Y = CoordAFocar.Y - 1;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 3;
+                                Coord.Y = CoordAFocar.Y + 3;
                             }
                         }
 
@@ -3777,32 +3778,32 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y + 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 1)
                     {
-                        C.Y = CoordAFocar.Y + 2;
+                        Coord.Y = CoordAFocar.Y + 2;
                     }
                     else if (CoordAFocar.Y == 8)
                     {
-                        C.Y = CoordAFocar.Y - 2;
+                        Coord.Y = CoordAFocar.Y - 2;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 2;
+                                Coord.Y = CoordAFocar.Y - 2;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 2;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 2;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 2;
+                                Coord.Y = CoordAFocar.Y + 2;
                             }
                         }
 
@@ -3810,41 +3811,41 @@ namespace BattleshipPRJ.Models
                 }
                 else if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 1] == 4 && Grelha[CoordAFocar.X, CoordAFocar.Y - 2] == 4)
                 {
-                    Acertou = true;
+                    PodeDisparar = true;
                     if (CoordAFocar.Y == 2)
                     {
-                        C.Y = CoordAFocar.Y + 1;
+                        Coord.Y = CoordAFocar.Y + 1;
                     }
                     else if (CoordAFocar.Y == 9)
                     {
-                        C.Y = CoordAFocar.Y - 3;
+                        Coord.Y = CoordAFocar.Y - 3;
                     }
                     else
                     {
                         int aleatorio = rnr.Next(0, 2);
                         if (aleatorio == 0)
                         {
-                            C.Y = CoordAFocar.Y + 1;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y + 1;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y - 3;
+                                Coord.Y = CoordAFocar.Y - 3;
                             }
                         }
                         else
                         {
-                            C.Y = CoordAFocar.Y - 3;
-                            if (Grelha[C.X, C.Y] != -1)
+                            Coord.Y = CoordAFocar.Y - 3;
+                            if (Grelha[Coord.X, Coord.Y] != -1)
                             {
-                                C.Y = CoordAFocar.Y + 1;
+                                Coord.Y = CoordAFocar.Y + 1;
                             }
                         }
 
                     }
                 }
             }
-            if (Acertou == true)
+            if (PodeDisparar == true)
             {
-                return C;
+                return Coord;
             }
             else
             {
