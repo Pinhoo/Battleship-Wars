@@ -267,7 +267,6 @@ namespace BattleshipPRJ.Models
             {
                 NovaCoordenada = DisparoParaSegundoHit(CoordAFocar, Grelha);
             }
-
             return NovaCoordenada;
         }//o que faz se o ultimo tiro acertou num barco de 3 canos
 
@@ -4441,16 +4440,17 @@ namespace BattleshipPRJ.Models
         public Coordenadas DisparoParaSegundoHit(Coordenadas CoordAFocar, int[,] Grelha)
         {
             Coordenadas NovaCoordenada = new Coordenadas();
+
+            int[,,,] NaoAceitoCoords;
+
             while (true)
             {
-                int[,,,] NaoAceitoCoords = VerificarBordas(CoordAFocar, false);
-
-                NovaCoordenada.CopiarValores(CoordAFocar);
-
+                NaoAceitoCoords = VerificarBordas(CoordAFocar, false);
+                
                 Coordenadas AdicionarValor = EscolherDirecao(NaoAceitoCoords);
 
-                NovaCoordenada.X = NovaCoordenada.X + AdicionarValor.X;
-                NovaCoordenada.Y = NovaCoordenada.Y + AdicionarValor.Y;
+                NovaCoordenada.X = CoordAFocar.X + AdicionarValor.X;
+                NovaCoordenada.Y = CoordAFocar.Y + AdicionarValor.Y;
 
                 if (Grelha[NovaCoordenada.X, NovaCoordenada.Y] == -1)
                 {

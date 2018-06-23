@@ -113,7 +113,10 @@ namespace BattleshipPRJ.Controllers
                     }
                     else
                     {
+                        if(gs1.Result == Resultado.SuccessHit)
+                        {
                         jogo.Afundou = false;
+                        }
                     }
 
 
