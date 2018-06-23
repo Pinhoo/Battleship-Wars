@@ -60,7 +60,7 @@ namespace BattleshipPRJ.Controllers
 
                 ModoAutonomo ModoAuto = new ModoAutonomo();
 
-                while (jogo.NumeroDisparosAutonomo != 0)
+                while (true)
                 {
                     HttpClient client1 = MyHttpClient.Client;
                     string path1 = "api/Play";
@@ -138,6 +138,11 @@ namespace BattleshipPRJ.Controllers
                     if (gs1.Result == Resultado.SuccessVictory)
                     {
                         jogo.NumeroDisparosAutonomo = 0;
+                    }
+
+                    if (jogo.NumeroDisparosAutonomo == 0)
+                    {
+                        break;
                     }
 
                 }

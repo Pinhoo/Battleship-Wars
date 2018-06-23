@@ -243,7 +243,6 @@ namespace BattleshipPRJ.Models
 
             UltimoBarcoAcertado = 0;
             Afundou = false;
-
             CoordsUltimoTiro = new Coordenadas();
         }
 

@@ -12,11 +12,6 @@ namespace BattleshipPRJ.Models
         public Coordenadas DevolverCoordsAleatorio(int[,] GrelhaMarcar)//metodo que devolve coordenadas aleatorias
         {
             Coordenadas NovasCoordenadas = new Models.Coordenadas();
-            NovasCoordenadas.X = 0;
-            NovasCoordenadas.Y = 0;
-
-            Random rnr = new Random();
-
             while (true)
             {
                 NovasCoordenadas.X = rnr.Next(0, 10);
@@ -32,7 +27,7 @@ namespace BattleshipPRJ.Models
 
         public int[,] Marcar(Coordenadas Coordenada, int[,] GrelhaMarcada)
         {
-            int[,,,] NaoAceitoCoords = VerificarBordas(Coordenada,false);
+            int[,,,] NaoAceitoCoords = VerificarBordas(Coordenada, false);
 
             if (NaoAceitoCoords[1, 0, 1, 0] == 1)
             {
@@ -253,7 +248,7 @@ namespace BattleshipPRJ.Models
                         proximoTiro = DevolverCoordsAleatorio(GrelhaMarcar);
                         break;
                 }
-                
+
             }
             else
             {
@@ -297,11 +292,11 @@ namespace BattleshipPRJ.Models
 
         public int[,,,] VerificarBordas(Coordenadas coordenadas, bool RaioDois)
         {
-            int[,,,] NaoAceitoCoords = new int[3,3,3,3];//NaoAceitoCoords[ X negativo, X positivo, Y negativo, Y positivo]
+            int[,,,] NaoAceitoCoords = new int[3, 3, 3, 3];//NaoAceitoCoords[ X negativo, X positivo, Y negativo, Y positivo]
 
             if (coordenadas.X == 0 && coordenadas.Y == 0)
             {
-                NaoAceitoCoords[ 1, 0, 1, 0] = 1;
+                NaoAceitoCoords[1, 0, 1, 0] = 1;
                 return NaoAceitoCoords;
             }
             else if (coordenadas.X == 9 && coordenadas.Y == 0)
@@ -382,7 +377,8 @@ namespace BattleshipPRJ.Models
                     return NaoAceitoCoords;
                 }
             }
-            else if (coordenadas.X == 0)
+
+            if (coordenadas.X == 0)
             {
                 NaoAceitoCoords[1, 0, 0, 0] = 1;
                 return NaoAceitoCoords;
@@ -426,25 +422,25 @@ namespace BattleshipPRJ.Models
                 }
             }
             NaoAceitoCoords[0, 0, 0, 0] = 1;
-                return NaoAceitoCoords;//aceita tudo
+            return NaoAceitoCoords;//aceita tudo
         }//método para não deixar disparar para além das bordas da grelha
-        
+
         public Coordenadas EscolherDirecao(int[,,,] NaoAceitoCoords)//aleatoriamente escolhe uma direção(norte sul este oeste) depende do que se acertou e se há possibilidade ou se já não está marcardo
         {
-            Coordenadas C = new Coordenadas();
+            Coordenadas Coord = new Coordenadas();
 
             if (NaoAceitoCoords[1, 0, 1, 0] == 1)
             {
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
                 {
-                    C.X = 1;
-                    C.Y = 0;
+                    Coord.X = 1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 1)
                 {
-                    C.X = 0;
-                    C.Y = 1;
+                    Coord.X = 0;
+                    Coord.Y = 1;
                 }
             }
             else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
@@ -452,13 +448,13 @@ namespace BattleshipPRJ.Models
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
                 {
-                    C.X = 1;
-                    C.Y = 0;
+                    Coord.X = 1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 1)
                 {
-                    C.X = 0;
-                    C.Y = -1;
+                    Coord.X = 0;
+                    Coord.Y = -1;
                 }
             }
             else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
@@ -466,13 +462,13 @@ namespace BattleshipPRJ.Models
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
                 {
-                    C.X = -1;
-                    C.Y = 0;
+                    Coord.X = -1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 1)
                 {
-                    C.X = 0;
-                    C.Y = 1;
+                    Coord.X = 0;
+                    Coord.Y = 1;
                 }
             }
             else if (NaoAceitoCoords[0, 1, 0, 1] == 1)
@@ -480,13 +476,13 @@ namespace BattleshipPRJ.Models
                 int Direcao = rnr.Next(0, 2);
                 if (Direcao == 0)
                 {
-                    C.X = -1;
-                    C.Y = 0;
+                    Coord.X = -1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 1)
                 {
-                    C.X = 0;
-                    C.Y = -1;
+                    Coord.X = 0;
+                    Coord.Y = -1;
                 }
             }
             else if (NaoAceitoCoords[1, 0, 0, 0] == 1)
@@ -494,18 +490,18 @@ namespace BattleshipPRJ.Models
                 int Direcao = rnr.Next(0, 3);
                 if (Direcao == 0)
                 {
-                    C.X = 1;
-                    C.Y = 0;
+                    Coord.X = 1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 1)
                 {
-                    C.X = 0;
-                    C.Y = -1;
+                    Coord.X = 0;
+                    Coord.Y = -1;
                 }
                 else if (Direcao == 2)
                 {
-                    C.X = 0;
-                    C.Y = 1;
+                    Coord.X = 0;
+                    Coord.Y = 1;
                 }
             }
             else if (NaoAceitoCoords[0, 1, 0, 0] == 1)
@@ -513,18 +509,18 @@ namespace BattleshipPRJ.Models
                 int Direcao = rnr.Next(0, 3);
                 if (Direcao == 0)
                 {
-                    C.X = -1;
-                    C.Y = 0;
+                    Coord.X = -1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 1)
                 {
-                    C.X = 0;
-                    C.Y = -1;
+                    Coord.X = 0;
+                    Coord.Y = -1;
                 }
                 else if (Direcao == 2)
                 {
-                    C.X = 0;
-                    C.Y = 1;
+                    Coord.X = 0;
+                    Coord.Y = 1;
                 }
             }
             else if (NaoAceitoCoords[0, 0, 1, 0] == 1)
@@ -532,18 +528,18 @@ namespace BattleshipPRJ.Models
                 int Direcao = rnr.Next(0, 3);
                 if (Direcao == 0)
                 {
-                    C.X = 1;
-                    C.Y = 0;
+                    Coord.X = 1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 1)
                 {
-                    C.X = -1;
-                    C.Y = 0;
+                    Coord.X = -1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 2)
                 {
-                    C.X = 0;
-                    C.Y = 1;
+                    Coord.X = 0;
+                    Coord.Y = 1;
                 }
             }
             else if (NaoAceitoCoords[0, 0, 0, 1] == 1)
@@ -551,18 +547,18 @@ namespace BattleshipPRJ.Models
                 int Direcao = rnr.Next(0, 3);
                 if (Direcao == 0)
                 {
-                    C.X = 1;
-                    C.Y = 0;
+                    Coord.X = 1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 1)
                 {
-                    C.X = -1;
-                    C.Y = 0;
+                    Coord.X = -1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 2)
                 {
-                    C.X = 0;
-                    C.Y = -1;
+                    Coord.X = 0;
+                    Coord.Y = -1;
                 }
             }
             else if (NaoAceitoCoords[0, 0, 0, 0] == 1)
@@ -570,36 +566,38 @@ namespace BattleshipPRJ.Models
                 int Direcao = rnr.Next(0, 4);
                 if (Direcao == 0)
                 {
-                    C.X = 1;
-                    C.Y = 0;
+                    Coord.X = 1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 1)
                 {
-                    C.X = -1;
-                    C.Y = 0;
+                    Coord.X = -1;
+                    Coord.Y = 0;
                 }
                 else if (Direcao == 2)
                 {
-                    C.X = 0;
-                    C.Y = 1;
+                    Coord.X = 0;
+                    Coord.Y = 1;
                 }
                 else if (Direcao == 3)
                 {
-                    C.X = 0;
-                    C.Y = -1;
+                    Coord.X = 0;
+                    Coord.Y = -1;
                 }
             }
 
-            return C;
+            return Coord;
         }
 
-        public Coordenadas VerificarEDecidirTerceiroTiro(int[,] Grelha, Coordenadas CoordAFocar,int NrDeCanos)
+        public Coordenadas VerificarEDecidirTerceiroTiro(int[,] Grelha, Coordenadas CoordAFocar, int NrDeCanos)
         {
             bool CoordValida = false;
 
             int[,,,] NaoAceitoCoords = VerificarBordas(CoordAFocar, false);
 
             Coordenadas Coord = new Coordenadas();
+
+            Coord.CopiarValores(CoordAFocar);
 
             Coordenadas CoordFinal = new Coordenadas();
 
@@ -783,7 +781,7 @@ namespace BattleshipPRJ.Models
                 return null;
             }
         }//o que faz se o ultimo tiro acertou num barco de 3 canos sabendo que já acertou 2 quadrados nesse barco
-        
+
         public Coordenadas QuartoTiro4Canos(int[,] Grelha, Coordenadas CoordAFocar)//o que faz se o ultimo tiro acertou num barco de 4 canos sabendo que já acertou 3 quadrados nesse barco
         {
             bool PodeDisparar = false;
@@ -800,7 +798,7 @@ namespace BattleshipPRJ.Models
                 {
                     if (CoordAFocar.X == 0) //se for ao pé de uma das bordas apenas pode selecionar o outro lado
                     {
-                        Coord.X = CoordAFocar.X + 3;
+                            Coord.X = CoordAFocar.X + 3;
                     }
                     else if (CoordAFocar.X == 7)// por isso meto este codigo
                     {
@@ -863,7 +861,7 @@ namespace BattleshipPRJ.Models
                     PodeDisparar = true;
                 }
             }
-            else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
+            else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X - 2, CoordAFocar.Y] == 4)
                 {
@@ -932,7 +930,7 @@ namespace BattleshipPRJ.Models
                     PodeDisparar = true;
                 }
             }
-            else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
+            else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
             {
                 if (Grelha[CoordAFocar.X, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 1, CoordAFocar.Y] == 4 && Grelha[CoordAFocar.X + 2, CoordAFocar.Y] == 4)
                 {
@@ -3845,7 +3843,14 @@ namespace BattleshipPRJ.Models
             }
             if (PodeDisparar == true)
             {
-                return Coord;
+                if(Grelha[Coord.X,Coord.Y]==-1)
+                {
+                    return Coord;
+                }
+                else
+                {
+                    return DevolverCoordsAleatorio(Grelha);
+                }
             }
             else
             {
@@ -3857,357 +3862,473 @@ namespace BattleshipPRJ.Models
         {
             Coordenadas CoordFinal = new Coordenadas();
             CoordFinal.CopiarValores(CoordAFocar);
-            int i = 0;
-            while (i == 0)
+
+            int[,,,] NaoAceitoCoords = VerificarBordas(CoordFinal, false);
+
+            if (NaoAceitoCoords[1, 0, 1, 0] == 1)
             {
-
-                int[,,,] NaoAceitoCoords = VerificarBordas(CoordFinal, false);
-
-                if (NaoAceitoCoords[1, 0, 1, 0] == 1)
+                if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                 {
-                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
+                    CoordFinal.X++;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                {
+                    CoordFinal.Y++;
+                }
+                else
+                {
+                    int aleatorio;
+                    int j = 0;
+                    while (j == 0)
                     {
-                        CoordFinal.X++;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
-                    {
-                        CoordFinal.Y++;
-                        i++;
-                    }
-                    else
-                    {
-                        int aleatorio;
-                        int j = 0;
-                        while (j == 0)
+                        aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                         {
-                            aleatorio = rnr.Next(0, 2);
-                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X++;
-                                j++;
-                            }
-                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
-                            {
-                                CoordFinal.Y++;
-                                j++;
-                            }
+                            CoordFinal.X++;
+                            j++;
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                        }
+                        else if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
                         }
                     }
                 }
-                else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
+            }
+            else if (NaoAceitoCoords[1, 0, 0, 1] == 1)
+            {
+                if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                 {
-                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
+                    CoordFinal.X++;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                {
+                    CoordFinal.Y--;
+                }
+                else
+                {
+                    int aleatorio;
+                    int j = 0;
+                    while (j == 0)
                     {
-                        CoordFinal.X++;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
-                    {
-                        CoordFinal.Y--;
-                        i++;
-                    }
-                    else
-                    {
-                        int aleatorio;
-                        int j = 0;
-                        while (j == 0)
+                        aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                         {
-                            aleatorio = rnr.Next(0, 2);
-                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X++;
-                                j++;
-                            }
-                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
-                            {
-                                CoordFinal.Y--;
-                                j++;
-                            }
+                            CoordFinal.X++;
+                            j++;
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                        }
+                        else if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
                         }
                     }
                 }
-                else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
+            }
+            else if (NaoAceitoCoords[0, 1, 1, 0] == 1)
+            {
+                if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                 {
-                    if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
+                    CoordFinal.X--;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                {
+                    CoordFinal.Y++;
+                }
+                else
+                {
+                    int aleatorio;
+                    int j = 0;
+                    while (j == 0)
                     {
-                        CoordFinal.X--;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
-                    {
-                        CoordFinal.Y++;
-                        i++;
-                    }
-                    else
-                    {
-                        int aleatorio;
-                        int j = 0;
-                        while (j == 0)
+                        aleatorio = rnr.Next(0, 2);
+                        if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                         {
-                            aleatorio = rnr.Next(0, 2);
-                            if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X--;
-                                j++;
-                            }
-                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
-                            {
-                                CoordFinal.Y++;
-                                j++;
-                            }
+                            CoordFinal.X--;
+                            j++;
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                        }
+                        else if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
                         }
                     }
                 }
-                else if (NaoAceitoCoords[0, 1, 0, 1] == 1)
+            }
+            else if (NaoAceitoCoords[0, 1, 0, 1] == 1)
+            {
+                if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                 {
-                    if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
+                    CoordFinal.X--;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                {
+                    CoordFinal.Y--;
+                }
+                else
+                {
+                    int aleatorio;
+                    int j = 0;
+                    while (j == 0)
                     {
-                        CoordFinal.X--;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
-                    {
-                        CoordFinal.Y--;
-                        i++;
-                    }
-                    else
-                    {
-                        int aleatorio;
-                        int j = 0;
-                        while (j == 0)
+                        aleatorio = rnr.Next(0, 4);
+                        if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                         {
-                            aleatorio = rnr.Next(0, 4);
-                            if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X--;
-                                j++;
-                            }
-                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
-                            {
-                                CoordFinal.Y--;
-                                j++;
-                            }
+                            CoordFinal.X--;
+                            j++;
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                        }
+                        else if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
                         }
                     }
                 }
-                else if (NaoAceitoCoords[1, 0, 0, 0] == 1)
+            }
+            else if (NaoAceitoCoords[1, 0, 0, 0] == 1)
+            {
+                if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                 {
-                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
+                    CoordFinal.X++;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                {
+                    CoordFinal.Y++;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                {
+                    CoordFinal.Y--;
+                }
+                else
+                {
+                    int aleatorio;
+                    int j = 0;
+                    while (j == 0)
                     {
-                        CoordFinal.X++;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
-                    {
-                        CoordFinal.Y++;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
-                    {
-                        CoordFinal.Y--;
-                        i++;
-                    }
-                    else
-                    {
-                        int aleatorio;
-                        int j = 0;
-                        while (j == 0)
+                        aleatorio = rnr.Next(0, 3);
+                        if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                         {
-                            aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X++;
-                                j++;
-                            }
-                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
-                            {
-                                CoordFinal.Y++;
-                                j++;
-                            }
-                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
-                            {
-                                CoordFinal.Y--;
-                                j++;
-                            }
+                            CoordFinal.X++;
+                            j++;
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                        }
+                        else if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
                         }
                     }
                 }
-                else if (NaoAceitoCoords[0, 1, 0, 0] == 1)
+            }
+            else if (NaoAceitoCoords[0, 1, 0, 0] == 1)
+            {
+                if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                 {
-                    if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
+                    CoordFinal.X--;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                {
+                    CoordFinal.Y++;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                {
+                    CoordFinal.Y--;
+                }
+                else
+                {
+                    int aleatorio;
+                    int j = 0;
+                    while (j == 0)
                     {
-                        CoordFinal.X--;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
-                    {
-                        CoordFinal.Y++;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
-                    {
-                        CoordFinal.Y--;
-                        i++;
-                    }
-                    else
-                    {
-                        int aleatorio;
-                        int j = 0;
-                        while (j == 0)
+                        aleatorio = rnr.Next(0, 3);
+                        if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
                         {
-                            aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X--;
-                                j++;
-                            }
-                            else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
-                            {
-                                CoordFinal.Y++;
-                                j++;
-                            }
-                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
-                            {
-                                CoordFinal.Y--;
-                                j++;
-                            }
+                            CoordFinal.X--;
+                            j++;
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                        }
+                        else if (aleatorio == 0 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
                         }
                     }
                 }
-                else if (NaoAceitoCoords[0, 0, 1, 0] == 1)
+            }
+            else if (NaoAceitoCoords[0, 0, 1, 0] == 1)
+            {
+                if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                 {
-                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
+                    CoordFinal.X++;
+                }
+                else if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
+                {
+                    CoordFinal.X--;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                {
+                    CoordFinal.Y++;
+                }
+                else
+                {
+                    int aleatorio;
+                    int j = 0;
+                    while (j == 0)
                     {
-                        CoordFinal.X++;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
-                    {
-                        CoordFinal.X--;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
-                    {
-                        CoordFinal.Y++;
-                        i++;
-                    }
-                    else
-                    {
-                        int aleatorio;
-                        int j = 0;
-                        while (j == 0)
+                        aleatorio = rnr.Next(0, 3);
+                        if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                         {
-                            aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X++;
-                                j++;
-                            }
-                            else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X--;
-                                j++;
-                            }
-                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
-                            {
-                                CoordFinal.Y++;
-                                j++;
-                            }
+                            CoordFinal.X++;
+                            j++;
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
+                        {
+                            CoordFinal.X--;
+                            j++;
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                        }
+                        else if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
                         }
                     }
                 }
-                else if (NaoAceitoCoords[0, 0, 0, 1] == 1)
+            }
+            else if (NaoAceitoCoords[0, 0, 0, 1] == 1)
+            {
+                if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                 {
-                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
+                    CoordFinal.X++;
+                }
+                else if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
+                {
+                    CoordFinal.X--;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                {
+                    CoordFinal.Y--;
+                }
+                else
+                {
+                    int aleatorio;
+                    int j = 0;
+                    while (j == 0)
                     {
-                        CoordFinal.X++;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
-                    {
-                        CoordFinal.X--;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
-                    {
-                        CoordFinal.Y--;
-                        i++;
-                    }
-                    else
-                    {
-                        int aleatorio;
-                        int j = 0;
-                        while (j == 0)
+                        aleatorio = rnr.Next(0, 3);
+                        if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                         {
-                            aleatorio = rnr.Next(0, 3);
-                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X++;
-                                j++;
-                            }
-                            else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X--;
-                                j++;
-                            }
-                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
-                            {
-                                CoordFinal.Y--;
-                                j++;
-                            }
+                            CoordFinal.X++;
+                            j++;
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
+                        {
+                            CoordFinal.X--;
+                            j++;
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                        }
+                        else if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
                         }
                     }
                 }
-                else if (NaoAceitoCoords[0, 0, 0, 0] == 1)
+            }
+            else if (NaoAceitoCoords[0, 0, 0, 0] == 1)
+            {
+                if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                 {
-                    if (Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
+                    CoordFinal.X++;
+                }
+                else if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
+                {
+                    CoordFinal.X--;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                {
+                    CoordFinal.Y++;
+                }
+                else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                {
+                    CoordFinal.Y--;
+                }
+                else
+                {
+                    int aleatorio;
+                    int j = 0;
+                    while (j == 0)
                     {
-                        CoordFinal.X++;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
-                    {
-                        CoordFinal.X--;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
-                    {
-                        CoordFinal.Y++;
-                        i++;
-                    }
-                    else if (Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
-                    {
-                        CoordFinal.Y--;
-                        i++;
-                    }
-                    else
-                    {
-                        int aleatorio;
-                        int j = 0;
-                        while (j == 0)
+                        aleatorio = rnr.Next(0, 4);
+                        if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == -1)
                         {
-                            aleatorio = rnr.Next(0, 4);
-                            if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X++;
-                                j++;
-                            }
-                            else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
-                            {
-                                CoordFinal.X--;
-                                j++;
-                            }
-                            else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
-                            {
-                                CoordFinal.Y++;
-                                j++;
-                            }
-                            else if (aleatorio == 3 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
-                            {
-                                CoordFinal.Y--;
-                                j++;
-                            }
+                            CoordFinal.X++;
+                            j++;
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == -1)
+                        {
+                            CoordFinal.X--;
+                            j++;
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == -1)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                        }
+                        else if (aleatorio == 3 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == -1)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                        }
+                        else if (aleatorio == 0 && Grelha[CoordFinal.X + 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 1 && Grelha[CoordFinal.X - 1, CoordFinal.Y] == 5)
+                        {
+                            CoordFinal.X--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 2 && Grelha[CoordFinal.X, CoordFinal.Y + 1] == 5)
+                        {
+                            CoordFinal.Y++;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
+                        }
+                        else if (aleatorio == 3 && Grelha[CoordFinal.X, CoordFinal.Y - 1] == 5)
+                        {
+                            CoordFinal.Y--;
+                            j++;
+                            CoordFinal = PortaAvioes(Grelha, CoordFinal);
                         }
                     }
                 }
@@ -4218,6 +4339,7 @@ namespace BattleshipPRJ.Models
         public Coordenadas DirecaoTerceiroTiro(int X, int Y, Coordenadas Coordenadas, int[,] Grelha)
         {
             Coordenadas Coord = new Coordenadas();
+
             Coord.CopiarValores(Coordenadas);
 
             int Aleatorio = rnr.Next(0, 2);
@@ -4227,58 +4349,59 @@ namespace BattleshipPRJ.Models
                 {
                     if (Aleatorio == 0)
                     {
-                        if(Coord.X > 1)
-                            Coord.X = Coord.X - 2;
+                        if (Coordenadas.X > 1)
+                            Coord.X = Coordenadas.X - 2;
                         else
-                            Coord.X = Coord.X + 1;
+                            Coord.X = Coordenadas.X + 1;
                     }
                     else if (Aleatorio == 1)
                     {
-                        Coord.X = Coord.X + 1;
+                        Coord.X = Coordenadas.X + 1;
                     }
                 }
                 else if (X == 1)
                 {
                     if (Aleatorio == 0)
                     {
-                        if (Coord.X < 8)
-                            Coord.X = Coord.X + 2;
+                        if (Coordenadas.X < 8)
+                            Coord.X = Coordenadas.X + 2;
                         else
-                            Coord.X = Coord.X - 1;
+                            Coord.X = Coordenadas.X - 1;
                     }
                     else if (Aleatorio == 1)
                     {
-                        Coord.X = Coord.X - 1;
+                        Coord.X = Coordenadas.X - 1;
                     }
                 }
                 else if (Y == -1)
                 {
                     if (Aleatorio == 0)
                     {
-                        if(Coord.Y > 1)
-                            Coord.Y = Coord.Y - 2;
+                        if (Coordenadas.Y > 1)
+                            Coord.Y = Coordenadas.Y - 2;
                         else
-                            Coord.Y = Coord.Y + 1;
+                            Coord.Y = Coordenadas.Y + 1;
                     }
                     else if (Aleatorio == 1)
                     {
-                        Coord.Y = Coord.Y + 1;
+                        Coord.Y = Coordenadas.Y + 1;
                     }
                 }
-                else
+                else if(Y == 1)
                 {
                     if (Aleatorio == 0)
                     {
-                        if(Coord.Y < 8)
-                            Coord.Y = Coord.Y + 2;
+                        if (Coordenadas.Y < 8)
+                            Coord.Y = Coordenadas.Y + 2;
                         else
-                            Coord.Y = Coord.Y - 1;
+                            Coord.Y = Coordenadas.Y - 1;
                     }
                     else if (Aleatorio == 1)
                     {
-                        Coord.Y = Coord.Y - 1;
+                        Coord.Y = Coordenadas.Y - 1;
                     }
                 }
+
                 if (Coord.Y < 0 || Coord.Y > 9 || Coord.X < 0 || Coord.X > 9 || Grelha[Coord.X, Coord.Y] != -1)
                 {
                     if (Aleatorio == 0)
@@ -4292,10 +4415,9 @@ namespace BattleshipPRJ.Models
                 }
                 else
                 {
-                    break;
+                    return Coord;
                 }
             }
-            return Coord;
         }//método para 3º tiro dos barcos de 3 e 4 canos(criei um metodo apenas para não haver repetição do codigo do mesmo)
 
         public int[,] MarcarAdjacentes(int[,] GrelhaMarcar, int Barco)
@@ -4306,10 +4428,10 @@ namespace BattleshipPRJ.Models
                 {
                     if (GrelhaMarcar[X, Y] == Barco)
                     {
-                        Coordenadas C = new Coordenadas();
-                        C.X = X;
-                        C.Y = Y;
-                        Marcar(C, GrelhaMarcar);
+                        Coordenadas Coord = new Coordenadas();
+                        Coord.X = X;
+                        Coord.Y = Y;
+                        Marcar(Coord, GrelhaMarcar);
                     }
                 }
             }
