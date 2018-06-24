@@ -51,6 +51,7 @@ namespace BattleshipPRJ.Controllers
 
 
             int ResultTiro = EspacoOcupado.BarcosO[opcaoY, opcaoX];
+            
 
             if (submitButton == "Disparar")
             {
@@ -79,6 +80,7 @@ namespace BattleshipPRJ.Controllers
                         jogue.LocalAoFundo(ResultTiro, opcaoY, opcaoX);
 
                         jogue.Grelha[opcaoY, opcaoX] = ResultTiro;
+                        
 
                         if (ResultTiro != 0)//tem de se utilizar isto para permitir o funcionamento da app online
                         {
@@ -148,6 +150,8 @@ namespace BattleshipPRJ.Controllers
             {
                 jogue.ConfirmarDesistir(false);
             }
+
+            jogue.AtualizarJogoLocal();
 
             return View(jogue);
 

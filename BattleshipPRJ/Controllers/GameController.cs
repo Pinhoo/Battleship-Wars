@@ -98,9 +98,7 @@ namespace BattleshipPRJ.Controllers
 
                     //modo auto metodos de ajuda
 
-                    jogo.Grelha[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
-
-                    jogo.GrelhaModoAuto[Coordenada.X, Coordenada.Y] = gs1.DamagedShipSize;
+                    jogo.MarcarGrelhas(Coordenada.X, Coordenada.Y, gs1.DamagedShipSize);
                     
                     if (gs1.Result == Resultado.SuccessVictory)
                     {
@@ -132,11 +130,7 @@ namespace BattleshipPRJ.Controllers
 
                     rs.ScoreFimRonda = jogo.Score;
 
-                    jogo.CalcularPercentagens();
-
-                    jogo.AddRoundSummary(rs);
-
-                    jogo.NumeroDisparosAutonomo--;
+                    jogo.FinalizarRonda(rs);
 
                     if (gs1.Result == Resultado.SuccessVictory)
                     {
@@ -244,7 +238,7 @@ namespace BattleshipPRJ.Controllers
 
                 if (gs.Result == Resultado.SuccessVictory || jogue.Misseis == 0)
                 {
-                    HiScoresModel hiscore = new HiScoresModel(jogue.Nome, (int)jogue.Score, jogue.PercentagemAlvo, jogue.PercentagemAfundado, jogue.TirosAgua, jogue.TirosAlvo, jogue.TirosRepetido, jogue.FimdoJogo, jogue.Missao);
+                    HiScoresModel hiscore = new HiScoresModel(jogue.Nome, jogue.Score, jogue.PercentagemAlvo, jogue.PercentagemAfundado, jogue.TirosAgua, jogue.TirosAlvo, jogue.TirosRepetido, jogue.FimdoJogo, jogue.Missao);
 
                     Repository.AddHighScore(hiscore);
 
@@ -277,7 +271,7 @@ namespace BattleshipPRJ.Controllers
                     jogue.FimdoJogo = "Derrota";
                     jogue.Gameover = true;
 
-                    HiScoresModel hiscore = new HiScoresModel(jogue.Nome, (int)jogue.Score, jogue.PercentagemAlvo, jogue.PercentagemAfundado, jogue.TirosAgua, jogue.TirosAlvo, jogue.TirosRepetido, jogue.FimdoJogo, jogue.Missao);
+                    HiScoresModel hiscore = new HiScoresModel(jogue.Nome, jogue.Score, jogue.PercentagemAlvo, jogue.PercentagemAfundado, jogue.TirosAgua, jogue.TirosAlvo, jogue.TirosRepetido, jogue.FimdoJogo, jogue.Missao);
 
                     Repository.AddHighScore(hiscore);
                 }

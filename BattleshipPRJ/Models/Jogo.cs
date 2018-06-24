@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BattleshipPRJ.Models
 {
-    public class Jogo :IComparable
+    public class Jogo : IComparable
     {
         private static int heidi = 0;
 
@@ -73,6 +73,8 @@ namespace BattleshipPRJ.Models
         public int LocalPortaAvioes { get; set; }
 
         public int Local4Canos { get; set; }
+
+        public string MensagemJogoLocal { get; set; }
 
         //modo auto
 
@@ -147,7 +149,7 @@ namespace BattleshipPRJ.Models
             {
                 return "Tiro Inválido!";
             }
-            else if(result == Resultado.GameHasEnded)
+            else if (result == Resultado.GameHasEnded)
             {
                 return "Jogo acabou!";
 
@@ -195,7 +197,7 @@ namespace BattleshipPRJ.Models
             FimdoJogo = "Derrota";
 
             ID = heidi;
-
+            MensagemJogoLocal = "Comece por disparar um míssil!";
             Gameover = false;
 
             Portaavioesrestantes = 1;
@@ -258,7 +260,7 @@ namespace BattleshipPRJ.Models
                 if (ganho == false)
                 {
                     AdicionarJogada(true, BarcoAoFundo, false, false, 0);
-                    
+
 
                 }
                 else
@@ -282,7 +284,7 @@ namespace BattleshipPRJ.Models
                 TirosAgua++;
                 AdicionarJogada(false, false, false, false, 0);
             }
-            
+
             Barcoaofundo = BarcoAoFundo;
             CalcularPercentagens();
         }
@@ -293,7 +295,7 @@ namespace BattleshipPRJ.Models
             Misseis = Misseis - 1;
             NumeroDeJogadas = NumeroDeJogadas + 1;
             AdicionarJogada(false, false, true, false, 0);
-            
+
             Barcoaofundo = false;
             CalcularPercentagens();
         }
@@ -344,11 +346,11 @@ namespace BattleshipPRJ.Models
                 return 1;
             if (j2.Score == Score)
                 return 0;
-                return -1;
-            
-            
+            return -1;
+
+
         }
-        
+
         public bool ConfirmarDesistir(bool Confirmado)
         {
             if (Confirmado == true)
@@ -369,8 +371,8 @@ namespace BattleshipPRJ.Models
                 return false;
             }
         }
-    
-       
+
+
         public void AdicionarJogada(bool d_BarcoAtingido, bool d_BarcoAfundado, bool d_Penalizacao, bool d_Ganho, int d_Missseis)
         {
 
@@ -407,9 +409,9 @@ namespace BattleshipPRJ.Models
         }
 
 
-        
 
-        public void AtualizarJogada(GameState gs,int opcaoY,int opcaoX)
+
+        public void AtualizarJogada(GameState gs, int opcaoY, int opcaoX)
         {
             if (gs.Result == Resultado.SuccessHit)
             {
@@ -485,7 +487,7 @@ namespace BattleshipPRJ.Models
                     {
                         ResultadoJogada = "Afundaste o último barco de" + gs.DamagedShipSize + " canos!";
                     }
-                   ResultadoJogada = ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
+                    ResultadoJogada = ReceberResult(gs.Result) + gs.DamagedShipSize + " canos!";
                 }
 
                 Disparou(gs.DamagedShipSize, false, true);
@@ -506,9 +508,9 @@ namespace BattleshipPRJ.Models
             }
             else if (gs.Result == Resultado.SuccessVictory)
             {
-                
+
                 AtualizarArmadaInimiga(gs.DamagedShipSize);
-                
+
                 Grelha[opcaoY, opcaoX] = gs.DamagedShipSize;
                 ResultadoJogada = ReceberResult(gs.Result);
                 Disparou(gs.DamagedShipSize, true, true);
@@ -559,8 +561,8 @@ namespace BattleshipPRJ.Models
         }
 
         public void CalcularNumeroDisparos(string numrondas)
-        { 
-        if (numrondas == "auto0")
+        {
+            if (numrondas == "auto0")
             {
                 NumeroDisparosAutonomo = Misseis;
             }
@@ -579,6 +581,24 @@ namespace BattleshipPRJ.Models
             CoordsUltimoTiro.X = Coordenada.X;
             CoordsUltimoTiro.Y = Coordenada.Y;
             UltimoBarcoAcertado = DamagedShipSize;
+        }
+
+        public void MarcarGrelhas(int x, int y, int dmgshipsize)
+        {
+
+            Grelha[x, y] = dmgshipsize;
+
+            GrelhaModoAuto[x, y] = dmgshipsize;
+
+        }
+
+        public void FinalizarRonda(RoundSummary rs)
+        {
+            CalcularPercentagens();
+
+            AddRoundSummary(rs);
+
+            NumeroDisparosAutonomo--;
         }
 
         public void LocalAoFundo(int Barco, int opcaoY, int opcaoX)
@@ -707,6 +727,98 @@ namespace BattleshipPRJ.Models
             }//portaavioes
             else
                 Barcoaofundo = false;
+        }
+
+        public void AtualizarJogoLocal()
+        {
+            if (NumeroDeJogadas == 0)
+            {
+                MensagemJogoLocal = "Começa por disparar um missíl.";
+            }
+            else if (TiroNaMesmaCoord == true)
+            {
+                MensagemJogoLocal = "Foste penalizado em 100 pontos por disparar no mesmo quadrado!";
+            }
+            else if (UltimoTiroDisparado == 5)
+            {
+                if (Barcoaofundo == true)
+                {
+                    MensagemJogoLocal = "Afundaste o porta-aviões!";
+                }
+                else
+                {
+                    MensagemJogoLocal = "Acertaste no porta-aviões!";
+                }
+            }
+            else if (UltimoTiroDisparado == 4)
+            {
+                if (Barcoaofundo == true)
+                {
+                    MensagemJogoLocal = "Afundaste o barco de quatro canos!";
+                }
+                else
+                {
+                    MensagemJogoLocal = " Acertaste num barco de quatro canos!";
+                }
+            }
+            else if (UltimoTiroDisparado == 3)
+            {
+                if (Barcoaofundo == true)
+                {
+                    if (Trescanosrestantes == 0)
+                    {
+                        MensagemJogoLocal = "Afundaste o<b> último</ b > barco de três canos!";
+                    }
+                    else
+                    {
+                        MensagemJogoLocal = "Afundaste um barco de três canos!";
+                    }
+                }
+                else
+                {
+                    MensagemJogoLocal = "Acertaste num barco de três canos!";
+                }
+            }
+            else if (UltimoTiroDisparado == 2)
+            {
+                if (Barcoaofundo == true)
+                {
+                    if (Doiscanosrestantes == 0)
+                    {
+                        MensagemJogoLocal = "Afundaste o último barco de dois canos";
+                    }
+                    else
+                    {
+                        MensagemJogoLocal = "Afundaste um barco de dois canos!";
+                    }
+                }
+                else
+                {
+                    MensagemJogoLocal = "Acertaste num barco de dois canos!";
+                }
+            }
+            else if (UltimoTiroDisparado == 1)
+            {
+                if (Submarinosrestantes == 0)
+                {
+                    MensagemJogoLocal = "Afundaste o último submarino!";
+
+                }
+                else
+                {
+
+                    MensagemJogoLocal = "Afundaste um submarino!";
+                }
+            }
+            else if (UltimoTiroDisparado == 0)
+            {
+                MensagemJogoLocal = " O teu missíl foi perdido no mar.";
+            }
+
+
+
+
+
         }
     }
 }
